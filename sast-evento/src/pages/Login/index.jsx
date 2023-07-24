@@ -1,13 +1,11 @@
-import { Button} from 'antd';
-
-
+import { useNavigate } from 'react-router-dom';
 function Login(){
-    
+    // const navigate=useNavigate()
     return(
-        <div className='login'>
-            <Button>提交</Button>
+        <div>
+            登录页
         </div>
     )
 }
 
-export default Login
+export default Login;

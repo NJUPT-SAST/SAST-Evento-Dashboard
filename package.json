@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "react-router-dom": "^6.14.2"
+  },
+  "devDependencies": {
+    "gulp-sass": "^5.1.0",
+    "sacc": "^0.0.1"
+  }
+}
