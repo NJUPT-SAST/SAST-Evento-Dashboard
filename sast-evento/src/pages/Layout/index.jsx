@@ -1,7 +1,9 @@
 import React from 'react'
 import { Layout, Nav, Button, Breadcrumb, Skeleton, Avatar, Image } from '@douyinfe/semi-ui';
-import { IconSemiLogo, IconBell, IconHelpCircle, IconBytedanceLogo,
-     IconHome, IconHistogram, IconLive, IconSetting,IconImage } from '@douyinfe/semi-icons';
+import {
+    IconSemiLogo, IconBell, IconHelpCircle, IconBytedanceLogo,
+    IconHome, IconHistogram, IconLive, IconSetting, IconImage
+} from '@douyinfe/semi-icons';
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom"
 
 function TheLayout() {
@@ -12,7 +14,7 @@ function TheLayout() {
                 <div>
                     <Nav mode="horizontal" defaultSelectedKeys={['Home']}>
                         <Nav.Header>
-                            <Image src="./evento.png" alt='evento图标' height='30vh' />
+                            <Image src="./evento.png" alt='evento图标' height={50} preview={false} />
                         </Nav.Header>
                         <Nav.Footer>
                             <Avatar color="orange" size="small">
