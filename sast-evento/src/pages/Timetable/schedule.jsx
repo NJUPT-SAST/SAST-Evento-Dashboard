@@ -1,6 +1,8 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { Calendar, DatePicker } from '@douyinfe/semi-ui';
+import { useState, useEffect, useRef } from 'react';
+import { Calendar, DatePicker, Button } from '@douyinfe/semi-ui';
+import domtoimage from 'dom-to-image';
+import { saveAs } from 'file-saver'
 
 export default function Schedule() {
   const calculateEndDate = (startDate) => {
@@ -31,18 +33,42 @@ export default function Schedule() {
   const events = [
     {
       key: '0',
-      start: new Date(2023, 7, 25, 14, 0, 0),
-      end: new Date(2023, 7, 25, 16, 0, 0),
-      children: <div style={dailyEventStyle}>7月25日 14:00 ~ 16:00</div>,
+      start: new Date(2023, 6, 26, 14, 0, 0),
+      end: new Date(2023, 6, 26, 16, 0, 0),
+      children: <div style={dailyEventStyle}>7月26日 14:00 ~ 16:00</div>,
     },
     {
       key: '1',
-      start: new Date(2023, 7, 26),
-      end: new Date(2023, 7, 27),
+      start: new Date(2023, 6, 26),
+      end: new Date(2023, 6, 27),
       allDay: true,
       children: <div style={allDayStyle}>7月26日 ~ 7月27日</div>,
     },
+    {
+      key: '2',
+      start: new Date(2023, 6, 27, 14, 0, 0),
+      end: new Date(2023, 6, 27, 18, 0, 0),
+      allDay: false,
+      children: <div style={dailyEventStyle}>前端组授课</div>,
+    },
+    {
+      key: '3',
+      start: new Date(2023, 6, 28, 14, 0, 0),
+      end: new Date(2023, 6, 29, 2, 0, 0),
+      allDay: false,
+      children: <div style={dailyEventStyle}>python组授课</div>,
+    },
   ];
+
+  const exportPic = () => {
+    domtoimage.toJpeg(document.querySelector('.semi-calendar-week'), { quality: 1, bgcolor: 'white', height: 1500 })
+      .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'schedule.jpeg';
+        link.href = dataUrl;
+        link.click();
+      });
+  }
 
   useEffect(() => {
     const start = startDate;
@@ -52,12 +78,14 @@ export default function Schedule() {
   }, [startDate])
 
 
+
   return (
     <>
       <DatePicker value={startDate} showClear={false}
         onChange={date => {
           setStartDate(date);
         }} />
+      <Button onClick={exportPic}>导出</Button>
       <Calendar
         mode="range"
         range={range}
@@ -65,6 +93,7 @@ export default function Schedule() {
         events={events}
         markWeekend={true}
       />
+
     </>
 
   );
