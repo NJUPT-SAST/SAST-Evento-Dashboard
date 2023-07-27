@@ -1,8 +1,7 @@
 import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, DatePicker, Button } from '@douyinfe/semi-ui';
 import domtoimage from 'dom-to-image';
-import { saveAs } from 'file-saver'
 
 export default function Schedule() {
   const calculateEndDate = (startDate) => {
@@ -30,6 +29,12 @@ export default function Schedule() {
     height: '100%',
     overflow: 'hidden',
   };
+
+  //const [events, setEvents] = useState([]);
+  const fetchEvents = () => {
+    //获取数据
+  }
+
   const events = [
     {
       key: '0',
@@ -76,8 +81,6 @@ export default function Schedule() {
     console.log(start, end);
     setRange([start, end]);
   }, [startDate])
-
-
 
   return (
     <>
