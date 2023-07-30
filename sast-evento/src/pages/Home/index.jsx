@@ -1,7 +1,7 @@
 function Home(){
     return(
         <div>
-            活动管理
+            活动
         </div>
     )
 }

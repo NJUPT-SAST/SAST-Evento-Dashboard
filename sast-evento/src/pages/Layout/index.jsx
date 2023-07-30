@@ -27,6 +27,8 @@ function TheLayout(){
                     renderWrapper={({ itemElement, isSubNav, isInSubNav, props })=>{
                         const routerMap={
                           Home:'/',
+                          Activity:'/activity',
+                          Roles:'/activity-role',
                           Feedback:'/feedback',
                           Timetable:'/timetable',
                           Setting:'/roles',
@@ -44,7 +46,12 @@ function TheLayout(){
                     style={{ maxWidth: 220, height: '100%' }}
                     defaultSelectedKeys={['Home']}
                     items={[
-                        { itemKey: 'Home', text: '活动管理', icon: <IconHome size="large" /> },
+                        { itemKey: 'Home', text: '活动', icon: <IconHome size="large" />, 
+                            items:[
+                                {itemKey:'Activity',text:'活动管理'},
+                                {itemKey:'Roles',text:'活动权限'}
+                            ]
+                        },
                         { itemKey: 'Feedback', text: '活动反馈', icon: <IconHistogram size="large" /> },
                         { itemKey: 'Timetable', text: '活动时间', icon: <IconLive size="large" /> },
                         { itemKey: 'Setting', text: '用户管理', icon: <IconSetting size="large" /> },

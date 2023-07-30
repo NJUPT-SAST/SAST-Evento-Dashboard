@@ -8,6 +8,8 @@ import Picture from './pages/Picture';
 import Roles from './pages/Roles';
 import Feedback from './pages/Feedback';
 import Page404 from './pages/Page404';
+import Activity from './pages/Home/Activity';
+import Activity_roles from './pages/Home/Activity_roles';
 
 function App() {
   return (
@@ -18,7 +20,10 @@ function App() {
           <Route path='/' element={
             <TheLayout/>
           }>
-            <Route index element={<Home/>}></Route>
+            <Route path='/'>
+              <Route path='activity' element={<Activity/>}></Route>
+              <Route path='activity-role' element={<Activity_roles/>}></Route>
+            </Route>
             <Route path='timetable' element={<Timetable/>}></Route>
             <Route path='feedback' element={<Feedback/>}></Route>
             <Route path='roles' element={<Roles/>}></Route>
