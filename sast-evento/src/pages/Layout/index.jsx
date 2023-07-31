@@ -1,6 +1,7 @@
 import React from 'react'
-import { Layout, Nav, Button, Breadcrumb, Skeleton, Avatar } from '@douyinfe/semi-ui';
-import { IconSemiLogo, IconBell, IconHelpCircle, IconBytedanceLogo, IconHome, IconHistogram, IconLive, IconSetting } from '@douyinfe/semi-icons';
+import { Layout, Nav, Avatar } from '@douyinfe/semi-ui';
+import { IconHome, IconHistogram,IconClock,IconUserCircle,IconImage } from '@douyinfe/semi-icons';
+import logo from '../../assets/Logo.png'
 import { Outlet ,Link ,useLocation,useNavigate} from "react-router-dom"
 
 function TheLayout(){
@@ -53,9 +54,9 @@ function TheLayout(){
                             ]
                         },
                         { itemKey: 'Feedback', text: '活动反馈', icon: <IconHistogram size="large" /> },
-                        { itemKey: 'Timetable', text: '活动时间', icon: <IconLive size="large" /> },
-                        { itemKey: 'Setting', text: '用户管理', icon: <IconSetting size="large" /> },
-                        { itemKey: 'Picture', text: '幻灯片', icon: <IconSetting size="large" />}
+                        { itemKey: 'Timetable', text: '活动时间', icon: <IconClock size="large" /> },
+                        { itemKey: 'Setting', text: '用户管理', icon: <IconUserCircle size="large" /> },
+                        { itemKey: 'Picture', text: '幻灯片', icon: <IconImage size="large" />}
                     ]}
                     footer={{
                         collapseButton: true,
