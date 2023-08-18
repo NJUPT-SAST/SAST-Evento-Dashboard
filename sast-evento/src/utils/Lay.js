@@ -58,4 +58,18 @@ export const GetSlide=(value)=>{
   })
 }
 
+export const Addtype=(type,allowValue)=>{
+  return axios({
+    method:'post',
+    url:'',
+    headers:{
+      token:`${token}`
+    },
+    data:{
+      typeName:type,
+      allowConflict:allowValue
+    }
+  })
+}
+
 

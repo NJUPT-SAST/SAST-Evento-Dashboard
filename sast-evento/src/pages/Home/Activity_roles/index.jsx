@@ -1,7 +1,9 @@
+import TreeRoles from "../../../components/TreeRoles"
+
 function Activity_roles(){
     return (
         <>
-            活动权限
+            <TreeRoles/>
         </>
     )
 }

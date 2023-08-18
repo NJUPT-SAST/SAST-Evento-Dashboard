@@ -29,7 +29,7 @@ function AddCarousel(){
 
     return(
         <>
-            <Button className="button"  onClick={showDialog}>添加幻灯片</Button>
+            <Button theme="solid" className="button"  onClick={showDialog}>添加幻灯片</Button>
             <Modal
             title='添加'
             visible={visible}

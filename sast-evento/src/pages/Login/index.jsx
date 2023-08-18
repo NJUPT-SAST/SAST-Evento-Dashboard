@@ -20,8 +20,8 @@ function Login(){
                 >
                  {({ formState, values, formApi }) => (
                 <>
-                 <Form.Input field='username' label='账号' style={{ width: '100%' }}   placeholder='请输入账号'/>
-                 <Form.Input mode='password' field='password' label='密码' style={{ width: '100%' }}  placeholder='请输入密码'/>
+                 <Form.Input field='username' label='账号' style={{ width: '100%' }}   placeholder='请输入账号' autoComplete='off'/>
+                 <Form.Input mode='password' field='password' label='密码' style={{ width: '100%' }}  placeholder='请输入密码' autoComplete='off'/>
                  <Button theme='solid'  htmlType='submit' type="tertiary" style={{width: '100%'}}>Log in</Button>
                  </>
                  )} 
