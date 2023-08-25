@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { List, Skeleton, Button, Avatar, Modal, Select } from '@douyinfe/semi-ui';
+import { List, Skeleton, Button, Avatar, Modal, Select, Input } from '@douyinfe/semi-ui';
 const Option = Select.Option;
 
 export default function Userlist() {
@@ -50,6 +50,8 @@ export default function Userlist() {
     };
     const [auth, setAuth] = useState(false);
     const [authorization, setAuthorization] = useState(false);
+    const [stuId, setStuId] = useState("B22011111");
+
     const onOk = () => {
         const authValue = auth;
         setAuthorization(authValue);
@@ -58,9 +60,14 @@ export default function Userlist() {
     }
 
     const [current, setCurrent] = useState(0);
+    const addStu = () => {
+        //添加用户后台管理
+    }
 
     return (
         <>
+            <Input placeholder={"添加用户后台管理"} showClear={true} style={{ width: '20%' }} onChange={value => setStuId(value)} />
+            <Button onClick={addStu}>添加</Button>
             <List
                 dataSource={list}
                 loading={loading}
@@ -86,21 +93,21 @@ export default function Userlist() {
 
             />
             <Modal title="权限详情" maskClosable={false} visible={visible} onOk={onOk} onCancel={onClose}>
-                    用户：{current}
-                    <br />
-                    权限：
-                    <br />
-                    允许修改他人权限：
-                    <Select defaultValue="false" onChange={value => setAuth(value)} style={{ width: 120 }}>
-                        <Select.Option label="允许" value="true" />
-                        <Select.Option label="拒绝" value="false" />
-                    </Select>
-                    <br />
-                    允许修改活动：
-                    <Select defaultValue="true" style={{ width: 120 }}>
-                        <Select.Option label="允许" value="true" />
-                        <Select.Option label="拒绝" value="false" />
-                    </Select>
+                用户：{current}
+                <br />
+                权限：
+                <br />
+                允许修改他人权限：
+                <Select defaultValue="false" onChange={value => setAuth(value)} style={{ width: 120 }}>
+                    <Select.Option label="允许" value="true" />
+                    <Select.Option label="拒绝" value="false" />
+                </Select>
+                <br />
+                允许修改活动：
+                <Select defaultValue="true" style={{ width: 120 }}>
+                    <Select.Option label="允许" value="true" />
+                    <Select.Option label="拒绝" value="false" />
+                </Select>
             </Modal>
         </>
 
