@@ -46,13 +46,13 @@ export default function LoadMoreList() {
 
 
         // const params = {
-        //     page: { page },
-        //     size: { pageSize }
+        //     page: page,
+        //     size: pageSize
         // }
         // fetch("url" + new URLSearchParams(params), {
         //     method: 'GET',
         //     headers: {
-        //         token: {token}
+        //         token: token
         //     }
         // })
         // .then(response => response.json)
@@ -104,7 +104,7 @@ export default function LoadMoreList() {
         fetch("url" + new URLSearchParams(params), {
             method: 'GET',
             headers: {
-                token: { token }
+                token: token
             }
         })
             .then(response => response.json())

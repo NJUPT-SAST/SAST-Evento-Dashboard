@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { List, Skeleton, Button, Avatar, Modal, Select, Input } from '@douyinfe/semi-ui';
-const Option = Select.Option;
+import { List, Skeleton, Button, Avatar, Modal, Select,Toast } from '@douyinfe/semi-ui';
 
 export default function Userlist() {
     const placeholder = (
@@ -21,64 +20,156 @@ export default function Userlist() {
         </div>
     )
     const [loading, setLoading] = useState(false);
-    const [list, setList] = useState([]);
+    const [list, setList] = useState([{
+        userId: 1,
+        studentId: "B22011111",
+        openId: 12345678
+    },
+    {
+        userId: 12,
+        studentId: "B22011112",
+        openId: 12345679
+    }]);//有后台权限用户列表
 
-    const data = [];
+    const [methodList, setMethodList] = useState({ children: [{ title: "添加后台管理者", value: "addAdmin" }, { title: "删除图片", value: "deletePicture" }] });//所有可用的admin权限
+    const [grantList, setGrantList] = useState([]);//要授予的权限
 
-    for (let i = 0; i < 10; i++) {
-        data.push({
-            id: `${i}`,
-            name: '小学生',
-            loading: false,
-        });
+    useEffect(() => {
+        console.log(grantList);
+    }, [grantList])
+
+    const getMethods = () => {
+        const headers = {
+            token: token
+        }
+
+        fetch("url", {
+            method: 'GET',
+            headers: headers
+        })
+            .then(res => res.json())
+            .then(data => setMethodList(data))
+    }
+
+    const [token, setToken] = useState('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMSIsImV4cCI6MTcyNzIwNjgzOH0.-Ea2xeeN9Un6Y_8zi22PqHPoazcyFjwKOjEvWGrxZF8')
+
+    //获取有后台权限用户列表
+    const getUserList = () => {
+        //setLoading(true);
+        const headers = {
+            token: token
+        }
+
+        fetch("url", {
+            method: 'GET',
+            headers: headers
+        })
+            .then(res => res.json())
+            .then(data => {
+                setList(data)
+            })
+        setLoading(false);
     }
 
     useEffect(() => {
-        fetchData();
+        getUserList();
     }, []);
 
-    const fetchData = async () => {
-        setLoading(true);
-
-        setList(data);
-
-        setLoading(false);
-    };
     const [visible, setVisible] = useState(false);
     const onClose = () => {
         setVisible(false);
     };
-    const [auth, setAuth] = useState(false);
-    const [authorization, setAuthorization] = useState(false);
-    const [stuId, setStuId] = useState("B22011111");
 
     const onOk = () => {
-        const authValue = auth;
-        setAuthorization(authValue);
         setVisible(false);
-        console.log(authValue);
+        editPermissions();
     }
 
-    const [current, setCurrent] = useState(0);
-    const addStu = () => {
+    const [current, setCurrent] = useState("B22011111");//当前用户的studentId
+    const [currentUserId, setCurrentUserId] = useState(0);//当前用户的userId
+    const addAddministrator = () => {
         //添加用户后台管理
+        const body = {
+            methodNames: grantList,
+            studentId: current,
+            userId: currentUserId
+        }
+        fetch("url", {
+            method: 'POST',
+            body: body,
+            headers: {
+                token: token
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    console.log("error");
+                    Toast.error("添加管理员失败")
+                }
+                else {
+                    console.log("ok")
+                    Toast.success("添加管理员成功")
+                }
+            })
+    }
+
+    const editPermissions = () => {
+        //编辑用户后台管理
+        const body = {
+            methodNames: grantList,
+            studentId: current,
+            userId: currentUserId
+        }
+        fetch("url", {
+            method: 'PUT',
+            body: body,
+            headers: {
+                token: token
+            }
+        })
+            .then(res => {
+                if (!res.ok) {
+                    console.log("error")
+                    Toast.error("编辑用户权限失败")
+                }
+                else {
+                    console.log("ok")
+                    Toast.success("编辑用户权限成功")
+                }
+            })
+    }
+
+    const deleteUser = () => {
+        const headers = {
+            token: token
+        }
+
+        fetch("url", {
+            method: 'DELETE',
+            headers: headers,
+            body: {
+                studentId: current,
+                userId: currentUserId,
+            }
+        })
+            .then(console.log("删除成功"))
+
+        setVisible(false);
     }
 
     return (
         <>
-            <Input placeholder={"添加用户后台管理"} showClear={true} style={{ width: '20%' }} onChange={value => setStuId(value)} />
-            <Button onClick={addStu}>添加</Button>
             <List
                 dataSource={list}
                 loading={loading}
                 placeholder={placeholder}
                 renderItem={item => (
-                    <Skeleton placeholder={placeholder} loading={item.loading}>
+                    <Skeleton placeholder={placeholder} loading={loading}>
                         <List.Item
-                            header={<Avatar color='blue' onClick={() => { setVisible(true); setCurrent(item.id) }}>{item.name.slice(-2)}</Avatar>}
+                            header={<Avatar color='blue' onClick={() => { getMethods(); setVisible(true); setCurrent(item.studentId); setCurrentUserId(item.userId) }}>{item.studentId.slice(-2)}</Avatar>}
                             main={
                                 <div>
-                                    <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}>学号：{item.id}</span>
+                                    <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}>学号：{item.studentId}</span>
                                     <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
                                         权限
                                     </p>
@@ -93,21 +184,54 @@ export default function Userlist() {
 
             />
             <Modal title="权限详情" maskClosable={false} visible={visible} onOk={onOk} onCancel={onClose}>
-                用户：{current}
-                <br />
-                权限：
-                <br />
-                允许修改他人权限：
-                <Select defaultValue="false" onChange={value => setAuth(value)} style={{ width: 120 }}>
-                    <Select.Option label="允许" value="true" />
-                    <Select.Option label="拒绝" value="false" />
-                </Select>
-                <br />
-                允许修改活动：
-                <Select defaultValue="true" style={{ width: 120 }}>
-                    <Select.Option label="允许" value="true" />
-                    <Select.Option label="拒绝" value="false" />
-                </Select>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between'
+                }}>
+                    <div style={{ fontSize: 18 }}>用户：{current}</div>
+                    <div>
+                        <Button type='danger' onClick={addAddministrator} style={{marginRight: 16}}>添加</Button>
+                        <Button type='danger' onClick={deleteUser}>删除</Button>
+                    </div>
+                </div>
+                <div style={{ fontSize: 16, marginBottom: 10 }}>权限：</div>
+                {
+                    methodList.children.map(item => {
+                        return (
+                            <div key={item.value} style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                marginBottom: 6,
+                            }}>
+                                <div style={{ fontSize: 14, marginBottom: 10 }}>{item.title}</div>
+                                <div>
+                                    <Select
+                                        defaultValue={false}
+                                        onChange={value => {
+                                            if (value) {
+                                                // 添加
+                                                setGrantList(prev => {
+                                                    return [...prev, item.value];
+                                                });
+                                            } else {
+                                                // 删除
+                                                setGrantList(prev => {
+                                                    const newList = prev.filter(m => m !== item.value);
+                                                    return newList;
+                                                });
+                                            }
+                                        }}
+                                        style={{ width: 120, margin: 0 }}
+                                    >
+                                        <Select.Option value={true}>允许</Select.Option>
+                                        <Select.Option value={false}>拒绝</Select.Option>
+                                    </Select>
+                                    <br />
+                                </div>
+                            </div>
+                        );
+                    })
+                }
             </Modal>
         </>
 
