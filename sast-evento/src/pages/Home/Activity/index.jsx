@@ -2,11 +2,13 @@ import React from 'react';
 import ActivityType from "../../../components/ActivityType"
 import ActivityLocation from "../../../components/ActivityLocation"
 import AddEvent from '../../../components/AddEvent';
-import { Table, Avatar,Space } from '@douyinfe/semi-ui';
+import { Table, Avatar, Space, Tag } from '@douyinfe/semi-ui';
 import CancelEvent from '../../../components/CancelEvent';
 import DeleteEvent from '../../../components/DeleteEvent';
 import EditEvent from '../../../components/EditEvent';
-import { IconMore } from '@douyinfe/semi-icons';
+import Department from '../../../components/Departments/Department';
+import AuthPermission from '../../../components/AuthPermission';
+import Getcode from '../../../components/GetQRcode';
 import './index.scss'
 
 function Activity() {
@@ -50,21 +52,36 @@ function Activity() {
             title: '更新日期',
             dataIndex: 'updateTime',
         },
-        // {
-        //     title: '',
-        //     dataIndex: 'operate',
-        //     render: () => {
-        //         return <IconMore />;
-        //     },
-        // },
+        {
+            title: '状态',
+            dataIndex: 'state',
+            render: (text, record, index) => {
+                return (
+                    <div>
+                        <Tag color={text == '进行中' ? 'green' : 'red'}>{text}</Tag>
+                    </div>
+                )
+            }
+        },
+        {
+            title: '二维码',
+            dataIndex: ' QRcode',
+            render: (_, record) => (
+                <Space>
+                    <Getcode record={record} />
+                </Space>
+            )
+        },
         {
             title: '操作',
             dataIndex: 'operate',
             render: (_, record) => (
                 <Space>
-                    <EditEvent/>
-                    <CancelEvent/>
-                    <DeleteEvent/>
+                    <AuthPermission>
+                        <EditEvent record={record} />
+                    </AuthPermission>
+                    <CancelEvent record={record} />
+                    <DeleteEvent record={record} />
                 </Space>
             )
         }
@@ -78,6 +95,7 @@ function Activity() {
             owner: '姜鹏志',
             updateTime: '2020-02-02 05:13',
             avatarBg: 'grey',
+            state: '进行中'
         },
         {
             key: '2',
@@ -87,6 +105,7 @@ function Activity() {
             owner: '郝宣',
             updateTime: '2020-01-17 05:31',
             avatarBg: 'red',
+            state: '取消喵'
         },
         {
             key: '3',
@@ -96,15 +115,17 @@ function Activity() {
             owner: 'Zoey Edwards',
             updateTime: '2020-01-26 11:01',
             avatarBg: 'light-blue',
+            state: '进行中'
         },
     ];
 
     return (
         <>
             <div className="activity-header">
-                <AddEvent/>
+                <AddEvent />
                 <ActivityType />
                 <ActivityLocation />
+                <Department />
             </div>
             <Table columns={columns} dataSource={data} pagination={false} />
         </>

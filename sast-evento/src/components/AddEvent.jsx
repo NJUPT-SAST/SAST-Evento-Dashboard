@@ -3,50 +3,6 @@ import { SideSheet, Button, Form, Col, Row, DatePicker, Select } from '@douyinfe
 import { TreeSelect } from 'antd';
 
 
-
-
-
-const treeData = [
-    {
-        value: 'parent 1',
-        title: 'parent 1',
-        children: [
-            {
-                value: 'parent 1-0',
-                title: 'parent 1-0',
-                children: [
-                    {
-                        value: 'leaf1',
-                        title: 'leaf1',
-                    },
-                    {
-                        value: 'leaf2',
-                        title: 'leaf2',
-                    },
-                ],
-            },
-            {
-                value: 'parent 1-1',
-                title: 'parent 1-1',
-                children: [
-                    {
-                        value: 'leaf3',
-                        title: (
-                            <b
-                                style={{
-                                    color: '#08c',
-                                }}
-                            >
-                                leaf3
-                            </b>
-                        ),
-                    },
-                ],
-            },
-        ],
-    },
-];
-
 const option1 = ['教学楼', '大活会客厅', '大活中区']
 const option2 = ['活动1', '活动2', '活动3']
 
@@ -60,17 +16,64 @@ const type = option2.map((option, index) => ({
     value: index + 1,
 }));
 
+const responseData=[
+    {
+      "id": 1,
+      "departmentName": "asdasd"
+    },
+    {
+      "id": 1097,
+      "departmentName": "Song Zhiyuan"
+    },
+    {
+      "id": 1098,
+      "departmentName": "Miguel Thomas"
+    },
+    {
+      "id": 1099,
+      "departmentName": "Tam Fu Shing"
+    },
+    {
+      "id": 1100,
+      "departmentName": "Sheila Mendoza"
+    },
+    {
+      "id": 1101,
+      "departmentName": "Yokoyama Seiko"
+    },
+    {
+      "id": 1102,
+      "departmentName": "Hsuan Yu Ling"
+    },
+    {
+      "id": 1103,
+      "departmentName": "Siu Tsz Ching"
+    },
+    {
+      "id": 1104,
+      "departmentName": "Peng Ziyi"
+    },
+    {
+      "id": 1105,
+      "departmentName": "Grace Ward"
+    },
+    {
+      "id": 1106,
+      "departmentName": "Yung Hui Mei"
+    }
+  ]
+
+  const transformedData = responseData.map(({ id, departmentName }) => ({
+    value: id,
+    label: departmentName
+  }));
 
 function AddEvent() {
-
-    const treeData = [{ "label": "test0", "key": "0", "children": [{ "label": "test4", "key": "4", "children": [{ "label": "test1", "key": "1", "value": "1" }, { "label": "test2", "key": "2", "value": "2" }, { "label": "test3", "key": "3", "value": "3" }], "value": "4" }, { "label": "test5", "key": "5", "value": "5" }], "value": "0" }]
-
-    const [value, setValue] = useState();
-
-    const onChange = (newValue) => {
-        console.log(newValue);
-        setValue(newValue);
-    };
+    const searchLabel=(sugInput,option)=>{
+        let label = option.label.toUpperCase();
+        let sug = sugInput.toUpperCase();
+        return label.includes(sug);
+    }
 
     const [visible, setVisible] = useState(false);
     const change = () => {
@@ -149,6 +152,7 @@ function AddEvent() {
                     <Row>
                         <Col span={12}>
                             <Form.Select
+                                filter={searchLabel}
                                 field='location'
                                 label="活动地点"
                                 trigger='blur'
@@ -159,6 +163,7 @@ function AddEvent() {
                         </Col>
                         <Col span={12}>
                             <Form.Select
+                                filter={searchLabel}
                                 field='type'
                                 label="活动类型"
                                 trigger='blur'
@@ -166,6 +171,21 @@ function AddEvent() {
                                 style={{ width: '90%' }}
                                 onChange={getType}
                                 optionList={type} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={12}>
+                            <Form.Select
+                            multiple
+                            maxTagCount={1}
+                            filter={searchLabel}
+                            field='department'
+                            label="活动组别"
+                            trigger='blur'
+                            placeholder='选择活动组别'
+                            style={{ width: '90%' }}
+                            optionList={transformedData}
+                            />
                         </Col>
                     </Row>
                     <Row>

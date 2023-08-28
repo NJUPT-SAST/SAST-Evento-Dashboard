@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Table, Space} from "@douyinfe/semi-ui";
+import { Table, Space } from "@douyinfe/semi-ui";
 import AddCarousel from "../../components/AddCarousel";
 import DeleteCarousel from "../../components/DeleteCarousel";
 import EditCarousel from "../../components/EditCarousel";
+
 
 
 function Picture() {
@@ -46,7 +47,9 @@ function Picture() {
     return (
         //添加按钮和Table组件
         <>
-            <AddCarousel />
+            <div style={{textAlign:'right'}}>
+                <AddCarousel />
+            </div>
             <Table columns={columns} dataSource={data} pagination={false} />
         </>
     )

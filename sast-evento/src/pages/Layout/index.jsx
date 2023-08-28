@@ -12,7 +12,7 @@ function TheLayout(){
                 <div>
                     <Nav mode="horizontal" defaultSelectedKeys={['Home']}>
                         <Nav.Header>
-                            <div>SAST-Evento(picture)</div>
+                            <img src={logo} alt="sast" style={{width:'120px',height:'45px'}}/>
                         </Nav.Header>
                         <Nav.Footer>
                             <Avatar color="orange" size="small">

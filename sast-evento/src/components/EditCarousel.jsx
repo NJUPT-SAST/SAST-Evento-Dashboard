@@ -1,27 +1,34 @@
 import React, { useState } from "react";
-import { SideSheet, Button, Typography, Form, Upload} from "@douyinfe/semi-ui";
+import { SideSheet, Button, Typography, Form, Upload } from "@douyinfe/semi-ui";
 import { v4 as uuidv4 } from 'uuid';
 import { IconUpload } from '@douyinfe/semi-icons';
 
 function EditCarousel(props) {
     const [visible, setVisible] = useState(false)
-    // const [fileList,setFileList]=useState([])
-    const fileList=[
+    
+    const defaultFileList=[
         {
-            uid:uuidv4(),
-            name:'test.png',
-            status:'done',
-            url:props.data.picture
+            uid: uuidv4(),
+            name: 'default.png',
+            status: 'success',
+            preview:true,
+            url: props.data.picture
         }
     ]
+    const onSubmit = () => {
+        setVisible(false)
+    }
+
+    const getFile=file=>{
+        console.log(file);
+    }
     function show() {
         setVisible(true)
     }
 
     const footer = (
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            {/* <Button style={{ marginRight: 8 }}>重置</Button> */}
-            <Button onClick={() => setVisible(false)} theme="solid">确认修改</Button>
+            <Button onClick={onSubmit} theme="solid">确认修改</Button>
         </div>
     )
     return (
@@ -46,9 +53,9 @@ function EditCarousel(props) {
                     <Upload
                         style={{ marginTop: 15 }}
                         limit={1}
-                        fileList={fileList}
-                    // uploadTrigger="custom"
-                    // beforeUpload={getFile}
+                        defaultFileList={defaultFileList}
+                        uploadTrigger="custom"
+                        onChange={getFile}
                     >
                         <Button icon={<IconUpload />} theme="light">
                             修改图片

@@ -1,8 +1,10 @@
-import React, { useState } from "react"
+import React from "react"
 import { Modal, Button, Popover, Input } from '@douyinfe/semi-ui';
-import Icon, { IconPlusStroked } from '@douyinfe/semi-icons';
+import { useState } from "react";
+import { IconEditStroked} from '@douyinfe/semi-icons';
 
-function AddLocation() {
+
+function EditLocation(props) {
     const [visible, setVisible] = useState(false);
     const showDialog = () => {
         setVisible(true);
@@ -14,7 +16,6 @@ function AddLocation() {
     const handleCancel = () => {
         setVisible(false);
     };
-
     const btnStyle = {
         width: 240,
         margin: '4px 50px',
@@ -34,12 +35,12 @@ function AddLocation() {
             <Popover
                 content={
                     <article style={{ padding: 12 }}>
-                        选中添加子节点
+                        选中地点,进行修改
                     </article>
                 }
-                position='topLeft'
+                position='top'
             >
-                <Button style={{ marginRight: 20 }} onClick={showDialog}>新增</Button>
+                <Button style={{ marginRight: 20 }} onClick={showDialog}>更改</Button>
             </Popover>
             <Modal
                 visible={visible}
@@ -48,11 +49,11 @@ function AddLocation() {
                 footer={footer}
                 closeOnEsc={true}
             >
-                <h3 style={{ textAlign: 'center', fontSize: 20, margin: 40 }}>添加子地点</h3>
-                <div style={{display:'flex',justifyContent:'center'}}>
-                    <Input 
-                    style={{ width: '320px' }} prefix={<IconPlusStroked />}
-                    placeholder="添加地点"
+                <h3 style={{ textAlign: 'center', fontSize: 20, margin: 40 }}>修改地点</h3>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <Input
+                        style={{ width: '320px' }}
+                        placeholder="修改地点" prefix={<IconEditStroked />}
                     ></Input>
                 </div>
             </Modal>
@@ -60,4 +61,4 @@ function AddLocation() {
     )
 }
 
-export default AddLocation
+export default EditLocation 

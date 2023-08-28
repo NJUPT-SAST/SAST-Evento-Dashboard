@@ -29,7 +29,7 @@ function AddCarousel(){
 
     return(
         <>
-            <Button theme="solid" className="button"  onClick={showDialog}>添加幻灯片</Button>
+            <Button theme="solid" className="button" onClick={showDialog}>添加幻灯片</Button>
             <Modal
             title='添加'
             visible={visible}
@@ -52,8 +52,8 @@ function AddCarousel(){
                 <Upload
                 style={{padding:10}}
                 limit={limit}
-                // uploadTrigger="custom"
-                beforeUpload={getFile}
+                uploadTrigger="custom"
+                onChange={getFile}
                 >
                     <Button icon={<IconUpload/>} theme="light">
                         上传图片
