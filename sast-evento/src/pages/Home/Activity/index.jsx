@@ -3,9 +3,9 @@ import ActivityType from "../../../components/ActivityType"
 import ActivityLocation from "../../../components/ActivityLocation"
 import AddEvent from '../../../components/AddEvent';
 import { Table, Avatar, Space, Tag } from '@douyinfe/semi-ui';
-import CancelEvent from '../../../components/CancelEvent';
+import PatchEvent from '../../../components/CancelEvent';
 import DeleteEvent from '../../../components/DeleteEvent';
-import EditEvent from '../../../components/EditEvent';
+import PutEvent from '../../../components/EditEvent';
 import Department from '../../../components/Departments/Department';
 import AuthPermission from '../../../components/AuthPermission';
 import Getcode from '../../../components/GetQRcode';
@@ -78,10 +78,14 @@ function Activity() {
             render: (_, record) => (
                 <Space>
                     <AuthPermission>
-                        <EditEvent record={record} />
+                        <PutEvent record={record} />
                     </AuthPermission>
-                    <CancelEvent record={record} />
-                    <DeleteEvent record={record} />
+                    <AuthPermission>
+                        <PatchEvent record={record} />
+                    </AuthPermission>
+                    <AuthPermission>
+                        <DeleteEvent record={record} />
+                    </AuthPermission>
                 </Space>
             )
         }

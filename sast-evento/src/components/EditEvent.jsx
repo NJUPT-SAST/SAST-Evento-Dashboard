@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@douyinfe/semi-ui";
 
 
-function EditEvent(){
+function PutEvent(){
     return(
         <>
             <Button theme="borderless">编辑</Button>
@@ -10,4 +10,4 @@ function EditEvent(){
     )
 }
 
-export default EditEvent;
+export default PutEvent;

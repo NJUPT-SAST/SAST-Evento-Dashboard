@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Layout, Nav, Avatar } from '@douyinfe/semi-ui';
 import { IconHome, IconHistogram,IconClock,IconUserCircle,IconImage } from '@douyinfe/semi-icons';
 import logo from '../../assets/Logo.png'
@@ -6,6 +6,48 @@ import { Outlet ,Link ,useLocation,useNavigate} from "react-router-dom"
 
 function TheLayout(){
     const {Header,Sider}=Layout
+    useEffect(()=>{
+        let arr2=[
+            "addAdmin",
+            "deletePicture",
+            "addEvent",
+            "deleteAdmin",
+            "updateAction",
+            "deleteHomeSlide",
+            "getStates",
+            "deleteType",
+            "getAdmins",
+            "addHomeSlide",
+            "getFeedbackEvents",
+            "updateLocation",
+            "getLocations",
+            "addLocation",
+            "getFeedbacks",
+            "addPicture",
+            "patchHomeSlide",
+            "putAdmin",
+            "deleteLocation",
+            "addType",
+            "getActionList",
+            "eventQrcodeGet",
+            "getTypes",
+            "updateType"
+          ]
+        let arr1=[
+            "addEventSlide",
+            "deleteManager",
+            "deleteEventSlide",
+            "deleteEvent",
+            "patchEvent",
+            "addManager",
+            "patchEventSlide",
+            "putManager",
+            "putEvent"
+          ]
+        let arr=[...arr1,...arr2]
+        let str=JSON.stringify(arr)
+        localStorage.setItem('myArray',str)
+    },[])
     return(
         <Layout style={{ border: '1px solid var(--semi-color-border)',height:'100vh' }}>
             <Header style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>

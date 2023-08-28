@@ -2,7 +2,7 @@ import React from "react";
 import { Popconfirm,Button } from "@douyinfe/semi-ui";
 
 
-function CancelEvent(){
+function PatchEvent(){
     return(
         <>
         <Popconfirm content='是否确认取消' title='确认' style={{width:320}}>
@@ -12,4 +12,4 @@ function CancelEvent(){
     )
 }
 
-export default CancelEvent;
+export default PatchEvent;
