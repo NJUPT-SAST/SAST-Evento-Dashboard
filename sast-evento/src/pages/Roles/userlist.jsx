@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { List, Skeleton, Button, Avatar, Modal, Select,Toast } from '@douyinfe/semi-ui';
+import { List, Skeleton, Button, Avatar, Modal, Select, Toast, Popconfirm } from '@douyinfe/semi-ui';
 
 export default function Userlist() {
     const placeholder = (
@@ -30,6 +30,37 @@ export default function Userlist() {
         studentId: "B22011112",
         openId: 12345679
     }]);//有后台权限用户列表
+
+    const [myMethod, setMyMethod] = useState([
+        "addAdmin",
+        "deletePicture",
+        "addEvent",
+        "deleteAdmin",
+        "updateAction",
+        "deleteHomeSlide",
+        "getStates",
+        "deleteType",
+        "getAdmins",
+        "addHomeSlide",
+        "getFeedbackEvents",
+        "updateLocation",
+        "getLocations",
+        "addLocation",
+        "getFeedbacks",
+        "addPicture",
+        "patchHomeSlide",
+        "putAdmin",
+        "deleteLocation",
+        "addType",
+        "getActionList",
+        "eventQrcodeGet",
+        "getTypes",
+        "updateType"
+    ])
+
+    useEffect(() => {
+        console.log(123)
+    }, [])
 
     const [methodList, setMethodList] = useState({ children: [{ title: "添加后台管理者", value: "addAdmin" }, { title: "删除图片", value: "deletePicture" }] });//所有可用的admin权限
     const [grantList, setGrantList] = useState([]);//要授予的权限
@@ -81,7 +112,6 @@ export default function Userlist() {
     };
 
     const onOk = () => {
-        setVisible(false);
         editPermissions();
     }
 
@@ -135,6 +165,7 @@ export default function Userlist() {
                 else {
                     console.log("ok")
                     Toast.success("编辑用户权限成功")
+                    setVisible(false);
                 }
             })
     }
@@ -152,9 +183,17 @@ export default function Userlist() {
                 userId: currentUserId,
             }
         })
-            .then(console.log("删除成功"))
-
-        setVisible(false);
+            .then(res => {
+                if (!res.ok) {
+                    console.log("error")
+                    Toast.error("删除管理员失败")
+                }
+                else {
+                    console.log("ok")
+                    Toast.success("删除管理员成功")
+                    setVisible(false);
+                }
+            })
     }
 
     return (
@@ -190,8 +229,21 @@ export default function Userlist() {
                 }}>
                     <div style={{ fontSize: 18 }}>用户：{current}</div>
                     <div>
-                        <Button type='danger' onClick={addAddministrator} style={{marginRight: 16}}>添加</Button>
-                        <Button type='danger' onClick={deleteUser}>删除</Button>
+                        {
+                            myMethod.includes("addAdmin") ?
+                                <Popconfirm title='确认添加管理员？' content='危险行为！' onConfirm={addAddministrator} okButtonProps={{ type: 'danger' }}>
+                                    <Button type='danger' style={{ marginRight: 16 }}>添加</Button>
+                                </Popconfirm>
+                                : <></>
+                        }
+                        {
+                            myMethod.includes("deleteAdmin") ?
+                                <Popconfirm title='确认删除管理员？' content='危险行为！' onConfirm={deleteUser} okButtonProps={{ type: 'danger' }} >
+                                    <Button type='danger'>删除</Button>
+                                </Popconfirm>
+                                : <></>
+                        }
+
                     </div>
                 </div>
                 <div style={{ fontSize: 16, marginBottom: 10 }}>权限：</div>
@@ -232,7 +284,7 @@ export default function Userlist() {
                         );
                     })
                 }
-            </Modal>
+            </Modal >
         </>
 
     );
