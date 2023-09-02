@@ -1,26 +1,36 @@
 import React from "react";
-import { Table,Space } from "@douyinfe/semi-ui";
+import { Table,Space,Tag} from "@douyinfe/semi-ui";
 import DeleteType from "./DeleteType";
-import EditType from "./EditType";
+import UpdateType from "./EditType";
+import AddType from "./AddType";
 
 function TypeList(){
     const columns=[
         {
           title:'类型',
-          dataIndex:'type'  
+          dataIndex:'typeName',
+          align: "center",  
         },
         {
-            title:'冲突与否',
-            dataIndex:'Conflict'
+            title:'能否冲突',
+            dataIndex:'allowConflict',
+            align: "center",
+            render: function (allowConflict) {
+                if (allowConflict) { return <Tag color='green'>允许</Tag> }
+                else {
+                  return <Tag color='red'>禁止</Tag>
+                }
+              }
         },
         {
             title: '操作',
             dataIndex: 'operate',
+            align: "center",
             render: (_, record) => (
                 //两个按钮删除 编辑 
                 <Space>
-                    <EditType data={record} />
-                    <DeleteType />
+                    <UpdateType data={record} />
+                    <DeleteType typeId={record.typeId}/>
                 </Space>
             )
         }
@@ -28,19 +38,15 @@ function TypeList(){
 
     const data=[
         {
-            key:'1',
-            type:'软研部前端组',
-            Conflict:'允许',
-        },
-        {
-            key:'2',
-            type:'软研部后端组',
-            Conflict:'允许',
-        },
+            "id": 1,
+            "typeName": "红能国给民打色",
+            "allowConflict": false
+        }
     ]
 
     return(
         <>
+                <AddType/>
            <Table columns={columns} dataSource={data} pagination={false}/> 
         </>
     )

@@ -3,26 +3,9 @@ import { Button, Popconfirm, Popover } from '@douyinfe/semi-ui';
 
 
 function DeleteLocation(props) {
-    // const getValueByLabel = (label, nodes) => {
-    //     for (const node of nodes) {
-    //       if (node.label === label) {
-    //         return node.value;
-    //       }
-    //       if (node.children) {
-    //         const value = getValueByLabel(label, node.children);
-    //         if (value) {
-    //           return value;
-    //         }
-    //       }
-    //     }
-    //     return undefined;
-    //   };
-
-    //   const handleGetValue = () => {
-    //     const label = "101";
-    //     const value = getValueByLabel(label, props.treeData);
-    //     console.log(`Value for title "${label}": ${value}`);
-    //   };
+    const handleDelete=()=>{
+        console.log(props.id);
+    }
     return (
         <>
 
@@ -34,7 +17,7 @@ function DeleteLocation(props) {
                     }
                     position='top'
                 >
-                    <Button>删除</Button>
+                    <Button onClick={handleDelete}>删除</Button>
                 </Popover>
         </>
     )

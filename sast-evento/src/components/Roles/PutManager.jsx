@@ -1,15 +1,15 @@
+import { Button,Modal } from "@douyinfe/semi-ui"
+import { useState } from "react";
 import React, { useEffect } from "react";
 import { TreeSelect } from 'antd';
-import { useState } from "react";
 const { SHOW_CHILD } = TreeSelect;
 
 
-
-//获取选项
-function TreeRoles() {
+function PutManager(props){
+    //对多选树的管理
     const [treeData, setData] = useState([])
 
-    //请求接口
+    //请求接口获取其初始的权限
     useEffect(()=>{
         setData([
             {
@@ -57,13 +57,11 @@ function TreeRoles() {
           ])
     },[])
     // const treeData = data
-
     const [value, setValue] = useState(["putEvent"]);
     const onChange = (newValue) => {
-        console.log(newValue);
+        // console.log(newValue);
         setValue(newValue);
     };
-
     const tProps = {
         maxTagCount:1,
         treeData,
@@ -75,16 +73,57 @@ function TreeRoles() {
         style: {
           width: 300
         },
-      };
+    };
 
 
+
+
+    const [visible, setVisible] = useState(false);
+    const showDialog = () => {
+        setVisible(true);
+    };
+    const handleOk = () => {
+        setVisible(false);
+        console.log(props.eventid,value,props.userId);
+        //调用添加活动地点的接口
+    };
+    const handleCancel = () => {
+        setVisible(false);
+    };
+
+    const btnStyle = {
+        width: 240,
+        margin: '4px 50px',
+    };
+    const footer = (
+        <div style={{ textAlign: 'center' }}>
+            <Button type="primary" theme="solid" onClick={handleOk} style={btnStyle}>
+                确认
+            </Button>
+            <Button type="primary" theme="borderless" onClick={handleCancel} style={btnStyle}>
+                取消
+            </Button>
+        </div>
+    )
     return (
         <>
-            <TreeSelect
+            <Button onClick={showDialog}>编辑</Button>
+            <Modal
+                visible={visible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                footer={footer}
+                closeOnEsc={true}
+            >
+                <h3 style={{ textAlign: 'center', fontSize: 20, margin: 40 }}>编辑权限</h3>
+                <div style={{display:'flex',justifyContent:'center'}}>
+                <TreeSelect
                 {...tProps}
             />
+                </div>
+            </Modal>
         </>
     )
 }
 
-export default TreeRoles
+export default PutManager

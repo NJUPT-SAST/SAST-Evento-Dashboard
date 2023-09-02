@@ -36,10 +36,10 @@ function EditType(props) {
                 >
                     <Row>
                         <Col span={12} >
-                            <Form.Input field="name" label='类型' style={{width:'90%'}} initValue={props.data.type} />
+                            <Form.Input field="name" label='类型' style={{width:'90%'}} initValue={props.data.typeName} />
                         </Col>
                         <Col span={12}>
-                            <Form.Select field="link" label='选择' style={{width:'90%'}} initValue={handleValue(props.data.Conflict)}>
+                            <Form.Select field="link" label='选择' style={{width:'90%'}} initValue={handleValue(props.data.allowConflict)}>
                                 <Form.Select.Option value='true'>允许</Form.Select.Option>
                                 <Form.Select.Option value='false'>禁止</Form.Select.Option>
                             </Form.Select>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Table, Space } from "@douyinfe/semi-ui";
 import DeleteDepartment from "./deleteDepartment";
 import EditDepartment from "./EditDepartment";
+import AddDepartment from "./AddDepartment";
 
 
 function DepartmentList() {
@@ -54,15 +55,18 @@ function DepartmentList() {
   const columns = [
     {
       title: '序号',
-      dataIndex: 'id'
+      dataIndex: 'id',
+      align: "center",
     },
     {
       title: '组别',
-      dataIndex: 'departmentName'
+      dataIndex: 'departmentName',
+      align: "center",
     },
     {
       title: '操作',
       dataIndex: 'operate',
+      align: "center",
       render: (_, record) => (
         <Space>
           <EditDepartment record={record} />
@@ -74,6 +78,7 @@ function DepartmentList() {
 
   return (
     <>
+      <AddDepartment/>
       <Table columns={columns} dataSource={data} pagination={true} />
     </>
   )

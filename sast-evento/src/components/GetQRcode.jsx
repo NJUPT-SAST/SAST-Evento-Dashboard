@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@douyinfe/semi-ui";
 
-function Getcode(props){
+function EventQrcodeGet(props){
     return(
         <Button>
            二维码 
@@ -10,4 +10,4 @@ function Getcode(props){
     )
 }
 
-export default Getcode
+export default EventQrcodeGet

@@ -1,10 +1,10 @@
 import React from "react"
-import { Modal, Button, Popover, Input } from '@douyinfe/semi-ui';
+import { Modal, Button, Input } from '@douyinfe/semi-ui';
 import { useState } from "react";
-import { IconEditStroked} from '@douyinfe/semi-icons';
+import { IconEditStroked } from '@douyinfe/semi-icons';
 
 
-function UpdateLocation(props) {
+function PictureList() {
     const [visible, setVisible] = useState(false);
     const showDialog = () => {
         setVisible(true);
@@ -16,6 +16,7 @@ function UpdateLocation(props) {
     const handleCancel = () => {
         setVisible(false);
     };
+
     const btnStyle = {
         width: 240,
         margin: '4px 50px',
@@ -32,16 +33,8 @@ function UpdateLocation(props) {
     )
     return (
         <>
-            <Popover
-                content={
-                    <article style={{ padding: 12 }}>
-                        选中地点,进行修改
-                    </article>
-                }
-                position='top'
-            >
-                <Button style={{ marginRight: 20 }} onClick={showDialog}>更改</Button>
-            </Popover>
+
+            <Button size="small" theme="solid" onClick={showDialog}>更改</Button>
             <Modal
                 visible={visible}
                 onOk={handleOk}
@@ -49,11 +42,12 @@ function UpdateLocation(props) {
                 footer={footer}
                 closeOnEsc={true}
             >
-                <h3 style={{ textAlign: 'center', fontSize: 20, margin: 40 }}>修改地点</h3>
+                <h3 style={{ textAlign: 'center', fontSize: 20, margin: 40 }}>修改组别</h3>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Input
                         style={{ width: '320px' }}
-                        placeholder="修改地点" prefix={<IconEditStroked />}
+                        placeholder="输入新组别" prefix={<IconEditStroked />}
+                        onChange={getdepartment}
                     ></Input>
                 </div>
             </Modal>
@@ -61,4 +55,4 @@ function UpdateLocation(props) {
     )
 }
 
-export default UpdateLocation
+export default PictureList

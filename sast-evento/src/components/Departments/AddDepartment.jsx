@@ -1,26 +1,21 @@
-import React, { useState } from "react"
-import { Modal, Button, Popover, Input } from '@douyinfe/semi-ui';
+import React,{useState} from "react";
+import { Button,Input,Modal } from "@douyinfe/semi-ui";
 import { IconPlusStroked } from '@douyinfe/semi-icons';
 
-function AddLocation(props) {
+function AddDepartment(){
     const [visible, setVisible] = useState(false);
-    const [location,setLocation] = useState()
+    let departmentName
     const showDialog = () => {
         setVisible(true);
     };
     const handleOk = () => {
         setVisible(false);
-        console.log(props.id,location);
+        console.log(departmentName);
         //调用添加活动地点的接口
     };
     const handleCancel = () => {
         setVisible(false);
     };
-    const getlocation=(value)=>{
-        setLocation(value)
-    }
-
-    //弹框的样式
     const btnStyle = {
         width: 240,
         margin: '4px 50px',
@@ -35,31 +30,26 @@ function AddLocation(props) {
             </Button>
         </div>
     )
-    return (
+
+    const getdepartment=(value)=>{
+        departmentName=value
+    }
+    return(
         <>
-            <Popover
-                content={
-                    <article style={{ padding: 12 }}>
-                        选中添加子节点
-                    </article>
-                }
-                position='topLeft'
-            >
-                <Button style={{ marginRight: 20 }} onClick={showDialog}>新增</Button>
-            </Popover>
-            <Modal
+        <Button onClick={showDialog}>添加组别</Button>
+        <Modal
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={footer}
                 closeOnEsc={true}
             >
-                <h3 style={{ textAlign: 'center', fontSize: 20, margin: 40 }}>添加子地点</h3>
+                <h3 style={{ textAlign: 'center', fontSize: 20, margin: 40 }}>请输入组别名称</h3>
                 <div style={{display:'flex',justifyContent:'center'}}>
                     <Input 
                     style={{ width: '320px' }} prefix={<IconPlusStroked />}
-                    placeholder="添加地点"
-                    onChange={getlocation}
+                    placeholder="添加小组"
+                    onChange={getdepartment}
                     ></Input>
                 </div>
             </Modal>
@@ -67,4 +57,4 @@ function AddLocation(props) {
     )
 }
 
-export default AddLocation
+export default AddDepartment

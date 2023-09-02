@@ -3,33 +3,41 @@ import { Modal,Button,Upload,Input,Form,Col,Row} from "@douyinfe/semi-ui";
 import { IconUpload } from '@douyinfe/semi-icons';
 import '../component-scss/AddCarousel.scss';
 
-function AddCarousel(){
+function AddHomeSlide(){
     const [visible,setVisible]=useState(false);
+    const data={
+        url:'',
+        title:'',
+        link:''
+    }
     let limit=1
     function showDialog(){
         setVisible(true)
     }
     function handleOk(){
         setVisible(false)
+        console.log(data);
         //这里调用添加接口
     }
     function handleCancel(){
         setVisible(false)
     }
+
+
     function getTitle(value){
-        console.log(value);
+        data.title=value
     }
     function getLink(value){
-        console.log(value);
+        data.link=value
     }
     function getFile(file){
-        console.log(file);
+        data.url=file
         return false
     }
 
     return(
         <>
-            <Button theme="solid" className="button" onClick={showDialog}>添加幻灯片</Button>
+            <Button theme="solid" className="button" onClick={showDialog}>添加首页图</Button>
             <Modal
             title='添加'
             visible={visible}
@@ -64,4 +72,4 @@ function AddCarousel(){
     )
 }
 
-export default AddCarousel;
+export default AddHomeSlide;

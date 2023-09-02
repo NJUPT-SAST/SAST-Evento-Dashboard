@@ -1,45 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Space } from "@douyinfe/semi-ui";
-import AddCarousel from "../../components/AddCarousel";
-import DeleteCarousel from "../../components/DeleteCarousel";
-import EditCarousel from "../../components/EditCarousel";
+import AddHomeSlide from "../../components/AddCarousel";
+import DeleteHomeSlide from "../../components/DeleteCarousel";
+import PatchHomeSlide from "../../components/EditCarousel";
 
 
 
-function Picture() {
-    const Data = [
-        {
-            key: '1',
-            name: 'test',
-            link: '/packge/new/index',
-            picture: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png'
-        }
-    ]
-    const [data, setData] = useState(Data)
+
+function Picture() {  
+    const [data, setData] = useState([])
+    useEffect(()=>{
+        setData(
+            [
+                {
+                    slideId: '1',
+                    title: 'test',
+                    link: '/packge/new/index',
+                    url: 'https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png'
+                },
+                {
+                    slideId: '2',
+                    title: 'test',
+                    link: '/packge/new/index',
+                    url: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/dy.png'
+                },
+            ]
+        )
+    },[])
     const columns = [
         {
             title: '标题',
-            dataIndex: 'name'
+            dataIndex: 'title',
+            align: "center"
         },
         {
             title: '链接',
-            dataIndex: 'link'
+            dataIndex: 'link',
+            align: "center"
         },
         {
             title: '图片',
-            dataIndex: 'picture',
-            render: picture => {
-                return <img src={picture || ' '} width={30} height={30} alt=''></img>
+            dataIndex: 'url',
+            align: "center",
+            render: url => {
+                return <img src={url || ' '} width={30} height={30} alt=''></img>
             }
         },
         {
             title: '操作',
             dataIndex: 'operate',
+            align: "center",
             render: (_, record) => (
                 //两个按钮删除 编辑 
                 <Space>
-                    <EditCarousel data={record} />
-                    <DeleteCarousel />
+                    <PatchHomeSlide data={record} />
+                    <DeleteHomeSlide slideId={record.slideId}/>
                 </Space>
             )
         }
@@ -48,9 +63,9 @@ function Picture() {
         //添加按钮和Table组件
         <>
             <div style={{textAlign:'right'}}>
-                <AddCarousel />
+                <AddHomeSlide/>
             </div>
-            <Table columns={columns} dataSource={data} pagination={false} />
+            <Table columns={columns} dataSource={data} pagination={true} />
         </>
     )
 }

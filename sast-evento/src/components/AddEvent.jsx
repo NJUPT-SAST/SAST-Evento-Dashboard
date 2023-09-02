@@ -3,19 +3,15 @@ import { SideSheet, Button, Form, Col, Row, DatePicker, Select } from '@douyinfe
 import { TreeSelect } from 'antd';
 
 
-const option1 = ['教学楼', '大活会客厅', '大活中区']
+//自定义的活动类型
 const option2 = ['活动1', '活动2', '活动3']
-
-const location = option1.map((option, index) => ({
-    label: option,
-    value: index + 1,
-}));
-
 const type = option2.map((option, index) => ({
     label: option,
     value: index + 1,
 }));
 
+
+//对活动组别的数据处理
 const responseData=[
     {
       "id": 1,
@@ -62,13 +58,17 @@ const responseData=[
       "departmentName": "Yung Hui Mei"
     }
   ]
-
   const transformedData = responseData.map(({ id, departmentName }) => ({
     value: id,
     label: departmentName
   }));
 
+
+
 function AddEvent() {
+    var postdata
+
+    //用于Select组件搜索
     const searchLabel=(sugInput,option)=>{
         let label = option.label.toUpperCase();
         let sug = sugInput.toUpperCase();
@@ -76,25 +76,86 @@ function AddEvent() {
     }
 
     const [visible, setVisible] = useState(false);
+    //活动地点(树结构)
+    const [treeData, setTreeData] = useState(
+        [
+          {
+              "children": [
+                  {
+                      "children": [
+                          {
+                              "children": [
+                                  {
+                                      "label": "Curtis Silva",
+                                      "value": "6",
+                                      "key": "6"
+                                  },
+                                  {
+                                      "label": "Alexander Vargas",
+                                      "value": "7",
+                                      "key": "7"
+                                  },
+                                  {
+                                      "label": "Sheh Sum Wing",
+                                      "value": "8",
+                                      "key": "8"
+                                  },
+                                  {
+                                      "label": "Kudo Ryota",
+                                      "value": "9",
+                                      "key": "9"
+                                  },
+                                  {
+                                      "label": "Kojima Eita",
+                                      "value": "10",
+                                      "key": "10"
+                                  }
+                              ],
+                              "label": "Jamie King",
+                              "value": "2",
+                              "key": "2"
+                          },
+                          {
+                              "label": "Ng Wing Sze",
+                              "value": "3",
+                              "key": "3"
+                          },
+                          {
+                              "label": "Wong Chieh Lun",
+                              "value": "4",
+                              "key": "4"
+                          },
+                          {
+                              "label": "Kudo Akina",
+                              "value": "5",
+                              "key": "5"
+                          }
+                      ],
+                      "label": "Norma Stephens",
+                      "value": "1",
+                      "key": "1"
+                  }
+              ],
+              "label": "root",
+              "value": "0",
+              "key": "0"
+          }
+      ]
+      )
+
     const change = () => {
         setVisible(!visible);
     };
 
-    const getLocation = (value) => {
-        console.log(value);
-    }
-
-    const getType = (value) => {
-        console.log(value);
-    }
-
-    const getDescription = (value) => {
-        console.log(value);
+    const handleSubmit=()=>{
+        console.log(postdata);
+        //调用发起活动的接口
+        setVisible(false)
     }
 
     const footer = (
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button onClick={() => setVisible(false)} theme="solid">确认发起</Button>
+            <Button onClick={handleSubmit} theme="solid">确认发起</Button>
         </div>
     )
 
@@ -104,11 +165,12 @@ function AddEvent() {
             <SideSheet
                 title="发起新的活动" visible={visible} onCancel={change}
                 footer={footer}
+                width='40vw'
                 headerStyle={{ borderBottom: '1px solid var(--semi-color-border)' }}
                 bodyStyle={{ borderBottom: '1px solid var(--semi-color-border)' }}
             >
-                <Form
-                >
+                <Form 
+                onValueChange={values=>{postdata=values}}>
                     <Row>
                         <Col span={12}>
                             <Form.Input
@@ -132,60 +194,60 @@ function AddEvent() {
                     <Row>
                         <Col span={12}>
                             <Form.DatePicker
-                                type="dateRange"
-                                field="活动时间"
+                                type="dateTimeRange"
+                                field="EventTime"
+                                label="活动时间"
                                 trigger="blur"
-                                // placeholder="选择日期"
+                                insetInput
                                 style={{ width: '90%' }}
                             />
                         </Col>
                         <Col span={12}>
                             <Form.DatePicker
-                                type="dateRange"
-                                field="报名时间"
+                                type="dateTimeRange"
+                                field="RegistrationTime"
+                                label="报名时间"
                                 trigger="blur"
-                                // placeholder="选择日期"
+                                insetInput
                                 style={{ width: '90%' }}
                             />
                         </Col>
                     </Row>
                     <Row>
-                        <Col span={12}>
-                            <Form.Select
-                                filter={searchLabel}
-                                field='location'
-                                label="活动地点"
-                                trigger='blur'
-                                placeholder="选择活动地点"
-                                style={{ width: '90%' }}
-                                onChange={getLocation}
-                                optionList={location} />
-                        </Col>
-                        <Col span={12}>
-                            <Form.Select
-                                filter={searchLabel}
-                                field='type'
-                                label="活动类型"
-                                trigger='blur'
-                                placeholder="选择活动类型"
-                                style={{ width: '90%' }}
-                                onChange={getType}
-                                optionList={type} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={12}>
+                    <Col span={12}>
                             <Form.Select
                             multiple
                             maxTagCount={1}
                             filter={searchLabel}
-                            field='department'
+                            field='departments'
                             label="活动组别"
                             trigger='blur'
                             placeholder='选择活动组别'
                             style={{ width: '90%' }}
                             optionList={transformedData}
                             />
+                        </Col>
+                        <Col span={12}>
+                            <Form.Select
+                                filter={searchLabel}
+                                field='typeId'
+                                label="活动类型"
+                                trigger='blur'
+                                placeholder="选择活动类型"
+                                style={{ width: '90%' }}
+                                optionList={type} />
+                        </Col>
+                    </Row>
+                    <Row>
+                    <Col span={12}>
+                            <Form.TreeSelect
+                                filterTreeNode
+                                field='locationId'
+                                label="活动地点"
+                                trigger='blur'
+                                placeholder="选择活动地点"
+                                style={{ width: '90%' }}
+                                treeData={treeData} />
                         </Col>
                     </Row>
                     <Row>
@@ -194,7 +256,6 @@ function AddEvent() {
                             label='活动介绍'
                             trigger='blur'
                             placeholder="请简单地描述一下活动喵"
-                            onChange={getDescription}
                         />
                     </Row>
                 </Form>

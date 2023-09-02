@@ -89,11 +89,11 @@ function TheLayout(){
                     style={{ maxWidth: 220, height: '100%' }}
                     defaultSelectedKeys={['Home']}
                     items={[
-                        { itemKey: 'Home', text: '活动', icon: <IconHome size="large" />, 
-                            items:[
-                                {itemKey:'Activity',text:'活动管理'},
-                                {itemKey:'Roles',text:'活动权限'}
-                            ]
+                        { itemKey: 'Activity', text: '活动', icon: <IconHome size="large" />, 
+                            // items:[
+                            //     {itemKey:'Activity',text:'活动管理'},
+                            //     {itemKey:'Roles',text:'活动权限'}
+                            // ]
                         },
                         { itemKey: 'Feedback', text: '活动反馈', icon: <IconHistogram size="large" /> },
                         { itemKey: 'Timetable', text: '活动时间', icon: <IconClock size="large" /> },

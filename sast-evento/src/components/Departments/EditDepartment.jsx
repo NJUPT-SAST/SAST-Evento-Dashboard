@@ -11,11 +11,17 @@ function EditDepartment(props) {
     };
     const handleOk = () => {
         setVisible(false);
+        console.log(props.record.id,props.record.departmentName)
         //调用添加活动地点的接口
     };
     const handleCancel = () => {
         setVisible(false);
     };
+
+    const getdepartment=(value)=>{
+        props.record.departmentName=value
+    }
+
     const btnStyle = {
         width: 240,
         margin: '4px 50px',
@@ -46,6 +52,7 @@ function EditDepartment(props) {
                     <Input
                         style={{ width: '320px' }}
                         placeholder="输入新组别" prefix={<IconEditStroked />}
+                        onChange={getdepartment}
                     ></Input>
                 </div>
             </Modal>

@@ -78,13 +78,13 @@ function Activity() {
             render: (_, record) => (
                 <Space>
                     <AuthPermission>
-                        <PutEvent record={record} />
+                        <PutEvent record={record} id={record.eventid}/>
                     </AuthPermission>
                     <AuthPermission>
-                        <PatchEvent record={record} />
+                        <PatchEvent record={record} id={record.eventid}/>
                     </AuthPermission>
                     <AuthPermission>
-                        <DeleteEvent record={record} />
+                        <DeleteEvent record={record} id={record.eventid}/>
                     </AuthPermission>
                 </Space>
             )
@@ -92,7 +92,7 @@ function Activity() {
     ];
     const data = [
         {
-            key: '1',
+            eventid: '1',
             name: 'Semi Design 设计稿.fig',
             nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png',
             size: '2M',
@@ -102,7 +102,7 @@ function Activity() {
             state: '进行中'
         },
         {
-            key: '2',
+            eventid: '2',
             name: 'Semi Design 分享演示文稿',
             nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
             size: '2M',
@@ -112,7 +112,97 @@ function Activity() {
             state: '取消喵'
         },
         {
-            key: '3',
+            eventid: '3',
+            name: '设计文档',
+            nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
+            size: '34KB',
+            owner: 'Zoey Edwards',
+            updateTime: '2020-01-26 11:01',
+            avatarBg: 'light-blue',
+            state: '进行中'
+        },
+        {
+            eventid: '4',
+            name: '设计文档',
+            nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
+            size: '34KB',
+            owner: 'Zoey Edwards',
+            updateTime: '2020-01-26 11:01',
+            avatarBg: 'light-blue',
+            state: '进行中'
+        },
+        {
+            eventid: '5',
+            name: '设计文档',
+            nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
+            size: '34KB',
+            owner: 'Zoey Edwards',
+            updateTime: '2020-01-26 11:01',
+            avatarBg: 'light-blue',
+            state: '进行中'
+        },
+        {
+            eventid: '6',
+            name: '设计文档',
+            nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
+            size: '34KB',
+            owner: 'Zoey Edwards',
+            updateTime: '2020-01-26 11:01',
+            avatarBg: 'light-blue',
+            state: '进行中'
+        },
+        {
+            eventid: '7',
+            name: '设计文档',
+            nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
+            size: '34KB',
+            owner: 'Zoey Edwards',
+            updateTime: '2020-01-26 11:01',
+            avatarBg: 'light-blue',
+            state: '进行中'
+        },
+        {
+            eventid: '8',
+            name: '设计文档',
+            nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
+            size: '34KB',
+            owner: 'Zoey Edwards',
+            updateTime: '2020-01-26 11:01',
+            avatarBg: 'light-blue',
+            state: '进行中'
+        },
+        {
+            eventid: '9',
+            name: '设计文档',
+            nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
+            size: '34KB',
+            owner: 'Zoey Edwards',
+            updateTime: '2020-01-26 11:01',
+            avatarBg: 'light-blue',
+            state: '进行中'
+        },
+        {
+            eventid: '10',
+            name: '设计文档',
+            nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
+            size: '34KB',
+            owner: 'Zoey Edwards',
+            updateTime: '2020-01-26 11:01',
+            avatarBg: 'light-blue',
+            state: '进行中'
+        },
+        {
+            eventid: '11',
+            name: '设计文档',
+            nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
+            size: '34KB',
+            owner: 'Zoey Edwards',
+            updateTime: '2020-01-26 11:01',
+            avatarBg: 'light-blue',
+            state: '进行中'
+        },
+        {
+            eventid: '12',
             name: '设计文档',
             nameIconSrc: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/docs-icon.png',
             size: '34KB',
@@ -131,7 +221,7 @@ function Activity() {
                 <ActivityLocation />
                 <Department />
             </div>
-            <Table columns={columns} dataSource={data} pagination={false} />
+            <Table columns={columns} dataSource={data} pagination={true} />
         </>
     )
 }

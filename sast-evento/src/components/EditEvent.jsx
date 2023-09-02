@@ -5,7 +5,7 @@ import { Button } from "@douyinfe/semi-ui";
 function PutEvent(){
     return(
         <>
-            <Button theme="borderless">编辑</Button>
+            <Button>编辑</Button>
         </>
     )
 }

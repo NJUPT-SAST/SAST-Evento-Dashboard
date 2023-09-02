@@ -2,7 +2,7 @@ import React from "react";
 import { Popconfirm,Button } from "@douyinfe/semi-ui";
 
 
-function DeleteType(){
+function UpdateType(){
     return(
         <>
         <Popconfirm content='是否确认删除' title='确认' style={{width:320}}>
@@ -12,4 +12,4 @@ function DeleteType(){
     )
 }
 
-export default DeleteType;
+export default UpdateType;

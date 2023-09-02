@@ -12,7 +12,7 @@ function Department(){
             <Button theme='solid' className='button' onClick={change}>活动组别</Button>
             <SideSheet 
             title="活动组别管理" visible={visible} onCancel={change}
-            width='500px'
+            width='30vw'
             >
                 <DepartmentList/>
             </SideSheet>
