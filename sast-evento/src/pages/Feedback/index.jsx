@@ -34,7 +34,7 @@ function Feedback() {
             {
                 myMethod.includes("getFeedbackEvents") ?
                     <LoadMoreList />
-                    : <></>
+                    : <><div style={{userSelect:'none'}}>对不起，您的权限不足</div></>
             }
         </div>
     )

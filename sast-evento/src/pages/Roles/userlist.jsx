@@ -49,7 +49,7 @@ export default function Userlist() {
         "getFeedbacks",
         "addPicture",
         "patchHomeSlide",
-        "putAdmin",
+        //"putAdmin",
         "deleteLocation",
         "addType",
         "getActionList",
@@ -104,6 +104,7 @@ export default function Userlist() {
 
     useEffect(() => {
         getUserList();
+        console.log(myMethod)
     }, []);
 
     const [visible, setVisible] = useState(false);
@@ -195,6 +196,8 @@ export default function Userlist() {
                 }
             })
     }
+    var pAdm = !myMethod.includes("putAdmin")
+    console.log(pAdm)
 
     return (
         <>
@@ -220,9 +223,9 @@ export default function Userlist() {
                     </Skeleton>
                 )
                 }
-
+                style={{userSelect:'none'}}
             />
-            <Modal title="权限详情" maskClosable={false} visible={visible} onOk={onOk} onCancel={onClose}>
+            <Modal title="权限详情" maskClosable={false} visible={visible} onOk={onOk} onCancel={onClose} okButtonProps={{ disabled: pAdm }}>
                 <div style={{
                     display: 'flex',
                     justifyContent: 'space-between'

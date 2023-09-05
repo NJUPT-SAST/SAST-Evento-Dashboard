@@ -140,7 +140,7 @@ export default function LoadMoreList() {
                     </Skeleton>
                 )
                 }
-
+                style={{ userSelect: 'none' }}
             />
             <Pagination size='small' style={{ width: '100%', flexBasis: '100%', justifyContent: 'center' }}
                 pageSize={pageSize} total={data.length} currentPage={page} onChange={cPage => setPage(cPage)} />
