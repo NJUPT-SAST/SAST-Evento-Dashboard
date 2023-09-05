@@ -153,7 +153,7 @@ export default function LoadMoreList() {
                     </Skeleton>
                 )
                 }
-
+                style={{ userSelect: 'none' }}
             />
 <<<<<<< HEAD:src/pages/Feedback/activity_list.jsx
             <Modal title="活动反馈详情" fullScreen maskClosable={false} visible={visible} onOk={onClose} onCancel={onClose}>
