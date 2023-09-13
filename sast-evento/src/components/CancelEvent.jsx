@@ -1,13 +1,33 @@
-import React from "react";
-import { Popconfirm,Button } from "@douyinfe/semi-ui";
+import React,{useState} from "react";
+import { Modal, Button } from "@douyinfe/semi-ui";
 
 
-function PatchEvent(){
-    return(
+function PatchEvent() {
+    const [visible, setVisible] = useState(false)
+    const showMoadl = () => {
+        setVisible(true)
+    }
+
+    const handleOk = () => {
+        //调用取消活动接口
+        setVisible(false);
+    }
+
+    const handleCancel = () => {
+        setVisible(false);
+    }
+    return (
         <>
-        <Popconfirm content='是否确认取消' title='确认' style={{width:320}}>
-            <Button theme="borderless" type='warning'>取消</Button>
-        </Popconfirm>
+            <Button onClick={showMoadl} theme="borderless" type='warning'>取消活动</Button>
+            <Modal
+                title="取消活动" 
+                maskClosable={false}
+                visible={visible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                <span>你确定要取消活动嘛？</span>
+            </Modal> 
         </>
     )
 }

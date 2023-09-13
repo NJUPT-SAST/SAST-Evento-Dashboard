@@ -8,6 +8,7 @@ import Picture from './pages/Picture';
 import Roles from './pages/Roles';
 import Feedback from './pages/Feedback';
 import Page404 from './pages/Page404';
+import ImageList from './pages/Image';
 // import Activity from './pages/Home/Activity';
 // import Activity_roles from './pages/Home/Activity_roles';
 
@@ -28,6 +29,7 @@ function App() {
             <Route path='feedback' element={<Feedback/>}></Route>
             <Route path='roles' element={<Roles/>}></Route>
             <Route path='picture' element={<Picture/>}></Route>
+            <Route path='image' element={<ImageList/>}></Route>
           </Route>
           <Route path='/login' element={<Login />}></Route>
           <Route path='*' element={<Page404 />}></Route>

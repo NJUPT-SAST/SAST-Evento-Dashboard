@@ -44,7 +44,7 @@ function GetManager(props){
     ]
     return(
         <>
-            <Button onClick={change}>权限</Button>
+            <Button theme="borderless" onClick={change}>活动权限</Button>
             <SideSheet title={props.title} visible={visible} onCancel={change} width='40wv'>
                 <AddManager eventid={eventid}/>
                 <Table columns={columns} dataSource={data} pagination={true}/>

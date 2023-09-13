@@ -1,13 +1,34 @@
-import React from "react";
-import { Popconfirm,Button } from "@douyinfe/semi-ui";
+import React,{useState} from "react";
+import { Modal,Button } from "@douyinfe/semi-ui";
 
 
 function DeleteEvent(){
+    const [visible,setVisible]=useState(false)
+    const showMoadl=()=>{
+        setVisible(true)
+    }
+
+    const handleOk=()=>{
+        //调用删除活动接口
+        setVisible(false);
+    }
+
+    const handleCancel=()=>{
+        setVisible(false);
+    }
     return(
         <>
-        <Popconfirm content='是否确认删除' title='确认' style={{width:320}}>
-            <Button theme="borderless" type="danger">删除</Button>
-        </Popconfirm>
+
+            <Button onClick={showMoadl} theme="borderless" type="danger">删除活动</Button>
+            <Modal
+                title="删除活动" 
+                maskClosable={false}
+                visible={visible}
+                onOk={handleOk}
+                onCancel={handleCancel}
+            >
+                <span>你确定要删除活动嘛？</span>
+            </Modal> 
         </>
     )
 }

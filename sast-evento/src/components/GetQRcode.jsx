@@ -4,8 +4,8 @@ import { Button } from "@douyinfe/semi-ui";
 
 function EventQrcodeGet(props){
     return(
-        <Button>
-           二维码 
+        <Button theme="borderless">
+           活动二维码 
         </Button>
     )
 }
