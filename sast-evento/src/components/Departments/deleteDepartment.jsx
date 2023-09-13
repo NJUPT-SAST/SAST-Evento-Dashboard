@@ -1,10 +1,15 @@
 import React from "react";
-import { Popconfirm,Button } from "@douyinfe/semi-ui";
+import { Popconfirm,Button,Toast} from "@douyinfe/semi-ui";
+import { getDepartments,deleteDepartment } from "../../utils/departments";
 
 function DeleteDepartment(props){
     const handleDelete=()=>{
-        console.log(props.record.id);
-        //删除小组
+        deleteDepartment(props.record.id)
+        .then(response=>{
+            Toast.success('删除成功')
+            getDepartments()
+            .then(res=>{props.setData(res.data.data)})
+        }).catch(err=>Toast.error('删除失败'))
     }
     return(
         <>

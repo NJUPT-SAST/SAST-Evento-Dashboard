@@ -90,7 +90,7 @@ function ActivityLocation() {
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <AddLocation id={id}/>
                     <UpdateLocation id={id}/>
-                    <DeleteLocation id={id} />
+                    <DeleteLocation id={id}/>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center',marginTop:'20px' }}>
                     <TreeSelect

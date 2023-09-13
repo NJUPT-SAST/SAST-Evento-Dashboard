@@ -75,9 +75,6 @@ function TheLayout() {
                                     User
                                 </Avatar>
                             </Dropdown>
-                            {/* <Avatar onClick={()=>console.log("点击头像")}  color="orange" size="small">
-                                User
-                            </Avatar> */}
                         </Nav.Footer>
                     </Nav>
                 </div>

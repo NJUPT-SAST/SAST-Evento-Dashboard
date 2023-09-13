@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import { Table,Space,Tag} from "@douyinfe/semi-ui";
 import DeleteType from "./DeleteType";
 import UpdateType from "./EditType";
 import AddType from "./AddType";
+import { getTypes } from "../utils/types";
 
 function TypeList(){
+    const [data,setData]=useState([])
     const columns=[
         {
           title:'类型',
@@ -29,24 +31,24 @@ function TypeList(){
             render: (_, record) => (
                 //两个按钮删除 编辑 
                 <Space>
-                    <UpdateType data={record} />
-                    <DeleteType typeId={record.typeId}/>
+                    <UpdateType data={record} setData={setData}/>
+                    <DeleteType typeId={record.id} setData={setData}/>
                 </Space>
             )
         }
     ]
 
-    const data=[
-        {
-            "id": 1,
-            "typeName": "红能国给民打色",
-            "allowConflict": false
-        }
-    ]
+
+    useEffect(()=>{
+        getTypes()
+        .then((res)=>{
+            setData(res.data.data)
+        })
+    },[])
 
     return(
         <>
-                <AddType/>
+            <AddType setData={setData}/>
            <Table columns={columns} dataSource={data} pagination={false}/> 
         </>
     )

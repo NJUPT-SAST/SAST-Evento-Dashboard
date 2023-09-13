@@ -2,6 +2,7 @@ import React from "react"
 import { Modal, Button, Input } from '@douyinfe/semi-ui';
 import { useState } from "react";
 import { IconEditStroked } from '@douyinfe/semi-icons';
+import { putDepartment,getDepartments } from "../../utils/departments";
 
 
 function EditDepartment(props) {
@@ -11,8 +12,12 @@ function EditDepartment(props) {
     };
     const handleOk = () => {
         setVisible(false);
-        console.log(props.record.id,props.record.departmentName)
-        //调用添加活动地点的接口
+        
+        putDepartment(props.record.id,props.record.departmentName)
+        .then(response=>{
+            getDepartments()
+            .then(res=>{props.setData(res.data.data)})
+        })
     };
     const handleCancel = () => {
         setVisible(false);
@@ -39,7 +44,7 @@ function EditDepartment(props) {
     return (
         <>
 
-            <Button size="small" theme="solid" onClick={showDialog}>更改</Button>
+            <Button size="small" theme="solid" onClick={showDialog}>修改</Button>
             <Modal
                 visible={visible}
                 onOk={handleOk}

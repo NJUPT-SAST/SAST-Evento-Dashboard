@@ -1,8 +1,9 @@
 import React,{useState} from "react";
 import { Button,Input,Modal } from "@douyinfe/semi-ui";
 import { IconPlusStroked } from '@douyinfe/semi-icons';
+import { addDepartment,getDepartments } from "../../utils/departments";
 
-function AddDepartment(){
+function AddDepartment(props){
     const [visible, setVisible] = useState(false);
     let departmentName
     const showDialog = () => {
@@ -10,8 +11,13 @@ function AddDepartment(){
     };
     const handleOk = () => {
         setVisible(false);
-        console.log(departmentName);
+        
         //调用添加活动地点的接口
+        addDepartment(departmentName)
+        .then(response=>{
+            getDepartments()
+            .then(res=>{props.setData(res.data.data)})
+        })
     };
     const handleCancel = () => {
         setVisible(false);

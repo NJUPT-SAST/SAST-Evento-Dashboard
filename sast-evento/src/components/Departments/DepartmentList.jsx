@@ -1,57 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Space } from "@douyinfe/semi-ui";
 import DeleteDepartment from "./deleteDepartment";
 import EditDepartment from "./EditDepartment";
 import AddDepartment from "./AddDepartment";
+import { getDepartments } from "../../utils/departments";
 
 
 function DepartmentList() {
-  const [data, setData] = useState([
-    {
-      "id": 1,
-      "departmentName": "asdasd"
-    },
-    {
-      "id": 1097,
-      "departmentName": "Song Zhiyuan"
-    },
-    {
-      "id": 1098,
-      "departmentName": "Miguel Thomas"
-    },
-    {
-      "id": 1099,
-      "departmentName": "Tam Fu Shing"
-    },
-    {
-      "id": 1100,
-      "departmentName": "Sheila Mendoza"
-    },
-    {
-      "id": 1101,
-      "departmentName": "Yokoyama Seiko"
-    },
-    {
-      "id": 1102,
-      "departmentName": "Hsuan Yu Ling"
-    },
-    {
-      "id": 1103,
-      "departmentName": "Siu Tsz Ching"
-    },
-    {
-      "id": 1104,
-      "departmentName": "Peng Ziyi"
-    },
-    {
-      "id": 1105,
-      "departmentName": "Grace Ward"
-    },
-    {
-      "id": 1106,
-      "departmentName": "Yung Hui Mei"
-    }
-  ])
+  const [data, setData] = useState([])
   const columns = [
     {
       title: '序号',
@@ -69,16 +25,23 @@ function DepartmentList() {
       align: "center",
       render: (_, record) => (
         <Space>
-          <EditDepartment record={record} />
-          <DeleteDepartment record={record} />
+          <EditDepartment record={record} setData={setData}/>
+          <DeleteDepartment record={record} setData={setData}/>
         </Space>
       )
     }
   ]
 
+  useEffect(()=>{
+    getDepartments()
+    .then(res=>{
+      setData(res.data.data)
+    })
+  },[])
+
   return (
     <>
-      <AddDepartment/>
+      <AddDepartment setData={setData}/>
       <Table columns={columns} dataSource={data} pagination={true} />
     </>
   )

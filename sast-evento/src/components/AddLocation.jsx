@@ -1,23 +1,31 @@
 import React, { useState } from "react"
 import { Modal, Button, Popover, Input } from '@douyinfe/semi-ui';
 import { IconPlusStroked } from '@douyinfe/semi-icons';
+import { postLocation } from "../utils/location";
 
 function AddLocation(props) {
     const [visible, setVisible] = useState(false);
-    const [location,setLocation] = useState()
+    // const [location,setLocation] = useState()
+    var location
     const showDialog = () => {
         setVisible(true);
     };
     const handleOk = () => {
         setVisible(false);
-        console.log(props.id,location);
+        // console.log(props.id,location);
         //调用添加活动地点的接口
+        postLocation(props.id,location)
+        .then(res=>{
+            console.log(res.data);
+        })
+
     };
     const handleCancel = () => {
         setVisible(false);
     };
     const getlocation=(value)=>{
-        setLocation(value)
+        // setLocation(value)
+        location=value
     }
 
     //弹框的样式

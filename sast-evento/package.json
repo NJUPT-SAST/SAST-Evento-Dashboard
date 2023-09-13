@@ -2,6 +2,7 @@
   "name": "sast-evento",
   "version": "0.1.0",
   "private": true,
+  "proxy":"https://evento.sast.fun",
   "dependencies": {
     "@douyinfe/semi-ui": "^2.39.2",
     "@testing-library/jest-dom": "^5.17.0",
@@ -17,7 +18,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

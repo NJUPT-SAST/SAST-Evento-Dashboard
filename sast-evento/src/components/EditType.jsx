@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import { Button, Modal, Form, Row, Col } from "@douyinfe/semi-ui";
+import { updataType, getTypes } from "../utils/types";
 
 
-function EditType(props) {
+function UpdateType(props) {
     const [visible, setVisible] = useState(false)
+    var updata
     function show() {
         setVisible(true)
     }
     const handleOk = () => {
         setVisible(false);
-        //添加一个接口
+        updataType(props.data.id, updata.typeName, updata.allowConflict)
+            .then(response => {
+                getTypes()
+                    .then((res) => {
+                        props.setData(res.data.data)
+                    })
+            })
     };
     const handleCancel = () => {
         setVisible(false);
@@ -32,14 +40,15 @@ function EditType(props) {
             >
                 <h3 style={{ textAlign: 'center', fontSize: 24, margin: 40 }}>修改活动类型</h3>
                 <Form
-                    style={{padding:10,width:'100%'}} 
+                    style={{ padding: 10, width: '100%' }}
+                    onValueChange={values => { updata = values }}
                 >
                     <Row>
                         <Col span={12} >
-                            <Form.Input field="name" label='类型' style={{width:'90%'}} initValue={props.data.typeName} />
+                            <Form.Input field="typeName" label='类型' style={{ width: '90%' }} initValue={props.data.typeName} />
                         </Col>
                         <Col span={12}>
-                            <Form.Select field="link" label='选择' style={{width:'90%'}} initValue={handleValue(props.data.allowConflict)}>
+                            <Form.Select field="allowConflict" label='选择' style={{ width: '90%' }} initValue={handleValue(props.data.allowConflict)}>
                                 <Form.Select.Option value='true'>允许</Form.Select.Option>
                                 <Form.Select.Option value='false'>禁止</Form.Select.Option>
                             </Form.Select>
@@ -52,4 +61,4 @@ function EditType(props) {
     )
 }
 
-export default EditType;
+export default UpdateType;
