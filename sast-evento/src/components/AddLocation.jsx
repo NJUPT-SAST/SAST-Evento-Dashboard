@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import { Modal, Button, Popover, Input } from '@douyinfe/semi-ui';
+import { Modal, Button, Popover, Input,Toast } from '@douyinfe/semi-ui';
 import { IconPlusStroked } from '@douyinfe/semi-icons';
-import { postLocation } from "../utils/location";
+import { postLocation,getLocations } from "../utils/location";
 
 function AddLocation(props) {
     const [visible, setVisible] = useState(false);
@@ -12,11 +12,11 @@ function AddLocation(props) {
     };
     const handleOk = () => {
         setVisible(false);
-        // console.log(props.id,location);
-        //调用添加活动地点的接口
-        postLocation(props.id,location)
+        postLocation(location,props.id===undefined?0:props.id)
         .then(res=>{
-            console.log(res.data);
+            Toast.success('添加成功')
+            getLocations()
+            .then(response=>props.setTreeData(response.data.data))
         })
 
     };
@@ -48,7 +48,8 @@ function AddLocation(props) {
             <Popover
                 content={
                     <article style={{ padding: 12 }}>
-                        选中添加子节点
+                        选中添加子节点,
+                        未选中添加根目录
                     </article>
                 }
                 position='topLeft'

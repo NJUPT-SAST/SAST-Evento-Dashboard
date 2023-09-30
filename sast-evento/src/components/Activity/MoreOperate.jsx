@@ -13,10 +13,10 @@ function MoreOperate(props) {
     const menu=[
         {node:'item',name:<EventQrcodeGet/>},
         {node:'item',name:<AddImage/>},
-        {node:'item',name:<GetManager title={props.record.name} id={props.record.eventid}/>},
-        {node:'item',name:<PutEvent record={props.record} id={props.record.eventid}/>},
-        {node:"item",name:<PatchEvent record={props.record} id={props.record.eventid}/>},
-        {node:'item',name:<DeleteEvent record={props.record} id={props.record.eventid}/>},
+        {node:'item',name:<GetManager title={props.record.name} id={props.record.id}/>},
+        {node:'item',name:<PutEvent record={props.record} id={props.record.id}/>},
+        {node:"item",name:<PatchEvent id={props.record.id}/>},
+        {node:'item',name:<DeleteEvent id={props.record.id}/>},
     ]
     return (
         <>

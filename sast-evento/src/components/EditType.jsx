@@ -24,7 +24,7 @@ function UpdateType(props) {
     };
 
     const handleValue = (value) => {
-        if (value === '允许') { return 'true' }
+        if (value === true) { return 'true' }
         else return 'false'
     }
 

@@ -45,7 +45,6 @@ export const updataType=(id,typeName,allowConflict)=>{
         url:'/api/admin/type',
         headers:{
             token:token,
-            "Content-Type":'multipart/form-data'
         },
         data:{
             id,

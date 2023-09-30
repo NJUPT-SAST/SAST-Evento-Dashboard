@@ -1,8 +1,9 @@
 import React,{useState} from "react";
 import { Modal,Button } from "@douyinfe/semi-ui";
+import { deleteEvent } from "../utils/event";
 
 
-function DeleteEvent(){
+function DeleteEvent(props){
     const [visible,setVisible]=useState(false)
     const showMoadl=()=>{
         setVisible(true)
@@ -10,6 +11,9 @@ function DeleteEvent(){
 
     const handleOk=()=>{
         //调用删除活动接口
+        deleteEvent(props.id)
+        .then(res=>console.log(res))
+        .catch(err=>console.log(err))
         setVisible(false);
     }
 

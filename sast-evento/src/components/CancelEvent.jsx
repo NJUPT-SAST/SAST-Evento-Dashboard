@@ -1,8 +1,9 @@
 import React,{useState} from "react";
 import { Modal, Button } from "@douyinfe/semi-ui";
+import { patchEvent } from "../utils/event";
 
 
-function PatchEvent() {
+function PatchEvent(props) {
     const [visible, setVisible] = useState(false)
     const showMoadl = () => {
         setVisible(true)
@@ -10,6 +11,9 @@ function PatchEvent() {
 
     const handleOk = () => {
         //调用取消活动接口
+        patchEvent(props.id)
+        .then(res=>console.log(res))
+        .catch(err=>console.log(err))
         setVisible(false);
     }
 
@@ -26,7 +30,7 @@ function PatchEvent() {
                 onOk={handleOk}
                 onCancel={handleCancel}
             >
-                <span>你确定要取消活动嘛？</span>
+                <span> 你确定要取消活动嘛？</span>
             </Modal> 
         </>
     )

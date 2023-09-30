@@ -1,16 +1,29 @@
 import React from "react"
-import { Modal, Button, Popover, Input } from '@douyinfe/semi-ui';
+import { Modal, Button, Popover, Input,Toast } from '@douyinfe/semi-ui';
 import { useState } from "react";
+import { updateLocation,getLocations } from "../utils/location";
 import { IconEditStroked} from '@douyinfe/semi-icons';
 
 
 function UpdateLocation(props) {
     const [visible, setVisible] = useState(false);
+    let locationName
     const showDialog = () => {
         setVisible(true);
     };
+
+    const handleChange=(value)=>{
+        locationName=value
+    }
+
     const handleOk = () => {
         setVisible(false);
+        updateLocation(props.id,locationName)
+        .then(res=>{
+            Toast.success('更新成功')
+            getLocations()
+            .then(response=>props.setTreeData(response.data.data))
+        })
         //调用添加活动地点的接口
     };
     const handleCancel = () => {
@@ -54,6 +67,7 @@ function UpdateLocation(props) {
                     <Input
                         style={{ width: '320px' }}
                         placeholder="修改地点" prefix={<IconEditStroked />}
+                        onChange={handleChange}
                     ></Input>
                 </div>
             </Modal>

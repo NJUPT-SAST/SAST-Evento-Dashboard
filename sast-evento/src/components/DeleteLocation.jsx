@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { Button, Popconfirm, Popover } from '@douyinfe/semi-ui';
+import { Button, Popover,Toast } from '@douyinfe/semi-ui';
+import { deleteLocation,getLocations } from '../utils/location';
 
 
 function DeleteLocation(props) {
     const handleDelete=()=>{
-        console.log(props.id);
+        // console.log(props.id);
+        deleteLocation(props.id)
+        .then(res=>{
+            Toast.success('删除成功')
+            getLocations()
+            .then(response=>props.setTreeData(response.data.data))
+        })
     }
     return (
         <>

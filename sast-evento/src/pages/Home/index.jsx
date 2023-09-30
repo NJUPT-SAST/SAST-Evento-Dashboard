@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import ActivityType from '../../components/ActivityType';
 import ActivityLocation from '../../components/ActivityLocation';
 import AddImage from '../../components/AddImage';
@@ -12,9 +12,11 @@ import AuthPermission from '../../components/AuthPermission';
 import EventQrcodeGet from '../../components/GetQRcode';
 import GetManager from '../../components/Roles/GetManage';
 import MoreOperate from '../../components/Activity/MoreOperate';
+import { getEvent } from '../../utils/event';
 import './index.scss'
 
 function Home() {
+    const [data,setData]=useState([])
     const columns = [
         {
             title: '标题',
@@ -50,9 +52,10 @@ function Home() {
             align: "center",
             render: (state, record, index) => {
                 if(state=="IN_PROGRESS"){return <Tag color='green'>进行中</Tag>}
+                else if(state=="NOT_STARTED"){return <Tag color='blue'>未开始</Tag>}
                 else if(state=="ENDED"){return <Tag color='red'>已结束</Tag>}
-                else if(state=="CHECKING_IN"){return <Tag color='yellow'>核验中</Tag>}
-                else{return <Tag color='red'>取消了</Tag>}
+                else if(state=="CHECKING_IN"){return <Tag color='yellow'>报名中</Tag>}
+                else{return <Tag color='red'>已取消</Tag>}
             }
         },
         // {
@@ -102,130 +105,130 @@ function Home() {
             }
         }
     ];
-    const data =
-        [
-            {
-                "id": 1,
-                "title": "后端联合授课",
-                "description": "描述",
-                "gmtEventStart": "2023-08-08 22:38:44",
-                "gmtEventEnd": "2023-08-08 22:38:49",
-                "gmtRegistrationStart": "2023-08-08 22:38:51",
-                "gmtRegistrationEnd": "2023-08-08 22:38:53",
-                "eventType": {
-                    "id": 2,
-                    "typeName": "日常授课",
-                    "allowConflict": true
-                },
-                "location": "9",
-                "tag": "标签",
-                "state": "IN_PROGRESS",
-                "departments": [
-                    {
-                        "id": 1,
-                        "departmentName": "后端组"
-                    },
-                    {
-                        "id": 2,
-                        "departmentName": "前端组"
-                    },
-                    {
-                        "id": 3,
-                        "departmentName": "运维组"
-                    }
-                ]
-            },
-            {
-                "id": 2,
-                "title": "前端联合授课",
-                "description": "描述",
-                "gmtEventStart": "2023-08-09 10:30:49",
-                "gmtEventEnd": "2023-08-09 10:30:52",
-                "gmtRegistrationStart": "2023-08-09 10:30:54",
-                "gmtRegistrationEnd": "2023-08-09 10:30:58",
-                "eventType": {
-                    "id": 2,
-                    "typeName": "日常授课",
-                    "allowConflict": true
-                },
-                "location": "4",
-                "tag": "标签",
-                "state": "IN_PROGRESS",
-                "departments": [
-                    {
-                        "id": 1,
-                        "departmentName": "后端组"
-                    },
-                    {
-                        "id": 2,
-                        "departmentName": "前端组"
-                    },
-                    {
-                        "id": 3,
-                        "departmentName": "运维组"
-                    }
-                ]
-            },
-            {
-                "id": 3,
-                "title": "运维组授课",
-                "description": "描述",
-                "gmtEventStart": "2023-08-09 10:31:19",
-                "gmtEventEnd": "2023-08-09 10:31:22",
-                "gmtRegistrationStart": "2023-08-09 10:31:25",
-                "gmtRegistrationEnd": "2023-08-09 10:31:28",
-                "eventType": {
-                    "id": 2,
-                    "typeName": "日常授课",
-                    "allowConflict": true
-                },
-                "location": "10",
-                "tag": "标签",
-                "state": "NOT_STARTED",
-                "departments": []
-            },
-            {
-                "id": 4,
-                "title": "游戏组授课",
-                "description": "描述",
-                "gmtEventStart": "2023-08-09 10:31:47",
-                "gmtEventEnd": "2023-08-09 10:31:50",
-                "gmtRegistrationStart": "2023-08-09 10:31:52",
-                "gmtRegistrationEnd": "2023-08-09 10:31:54",
-                "eventType": {
-                    "id": 2,
-                    "typeName": "日常授课",
-                    "allowConflict": true
-                },
-                "location": "11",
-                "tag": "标签",
-                "state": "CHECKING_IN",
-                "departments": []
-            },
-            {
-                "id": 5,
-                "title": "后端组授课",
-                "description": "描述",
-                "gmtEventStart": "2023-08-10 19:25:38",
-                "gmtEventEnd": "2023-08-10 19:25:42",
-                "gmtRegistrationStart": "2023-08-10 19:25:45",
-                "gmtRegistrationEnd": "2023-08-10 19:25:47",
-                "eventType": {
-                    "id": 2,
-                    "typeName": "日常授课",
-                    "allowConflict": true
-                },
-                "location": "9",
-                "tag": "标签",
-                "state": "ENDED",
-                "departments": [
-                    {
-                        "id": 1,
-                        "departmentName": "后端组"
-                    }
-                ]
-            }
-        ];
+    // const data =
+    //     [
+    //         {
+    //             "id": 1,
+    //             "title": "后端联合授课",
+    //             "description": "描述",
+    //             "gmtEventStart": "2023-08-08 22:38:44",
+    //             "gmtEventEnd": "2023-08-08 22:38:49",
+    //             "gmtRegistrationStart": "2023-08-08 22:38:51",
+    //             "gmtRegistrationEnd": "2023-08-08 22:38:53",
+    //             "eventType": {
+    //                 "id": 2,
+    //                 "typeName": "日常授课",
+    //                 "allowConflict": true
+    //             },
+    //             "location": "9",
+    //             "tag": "标签",
+    //             "state": "IN_PROGRESS",
+    //             "departments": [
+    //                 {
+    //                     "id": 1,
+    //                     "departmentName": "后端组"
+    //                 },
+    //                 {
+    //                     "id": 2,
+    //                     "departmentName": "前端组"
+    //                 },
+    //                 {
+    //                     "id": 3,
+    //                     "departmentName": "运维组"
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             "id": 2,
+    //             "title": "前端联合授课",
+    //             "description": "描述",
+    //             "gmtEventStart": "2023-08-09 10:30:49",
+    //             "gmtEventEnd": "2023-08-09 10:30:52",
+    //             "gmtRegistrationStart": "2023-08-09 10:30:54",
+    //             "gmtRegistrationEnd": "2023-08-09 10:30:58",
+    //             "eventType": {
+    //                 "id": 2,
+    //                 "typeName": "日常授课",
+    //                 "allowConflict": true
+    //             },
+    //             "location": "4",
+    //             "tag": "标签",
+    //             "state": "IN_PROGRESS",
+    //             "departments": [
+    //                 {
+    //                     "id": 1,
+    //                     "departmentName": "后端组"
+    //                 },
+    //                 {
+    //                     "id": 2,
+    //                     "departmentName": "前端组"
+    //                 },
+    //                 {
+    //                     "id": 3,
+    //                     "departmentName": "运维组"
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             "id": 3,
+    //             "title": "运维组授课",
+    //             "description": "描述",
+    //             "gmtEventStart": "2023-08-09 10:31:19",
+    //             "gmtEventEnd": "2023-08-09 10:31:22",
+    //             "gmtRegistrationStart": "2023-08-09 10:31:25",
+    //             "gmtRegistrationEnd": "2023-08-09 10:31:28",
+    //             "eventType": {
+    //                 "id": 2,
+    //                 "typeName": "日常授课",
+    //                 "allowConflict": true
+    //             },
+    //             "location": "10",
+    //             "tag": "标签",
+    //             "state": "NOT_STARTED",
+    //             "departments": []
+    //         },
+    //         {
+    //             "id": 4,
+    //             "title": "游戏组授课",
+    //             "description": "描述",
+    //             "gmtEventStart": "2023-08-09 10:31:47",
+    //             "gmtEventEnd": "2023-08-09 10:31:50",
+    //             "gmtRegistrationStart": "2023-08-09 10:31:52",
+    //             "gmtRegistrationEnd": "2023-08-09 10:31:54",
+    //             "eventType": {
+    //                 "id": 2,
+    //                 "typeName": "日常授课",
+    //                 "allowConflict": true
+    //             },
+    //             "location": "11",
+    //             "tag": "标签",
+    //             "state": "CHECKING_IN",
+    //             "departments": []
+    //         },
+    //         {
+    //             "id": 5,
+    //             "title": "后端组授课",
+    //             "description": "描述",
+    //             "gmtEventStart": "2023-08-10 19:25:38",
+    //             "gmtEventEnd": "2023-08-10 19:25:42",
+    //             "gmtRegistrationStart": "2023-08-10 19:25:45",
+    //             "gmtRegistrationEnd": "2023-08-10 19:25:47",
+    //             "eventType": {
+    //                 "id": 2,
+    //                 "typeName": "日常授课",
+    //                 "allowConflict": true
+    //             },
+    //             "location": "9",
+    //             "tag": "标签",
+    //             "state": "ENDED",
+    //             "departments": [
+    //                 {
+    //                     "id": 1,
+    //                     "departmentName": "后端组"
+    //                 }
+    //             ]
+    //         }
+    //     ];
     
     const getdepartment=(values)=>{
         const departments=[];
@@ -251,7 +254,11 @@ function Home() {
     })
 
     useEffect(() => {
-        console.log(expandData);
+        getEvent()
+        .then(res=>{
+            setData(res.data.data.result)
+        })
+        .catch(err=>{console.log(err)})
     }, [])
 
     const expandRowRender = (record, index) => {
@@ -261,7 +268,7 @@ function Home() {
     return (
         <>
             <div className="activity-header">
-                <AddEvent />
+                <AddEvent setData={setData}/>
                 <ActivityType />
                 <ActivityLocation />
                 <Department />

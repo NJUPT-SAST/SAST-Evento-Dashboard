@@ -41,9 +41,10 @@ export const deleteLocation=(id)=>{
 export const updateLocation=(id,locationName)=>{
     return request({
         method:'patch',
-        url:'/api/admin/location/',
+        url:'/api/admin/location',
         headers:{
-            token:token
+            token:token,
+            "Content-Type":'multipart/form-data'
         },
         data:{
             id,

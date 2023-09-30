@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { SideSheet, Button, Form, Col, Row, DatePicker, Select } from '@douyinfe/semi-ui';
+import { getDepartments } from '../utils/departments';
+import { getLocations } from '../utils/location';
+import { getTypes } from '../utils/types';
 import { TreeSelect } from 'antd';
 
 
@@ -11,61 +14,31 @@ const type = option2.map((option, index) => ({
 }));
 
 
-//对活动组别的数据处理
-const responseData = [
-    {
-        "id": 1,
-        "departmentName": "asdasd"
-    },
-    {
-        "id": 1097,
-        "departmentName": "Song Zhiyuan"
-    },
-    {
-        "id": 1098,
-        "departmentName": "Miguel Thomas"
-    },
-    {
-        "id": 1099,
-        "departmentName": "Tam Fu Shing"
-    },
-    {
-        "id": 1100,
-        "departmentName": "Sheila Mendoza"
-    },
-    {
-        "id": 1101,
-        "departmentName": "Yokoyama Seiko"
-    },
-    {
-        "id": 1102,
-        "departmentName": "Hsuan Yu Ling"
-    },
-    {
-        "id": 1103,
-        "departmentName": "Siu Tsz Ching"
-    },
-    {
-        "id": 1104,
-        "departmentName": "Peng Ziyi"
-    },
-    {
-        "id": 1105,
-        "departmentName": "Grace Ward"
-    },
-    {
-        "id": 1106,
-        "departmentName": "Yung Hui Mei"
-    }
-]
-const transformedData = responseData.map(({ id, departmentName }) => ({
-    value: id,
-    label: departmentName
-}));
 
 
 
 function PutEvent(props) {
+
+    const [visible, setVisible] = useState(false);
+    //活动地点(树结构)
+    const [treeData, setTreeData] = useState([])
+    const [departments,setDepartments]=useState([])
+    const [type,setType]=useState([])
+
+
+    //获取活动组别、小组并且进行处理
+    const transformedData = departments.map(({ id, departmentName }) => ({
+        value: id,
+        label: departmentName
+      }));
+
+      const transformedType=type.map(({id,typeName})=>({
+        value:id,
+        label:typeName
+      }))
+
+
+    //组别的初始值
     const initDepartment=(values)=>{
         const departments=[];
         for(var i=0;i<values.length;i++){
@@ -73,7 +46,7 @@ function PutEvent(props) {
         }
         return departments
     }
-    var postdata
+    var editdata
 
     //用于Select组件搜索
     const searchLabel = (sugInput, option) => {
@@ -82,80 +55,12 @@ function PutEvent(props) {
         return label.includes(sug);
     }
 
-    const [visible, setVisible] = useState(false);
-    //活动地点(树结构)
-    const [treeData, setTreeData] = useState(
-        [
-            {
-                "children": [
-                    {
-                        "children": [
-                            {
-                                "children": [
-                                    {
-                                        "label": "Curtis Silva",
-                                        "value": "6",
-                                        "key": "6"
-                                    },
-                                    {
-                                        "label": "Alexander Vargas",
-                                        "value": "7",
-                                        "key": "7"
-                                    },
-                                    {
-                                        "label": "Sheh Sum Wing",
-                                        "value": "8",
-                                        "key": "8"
-                                    },
-                                    {
-                                        "label": "Kudo Ryota",
-                                        "value": "9",
-                                        "key": "9"
-                                    },
-                                    {
-                                        "label": "Kojima Eita",
-                                        "value": "10",
-                                        "key": "10"
-                                    }
-                                ],
-                                "label": "Jamie King",
-                                "value": "2",
-                                "key": "2"
-                            },
-                            {
-                                "label": "Ng Wing Sze",
-                                "value": "3",
-                                "key": "3"
-                            },
-                            {
-                                "label": "Wong Chieh Lun",
-                                "value": "4",
-                                "key": "4"
-                            },
-                            {
-                                "label": "Kudo Akina",
-                                "value": "5",
-                                "key": "5"
-                            }
-                        ],
-                        "label": "Norma Stephens",
-                        "value": "1",
-                        "key": "1"
-                    }
-                ],
-                "label": "root",
-                "value": "0",
-                "key": "0"
-            }
-        ]
-    )
-
     const change = () => {
         setVisible(!visible);
     };
 
     const handleSubmit = () => {
-        console.log(postdata);
+        console.log(editdata);
         //调用编辑活动的接口
         setVisible(false)
     }
@@ -165,6 +70,23 @@ function PutEvent(props) {
             <Button onClick={handleSubmit} theme="solid">确认修改</Button>
         </div>
     )
+
+    //useEffect获取初始的组织、地点、类型
+    useEffect(()=>{
+        getDepartments()
+        .then(res=>{
+           setDepartments(res.data.data)
+        })
+        getLocations()
+        .then(res=>{
+            setTreeData(res.data.data)
+        })
+        getTypes()
+        .then(res=>{
+            setType(res.data.data)
+        })
+    },[])
+
 
     return (
         <>
@@ -177,7 +99,7 @@ function PutEvent(props) {
                 bodyStyle={{ borderBottom: '1px solid var(--semi-color-border)' }}
             >
                 <Form
-                    onValueChange={values => { postdata = values }}>
+                    onValueChange={values => { editdata = values }}>
                     <Row>
                         <Col span={12}>
                             <Form.Input
@@ -248,7 +170,7 @@ function PutEvent(props) {
                                 trigger='blur'
                                 placeholder="选择活动类型"
                                 style={{ width: '90%' }}
-                                optionList={type} />
+                                optionList={transformedType} />
                         </Col>
                     </Row>
                     <Row>
