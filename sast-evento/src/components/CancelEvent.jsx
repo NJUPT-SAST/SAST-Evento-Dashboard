@@ -1,6 +1,6 @@
 import React,{useState} from "react";
-import { Modal, Button } from "@douyinfe/semi-ui";
-import { patchEvent } from "../utils/event";
+import { Modal, Button,Toast } from "@douyinfe/semi-ui";
+import { patchEvent,getEvent } from "../utils/event";
 
 
 function PatchEvent(props) {
@@ -12,8 +12,14 @@ function PatchEvent(props) {
     const handleOk = () => {
         //调用取消活动接口
         patchEvent(props.id)
-        .then(res=>console.log(res))
-        .catch(err=>console.log(err))
+        .then(res=>{
+            getEvent(props.currentPage)
+            .then(res=>{
+                props.setData(res.data.data.result)
+                props.setTotal(res.data.data.total)
+                Toast.success('取消成功')
+            })
+        })
         setVisible(false);
     }
 

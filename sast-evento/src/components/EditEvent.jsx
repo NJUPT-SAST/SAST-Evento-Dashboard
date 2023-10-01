@@ -1,18 +1,9 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SideSheet, Button, Form, Col, Row, DatePicker, Select } from '@douyinfe/semi-ui';
 import { getDepartments } from '../utils/departments';
 import { getLocations } from '../utils/location';
 import { getTypes } from '../utils/types';
-import { TreeSelect } from 'antd';
-
-
-//自定义的活动类型
-const option2 = ['活动1', '活动2', '活动3']
-const type = option2.map((option, index) => ({
-    label: option,
-    value: index + 1,
-}));
-
+import { putEvent, getEvent } from '../utils/event';
 
 
 
@@ -22,31 +13,39 @@ function PutEvent(props) {
     const [visible, setVisible] = useState(false);
     //活动地点(树结构)
     const [treeData, setTreeData] = useState([])
-    const [departments,setDepartments]=useState([])
-    const [type,setType]=useState([])
+    const [departments, setDepartments] = useState([])
+    const [type, setType] = useState([])
+
+
+    //使用正则表达式获取label
+    // const lastLocation=props.record.location.match(/(\S+)$/)[1];
+    //使用split分隔
+    const locationlist = props.record.location.split(" ")
+    const lastLocation = locationlist[locationlist.length - 1]
+    var editdata
+    var initLocation
 
 
     //获取活动组别、小组并且进行处理
     const transformedData = departments.map(({ id, departmentName }) => ({
         value: id,
         label: departmentName
-      }));
+    }));
 
-      const transformedType=type.map(({id,typeName})=>({
-        value:id,
-        label:typeName
-      }))
+    const transformedType = type.map(({ id, typeName }) => ({
+        value: id,
+        label: typeName
+    }))
 
 
     //组别的初始值
-    const initDepartment=(values)=>{
-        const departments=[];
-        for(var i=0;i<values.length;i++){
+    const initDepartment = (values) => {
+        const departments = [];
+        for (var i = 0; i < values.length; i++) {
             departments.push(values[i].id)
         }
         return departments
     }
-    var editdata
 
     //用于Select组件搜索
     const searchLabel = (sugInput, option) => {
@@ -55,13 +54,33 @@ function PutEvent(props) {
         return label.includes(sug);
     }
 
+
+    //通过label获取对应的value,进行初始值的赋值
+    function findValueByLabel(data, label) {
+        if (data.label === label) {
+            return data.value;
+        }
+        if (data.children) {
+            for (var i = 0; i < data.children.length; i++) {
+                var result = findValueByLabel(data.children[i], label);
+                if (result !== undefined) {
+                    return result;
+                }
+            }
+        }
+
+        return undefined;
+    }
+
     const change = () => {
         setVisible(!visible);
     };
 
     const handleSubmit = () => {
-        console.log(editdata);
-        //调用编辑活动的接口
+        // const resultLocation = findValueByLabel(treeData[0], lastLocation)
+        // const value = editdata.locationId
+        // const NumberValue=Number(value)
+  
         setVisible(false)
     }
 
@@ -72,20 +91,20 @@ function PutEvent(props) {
     )
 
     //useEffect获取初始的组织、地点、类型
-    useEffect(()=>{
+    useEffect(() => {
         getDepartments()
-        .then(res=>{
-           setDepartments(res.data.data)
-        })
+            .then(res => {
+                setDepartments(res.data.data)
+            })
         getLocations()
-        .then(res=>{
-            setTreeData(res.data.data)
-        })
+            .then(res => {
+                setTreeData(res.data.data)
+            })
         getTypes()
-        .then(res=>{
-            setType(res.data.data)
-        })
-    },[])
+            .then(res => {
+                setType(res.data.data)
+            })
+    }, [])
 
 
     return (
@@ -136,7 +155,7 @@ function PutEvent(props) {
                         </Col>
                         <Col span={12}>
                             <Form.DatePicker
-                                initValue={[props.record.gmtRegistrationStart,props.record.gmtRegistrationEnd]}
+                                initValue={[props.record.gmtRegistrationStart, props.record.gmtRegistrationEnd]}
                                 type="dateTimeRange"
                                 field="RegistrationTime"
                                 label="报名时间"
@@ -180,8 +199,9 @@ function PutEvent(props) {
                                 field='locationId'
                                 label="活动地点"
                                 trigger='blur'
-                                placeholder="选择活动地点"
+                                placeholder="请选择活动地点"
                                 style={{ width: '90%' }}
+                                initValue={lastLocation}
                                 treeData={treeData} />
                         </Col>
                     </Row>

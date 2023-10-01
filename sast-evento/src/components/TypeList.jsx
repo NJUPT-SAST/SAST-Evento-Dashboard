@@ -43,6 +43,7 @@ function TypeList(){
         getTypes()
         .then((res)=>{
             setData(res.data.data)
+        
         })
     },[])
 

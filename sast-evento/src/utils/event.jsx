@@ -31,12 +31,16 @@ export const postEvent=(value)=>{
 }
 
 //获取活动
-export const getEvent=()=>{
+export const getEvent=(page)=>{
     return request({
         method:"get",
         url:'/api/event/list',
         headers:{
             token: token
+        },
+        params:{
+            page:page,
+            size:10
         }
     })
 }
@@ -75,6 +79,9 @@ export const patchEvent=(value)=>{
 
 //修改活动
 export const putEvent=(id,value)=>{
+    const departments=value.departments.map(item=>{
+        return {"id":item}
+    })
     return request({
         method:'put',
         url:'/api/event/info',
@@ -83,7 +90,17 @@ export const putEvent=(id,value)=>{
         },
         params:{eventId:id},
         data:{
-            value
+            id:id,
+            title:value.title,
+            description:value.description,
+            typeId:value.typeId,
+            // locationId:Number(value.locationId),
+            tag:value.tag,
+            departments:departments,
+            gmtEventStart:moment(value.EventTime[0]).format('YYYY-MM-DD HH:mm:ss'),
+            gmtEventEnd:moment(value.EventTime[1]).format('YYYY-MM-DD HH:mm:ss'),
+            gmtRegistrationStart:moment(value.RegistrationTime[0]).format('YYYY-MM-DD HH:mm:ss'),
+            gmtRegistrationEnd:moment(value.RegistrationTime[1]).format('YYYY-MM-DD HH:mm:ss')
         }
     })
 }

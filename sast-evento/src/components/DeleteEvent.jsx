@@ -1,6 +1,6 @@
 import React,{useState} from "react";
-import { Modal,Button } from "@douyinfe/semi-ui";
-import { deleteEvent } from "../utils/event";
+import { Modal,Button,Toast} from "@douyinfe/semi-ui";
+import { deleteEvent,getEvent } from "../utils/event";
 
 
 function DeleteEvent(props){
@@ -12,8 +12,14 @@ function DeleteEvent(props){
     const handleOk=()=>{
         //调用删除活动接口
         deleteEvent(props.id)
-        .then(res=>console.log(res))
-        .catch(err=>console.log(err))
+        .then(res=>{
+            getEvent(props.currentPage)
+            .then(res=>{
+                props.setData(res.data.data.result)
+                props.setTotal(res.data.data.total)
+                Toast.success('删除成功')
+            })
+        })
         setVisible(false);
     }
 

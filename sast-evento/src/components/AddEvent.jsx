@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SideSheet, Button, Form, Col, Row, DatePicker, Select } from '@douyinfe/semi-ui';
-import { postEvent } from '../utils/event'
+import { postEvent,getEvent } from '../utils/event'
 import { getDepartments } from '../utils/departments';
 import { getLocations } from '../utils/location';
 import { getTypes } from '../utils/types';
@@ -10,7 +10,7 @@ import { TreeSelect } from 'antd';
 
 
 
-function AddEvent() {
+function AddEvent(props) {
     const [visible, setVisible] = useState(false);
     const [departments,setDepartments]=useState([])
     const [treeData, setTreeData] = useState([])
@@ -40,9 +40,16 @@ function AddEvent() {
     };
 
     const handleSubmit=()=>{
+        props.setLoading(true)
         postEvent(postdata)
-        .then(res=>{console.log(res.data)})
-        .catch(err=>console.log(err))
+        .then(res=>{
+            getEvent(props.currentPage)
+            .then(res=>{
+                props.setTotal(res.data.data.total);
+                props.setData(res.data.data.result);
+            })
+        })
+        .then(res=>props.setLoading(false))
         //调用发起活动的接口
         setVisible(false)
     }

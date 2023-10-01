@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ActivityType from '../../components/ActivityType';
 import ActivityLocation from '../../components/ActivityLocation';
 import AddImage from '../../components/AddImage';
@@ -16,12 +16,15 @@ import { getEvent } from '../../utils/event';
 import './index.scss'
 
 function Home() {
-    const [data,setData]=useState([])
+    const [data, setData] = useState([])
+    const [currentPage, setPage] = useState(1);
+    const [total, setTotal] = useState()
+    const [loading, setLoading] = useState(false)
     const columns = [
         {
             title: '标题',
             dataIndex: 'title',
-            align:'center',
+            align: 'center',
             render: (title, record, index) => {
                 return (
                     <span>
@@ -51,11 +54,11 @@ function Home() {
             dataIndex: 'state',
             align: "center",
             render: (state, record, index) => {
-                if(state=="IN_PROGRESS"){return <Tag color='green'>进行中</Tag>}
-                else if(state=="NOT_STARTED"){return <Tag color='blue'>未开始</Tag>}
-                else if(state=="ENDED"){return <Tag color='red'>已结束</Tag>}
-                else if(state=="CHECKING_IN"){return <Tag color='yellow'>报名中</Tag>}
-                else{return <Tag color='red'>已取消</Tag>}
+                if (state == "IN_PROGRESS") { return <Tag color='green'>进行中</Tag> }
+                else if (state == "NOT_STARTED") { return <Tag color='blue'>未开始</Tag> }
+                else if (state == "ENDED") { return <Tag color='red'>已结束</Tag> }
+                else if (state == "CHECKING_IN") { return <Tag color='yellow'>报名中</Tag> }
+                else { return <Tag color='red'>已取消</Tag> }
             }
         },
         // {
@@ -98,10 +101,10 @@ function Home() {
         //     )
         // },
         {
-            title:'',
-            dataIndex:'openrate',
-            render:(_,record)=>{
-                return <MoreOperate record={record}/>
+            title: '',
+            dataIndex: 'openrate',
+            render: (_, record) => {
+                return <MoreOperate setData={setData} setTotal={setTotal} currentPage={currentPage} record={record} />
             }
         }
     ];
@@ -229,14 +232,14 @@ function Home() {
     //             ]
     //         }
     //     ];
-    
-    const getdepartment=(values)=>{
-        const departments=[];
-        for(var i=0;i<values.length;i++){
-            departments.push(values[i].departmentName+" ")
+
+    const getdepartment = (values) => {
+        const departments = [];
+        for (var i = 0; i < values.length; i++) {
+            departments.push(values[i].departmentName + " ")
         }
         return departments
-    }    
+    }
     const expandData = data.map((msg, index) => {
         return (
             [
@@ -244,9 +247,9 @@ function Home() {
                 { key: '活动结束时间', value: msg.gmtEventEnd },
                 { key: '报名开始时间', value: msg.gmtRegistrationStart },
                 { key: '报名结束时间', value: msg.gmtRegistrationEnd },
-                {key:'活动地点',value:msg.location},
-                {key:'活动小组',value:getdepartment(msg.departments)},
-                {key:'活动描述',value:msg.description}
+                { key: '活动地点', value: msg.location },
+                { key: '活动小组', value: getdepartment(msg.departments) },
+                { key: '活动描述', value: msg.description }
             ]
 
         )
@@ -254,21 +257,35 @@ function Home() {
     })
 
     useEffect(() => {
-        getEvent()
-        .then(res=>{
-            setData(res.data.data.result)
-        })
-        .catch(err=>{console.log(err)})
+        setLoading(true)
+        getEvent(currentPage)
+            .then(res => {
+                setData(res.data.data.result)
+                setTotal(res.data.data.total)
+            })
+            .then(res=>setLoading(false))
     }, [])
+
+    const handlePageChange = page => {
+        setLoading(true)
+        setPage(page)
+        getEvent(page)
+            .then(res => {
+                setData(res.data.data.result)
+                setTotal(res.data.data.total)
+            })
+            .then(res => setLoading(false))
+    }
 
     const expandRowRender = (record, index) => {
         return <Descriptions align="center" data={expandData[index]} />;
     };
 
+
     return (
         <>
             <div className="activity-header">
-                <AddEvent setData={setData}/>
+                <AddEvent setLoading={setLoading} setTotal={setTotal} setData={setData} currentPage={currentPage}/>
                 <ActivityType />
                 <ActivityLocation />
                 <Department />
@@ -277,7 +294,13 @@ function Home() {
                 rowKey="title"
                 columns={columns} dataSource={data}
                 expandedRowRender={expandRowRender}
-                pagination={true} />
+                loading={loading}
+                pagination={{
+                    currentPage,
+                    pageSize: 10,
+                    total,
+                    onChange: handlePageChange
+                }} />
         </>
     )
 }
