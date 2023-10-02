@@ -7,6 +7,7 @@ import { getTypes } from "../utils/types";
 
 function TypeList(){
     const [data,setData]=useState([])
+    const [loading,setLoading]=useState(false)
     const columns=[
         {
           title:'类型',
@@ -40,17 +41,18 @@ function TypeList(){
 
 
     useEffect(()=>{
+        setLoading(true)
         getTypes()
         .then((res)=>{
             setData(res.data.data)
-        
         })
+        .then(res=>setLoading(false))
     },[])
 
     return(
         <>
             <AddType setData={setData}/>
-           <Table columns={columns} dataSource={data} pagination={false}/> 
+           <Table columns={columns} dataSource={data} pagination={false} loading={loading}/> 
         </>
     )
 }

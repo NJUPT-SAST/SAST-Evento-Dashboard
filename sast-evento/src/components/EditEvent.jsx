@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SideSheet, Button, Form, Col, Row, DatePicker, Select } from '@douyinfe/semi-ui';
+import { SideSheet, Button, Form, Col, Row, DatePicker, Select,Toast } from '@douyinfe/semi-ui';
 import { getDepartments } from '../utils/departments';
 import { getLocations } from '../utils/location';
 import { getTypes } from '../utils/types';
@@ -19,11 +19,11 @@ function PutEvent(props) {
 
     //使用正则表达式获取label
     // const lastLocation=props.record.location.match(/(\S+)$/)[1];
+
     //使用split分隔
     const locationlist = props.record.location.split(" ")
     const lastLocation = locationlist[locationlist.length - 1]
     var editdata
-    var initLocation
 
 
     //获取活动组别、小组并且进行处理
@@ -36,6 +36,26 @@ function PutEvent(props) {
         value: id,
         label: typeName
     }))
+
+
+    //活动状态的选项列表
+    const stateList=[
+        {value:'0',label:'未开始'},
+        {value:'1',label:'报名中'},
+        {value:'2',label:'进行中'},
+        {value:'3',label:'已取消'},
+        {value:'4',label:'已结束'}
+    ]
+
+    const initState=(value)=>{
+        switch(value){
+            case 'NOT_STARTED':return '0';
+            case 'CHECKING_IN':return '1';
+            case 'IN_PROGRESS':return '2';
+            case 'CANCELED':return '3';
+            case 'ENDED':return '4';
+        }
+    }
 
 
     //组别的初始值
@@ -72,14 +92,32 @@ function PutEvent(props) {
         return undefined;
     }
 
+    //获取最终的LocationId
+    function getLocationId(initLocation,value2){
+        const number=Number(initLocation)
+        if(isNaN(number)){
+            return Number(value2)
+        }
+        else{
+            return Number(initLocation)
+        }
+    }
+
     const change = () => {
         setVisible(!visible);
     };
 
     const handleSubmit = () => {
-        // const resultLocation = findValueByLabel(treeData[0], lastLocation)
-        // const value = editdata.locationId
-        // const NumberValue=Number(value)
+        const resultLocation = findValueByLabel(treeData[0], lastLocation)
+        const result=getLocationId(editdata.locationId,resultLocation)
+        putEvent(props.id,editdata,result)
+        .then(res=>{
+            getEvent(props.currentPage)
+            .then(res=>{
+                props.setData(res.data.data.result)
+                Toast.success('修改成功')
+            })
+        })
   
         setVisible(false)
     }
@@ -203,6 +241,16 @@ function PutEvent(props) {
                                 style={{ width: '90%' }}
                                 initValue={lastLocation}
                                 treeData={treeData} />
+                        </Col>
+                        <Col span={12}>
+                            <Form.Select
+                            initValue={initState(props.record.state)}
+                            field="state"
+                            label="活动状态"
+                            trigger='blur'
+                            style={{ width: '90%' }}
+                            optionList={stateList}
+                            />
                         </Col>
                     </Row>
                     <Row>

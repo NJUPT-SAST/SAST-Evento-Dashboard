@@ -78,7 +78,7 @@ export const patchEvent=(value)=>{
 }
 
 //修改活动
-export const putEvent=(id,value)=>{
+export const putEvent=(id,value,location)=>{
     const departments=value.departments.map(item=>{
         return {"id":item}
     })
@@ -94,8 +94,9 @@ export const putEvent=(id,value)=>{
             title:value.title,
             description:value.description,
             typeId:value.typeId,
-            // locationId:Number(value.locationId),
+            locationId:location,
             tag:value.tag,
+            state:Number(value.state),
             departments:departments,
             gmtEventStart:moment(value.EventTime[0]).format('YYYY-MM-DD HH:mm:ss'),
             gmtEventEnd:moment(value.EventTime[1]).format('YYYY-MM-DD HH:mm:ss'),

@@ -56,7 +56,7 @@ function Home() {
             render: (state, record, index) => {
                 if (state == "IN_PROGRESS") { return <Tag color='green'>进行中</Tag> }
                 else if (state == "NOT_STARTED") { return <Tag color='blue'>未开始</Tag> }
-                else if (state == "ENDED") { return <Tag color='red'>已结束</Tag> }
+                else if (state == "ENDED") { return <Tag color='grey'>已结束</Tag> }
                 else if (state == "CHECKING_IN") { return <Tag color='yellow'>报名中</Tag> }
                 else { return <Tag color='red'>已取消</Tag> }
             }
@@ -247,6 +247,7 @@ function Home() {
                 { key: '活动结束时间', value: msg.gmtEventEnd },
                 { key: '报名开始时间', value: msg.gmtRegistrationStart },
                 { key: '报名结束时间', value: msg.gmtRegistrationEnd },
+                {key:'活动标签',value:msg.tag},
                 { key: '活动地点', value: msg.location },
                 { key: '活动小组', value: getdepartment(msg.departments) },
                 { key: '活动描述', value: msg.description }

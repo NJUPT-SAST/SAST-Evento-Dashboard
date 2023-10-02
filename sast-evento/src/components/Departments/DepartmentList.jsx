@@ -8,6 +8,7 @@ import { getDepartments } from "../../utils/departments";
 
 function DepartmentList() {
   const [data, setData] = useState([])
+  const [loading,setLoading]=useState(false)
   const columns = [
     {
       title: '序号',
@@ -33,16 +34,18 @@ function DepartmentList() {
   ]
 
   useEffect(()=>{
+    setLoading(true)
     getDepartments()
     .then(res=>{
       setData(res.data.data)
     })
+    .then(res=>setLoading(false))
   },[])
 
   return (
     <>
       <AddDepartment setData={setData}/>
-      <Table columns={columns} dataSource={data} pagination={true} />
+      <Table columns={columns} dataSource={data} pagination={true} loading={loading}/>
     </>
   )
 }

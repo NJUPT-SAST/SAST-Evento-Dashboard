@@ -14,7 +14,7 @@ function MoreOperate(props) {
         {node:'item',name:<EventQrcodeGet/>},
         {node:'item',name:<AddImage/>},
         {node:'item',name:<GetManager title={props.record.name} id={props.record.id}/>},
-        {node:'item',name:<PutEvent setData={props.setData} setTotal={props.setTotal} currentPage={props.currentPage} record={props.record} id={props.record.id}/>},
+        {node:'item',name:<PutEvent setData={props.setData} currentPage={props.currentPage} record={props.record} id={props.record.id}/>},
         {node:"item",name:<PatchEvent setData={props.setData} setTotal={props.setTotal} currentPage={props.currentPage} id={props.record.id}/>},
         {node:'item',name:<DeleteEvent setData={props.setData} setTotal={props.setTotal} currentPage={props.currentPage} id={props.record.id}/>},
     ]
