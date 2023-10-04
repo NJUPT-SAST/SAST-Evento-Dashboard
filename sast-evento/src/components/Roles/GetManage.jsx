@@ -1,27 +1,15 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import { Button,SideSheet,Table,Space} from "@douyinfe/semi-ui";
 import AddManager from "./AddManager";
 import DeleteManager from "./DeleteManager";
 import PutManager from "./PutManager";
+import { getManagers } from "../../utils/event";
 
 
 function GetManager(props){
     const [visible,setVisible]=useState(false)
     const [eventid,setEventid]=useState(props.id)
-    const [data,setData]=useState(
-        [
-            {
-              "userId": null,
-              "studentId": "B2207xxxx",
-              "openId": null
-            },
-            {
-              "userId": null,
-              "studentId": "B22011111",
-              "openId": null
-            }
-          ]
-    )
+    const [data,setData]=useState([])
     const change=()=>{
         setVisible(!visible)
     }
@@ -29,7 +17,7 @@ function GetManager(props){
     const columns=[
         {
             title:'学号',
-            dataIndex:'studentId',
+            dataIndex:'userId',
         },
         {
             title: '权限操作',
@@ -42,11 +30,16 @@ function GetManager(props){
             )
         }
     ]
+
+    useEffect(()=>{
+        getManagers(props.id)
+        .then(res=>{setData(res.data.data)})
+    },[])
     return(
         <>
             <Button theme="borderless" onClick={change}>活动权限</Button>
             <SideSheet title={props.title} visible={visible} onCancel={change} width='40wv'>
-                <AddManager eventid={eventid}/>
+                <AddManager eventid={eventid} setData={setData}/>
                 <Table columns={columns} dataSource={data} pagination={true}/>
             </SideSheet>
         </>

@@ -3,29 +3,36 @@ import { Table, Space } from "@douyinfe/semi-ui";
 import AddHomeSlide from "../../components/AddCarousel";
 import DeleteHomeSlide from "../../components/DeleteCarousel";
 import PatchHomeSlide from "../../components/EditCarousel";
+import { getSlide } from "../../utils/homeSlide";
 
 
 
 
 function Picture() {  
     const [data, setData] = useState([])
+    const [total,setTotal] = useState()
     useEffect(()=>{
-        setData(
-            [
-                {
-                    slideId: '1',
-                    title: 'test',
-                    link: '/packge/new/index',
-                    url: 'https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png'
-                },
-                {
-                    slideId: '2',
-                    title: 'test',
-                    link: '/packge/new/index',
-                    url: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/dy.png'
-                },
-            ]
-        )
+        getSlide(1)
+        .then(res=>{
+            setData(res.data.data.slides)
+            setTotal(res.data.data.total)
+        })
+        // setData(
+        //     [
+        //         {
+        //             slideId: '1',
+        //             title: 'test',
+        //             link: '/packge/new/index',
+        //             url: 'https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png'
+        //         },
+        //         {
+        //             slideId: '2',
+        //             title: 'test',
+        //             link: '/packge/new/index',
+        //             url: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/dy.png'
+        //         },
+        //     ]
+        // )
     },[])
     const columns = [
         {
@@ -43,7 +50,7 @@ function Picture() {
             dataIndex: 'url',
             align: "center",
             render: url => {
-                return <img src={url || ' '} width={30} height={30} alt=''></img>
+                return <img src={url || ' '} width={60} height={30} alt=''></img>
             }
         },
         {

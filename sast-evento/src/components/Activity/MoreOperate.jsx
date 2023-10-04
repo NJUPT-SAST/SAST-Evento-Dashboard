@@ -11,7 +11,7 @@ import GetManager from '../Roles/GetManage';
 
 function MoreOperate(props) {
     const menu=[
-        {node:'item',name:<EventQrcodeGet/>},
+        {node:'item',name:<EventQrcodeGet id={props.record.id}/>},
         {node:'item',name:<AddImage/>},
         {node:'item',name:<GetManager title={props.record.name} id={props.record.id}/>},
         {node:'item',name:<PutEvent setData={props.setData} currentPage={props.currentPage} record={props.record} id={props.record.id}/>},

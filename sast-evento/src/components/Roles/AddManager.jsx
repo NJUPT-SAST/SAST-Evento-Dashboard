@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import { TreeSelect } from 'antd';
 import { IconPlusStroked } from '@douyinfe/semi-icons';
+import { addManagers,getManagers } from "../../utils/event";
 const { SHOW_CHILD } = TreeSelect;
 
 function AddManager(props) {
@@ -89,6 +90,11 @@ function AddManager(props) {
     const handleOk = () => {
         setVisible(false);
         console.log(props.eventid, value,userId);
+        addManagers(props.eventid,userId,value)
+        .then(response=>{
+            getManagers(props.eventid)
+            .then(res=>{props.setData(res.data.data)})
+        })
         //调用添加活动地点的接口
     };
     const handleCancel = () => {

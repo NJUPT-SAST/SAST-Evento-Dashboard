@@ -105,3 +105,59 @@ export const putEvent=(id,value,location)=>{
         }
     })
 }
+
+//获取活动二维码
+export const authCode=(id)=>{
+    return request({
+        method:'get',
+        url:'/api/event/authcode',
+        headers:{
+            token:token,
+        },
+        params:{
+            eventId:id,
+        }
+    })
+}
+
+//获取活动管理者列表
+export const getManagers=(id)=>{
+    return request({
+        method:'get',
+        url:'/api/permission/event/managers',
+        params:{
+            eventId:id
+        }
+    })
+}
+
+export const PutManagers=(id,userId,methodNames)=>{
+    return request({
+        method:"put",
+        url:'/api/permission/event/manager',
+        params:{
+            eventId:id
+        },
+        data:{
+            userId,
+            methodNames
+        }
+    })
+}
+
+export const addManagers=(id,userId,methodNames)=>{
+    return request({
+        method:'post',
+        url:'/api/permission/event/manager',
+        params:{
+            eventId:id
+        },
+        headers:{
+            "Content-Type":'multipart/form-data'
+        },
+        data:{
+            userId:userId,
+            methodNames:methodNames
+        }
+    })
+}

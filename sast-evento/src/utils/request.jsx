@@ -1,9 +1,14 @@
 import axios from "axios";
 import { Toast } from "@douyinfe/semi-ui";
 
+
+const token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYjIyMDcwMTIzIiwiZXhwIjoxNzMwMzUzODYxfQ.68v28NTtmNGORXlDf2zJO-jlSGV96ZgI6lBUNNsV__A"
 var request=axios.create({
     // baseURL:'http://evento.sast.fun/',
     // withCredentials:true,
+    headers:{
+        token:token
+    },
     timeout:30000,
 })
 
