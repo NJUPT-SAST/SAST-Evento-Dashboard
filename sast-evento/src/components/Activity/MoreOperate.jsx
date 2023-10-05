@@ -18,12 +18,16 @@ function MoreOperate(props) {
         {node:"item",name:<PatchEvent setData={props.setData} setTotal={props.setTotal} currentPage={props.currentPage} id={props.record.id}/>},
         {node:'item',name:<DeleteEvent setData={props.setData} setTotal={props.setTotal} currentPage={props.currentPage} id={props.record.id}/>},
     ]
+    const nomenu=[
+        {node:'item',name:'暂无权限'}
+    ]
+    const initmenu=menu.every(obj=>Object.keys(obj).length===0)
     return (
         <>
             <Dropdown
                 trigger={'click'}
                 position={'bottom'}
-                menu={menu}
+                menu={initmenu==true?nomenu:menu}
                 clickToHide
                 keepDOM={'true'}
             >

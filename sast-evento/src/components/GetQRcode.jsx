@@ -55,8 +55,8 @@ function EventQrcodeGet(props) {
                 onCancel={handleCancel}
                 footer={footer}
             >
-                <div id="myqrcode" style={{ display:'flex',justifyContent:'center',alignContent:'center'}}>
-                    <QRCode value={text} />
+                <div id="myqrcode" style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+                    <QRCode value={text || '-'} />
                 </div>
             </Modal>
         </>

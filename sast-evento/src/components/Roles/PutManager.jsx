@@ -1,63 +1,24 @@
-import { Button,Modal } from "@douyinfe/semi-ui"
+import { Button,Modal, Toast } from "@douyinfe/semi-ui"
 import { useState } from "react";
 import React, { useEffect } from "react";
 import { TreeSelect } from 'antd';
+import {manageTreeData,managerUserList,putManagers} from "../../utils/event";
 const { SHOW_CHILD } = TreeSelect;
 
 
 function PutManager(props){
     //对多选树的管理
-    const [treeData, setData] = useState([])
-
+    const [treeData, setTreeData] = useState([])
+    const [value, setValue] = useState(["putEvent"]);
+    const [visible, setVisible] = useState(false);
     //请求接口获取其初始的权限
     useEffect(()=>{
-        setData([
-            {
-              "children": [
-                {
-                  "title": "添加活动幻灯片",
-                  "value": "addEventSlide"
-                },
-                {
-                  "title": "删除活动管理者",
-                  "value": "deleteManager"
-                },
-                {
-                  "title": "删除活动幻灯片",
-                  "value": "deleteEventSlide"
-                },
-                {
-                  "title": "删除活动",
-                  "value": "deleteEvent"
-                },
-                {
-                  "title": "取消活动（部分修改活动信息）",
-                  "value": "patchEvent"
-                },
-                {
-                  "title": "添加活动管理者",
-                  "value": "addManager"
-                },
-                {
-                  "title": "编辑活动幻灯片",
-                  "value": "patchEventSlide"
-                },
-                {
-                  "title": "编辑活动管理者权限",
-                  "value": "putManager"
-                },
-                {
-                  "title": "修改活动",
-                  "value": "putEvent"
-                }
-              ],
-              "title": "default",
-              "value": "default"
-            }
-          ])
+      manageTreeData(props.eventid)
+      .then(res=>setTreeData(res.data.data))
+      managerUserList(props.eventid,props.userId)
+      .then(res=>setValue(res.data.data))
     },[])
     // const treeData = data
-    const [value, setValue] = useState(["putEvent"]);
     const onChange = (newValue) => {
         // console.log(newValue);
         setValue(newValue);
@@ -78,13 +39,17 @@ function PutManager(props){
 
 
 
-    const [visible, setVisible] = useState(false);
     const showDialog = () => {
         setVisible(true);
     };
     const handleOk = () => {
         setVisible(false);
-        console.log(props.eventid,value,props.userId);
+        console.log(value);
+        const formData=new FormData();
+        formData.append('userId',props.userId)
+        formData.append('methodNames',value)
+        putManagers(props.eventid,formData)
+        .then(res=>Toast.success('修改成功'))
         //调用添加活动地点的接口
     };
     const handleCancel = () => {

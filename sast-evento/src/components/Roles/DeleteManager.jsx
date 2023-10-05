@@ -1,9 +1,14 @@
-import { Button,Popconfirm } from "@douyinfe/semi-ui"
+import { Button,Popconfirm, Toast } from "@douyinfe/semi-ui"
+import { deleteEventManager,getManagers } from "../../utils/event";
 
 function DeleteManager(props){
     const handledelete=()=>{
-        console.log(props.eventid,props.userId);;
-        //调用删除权限接口
+        deleteEventManager(props.eventid,props.userId)
+        .then(res=>{
+            getManagers(props.eventid)
+            .then(res=>props.setData(res.data.data))
+            if(res.data.success==true) Toast.success('删除成功')
+        }) 
     }
     return (
         <>

@@ -8,7 +8,6 @@ import { getManagers } from "../../utils/event";
 
 function GetManager(props){
     const [visible,setVisible]=useState(false)
-    const [eventid,setEventid]=useState(props.id)
     const [data,setData]=useState([])
     const change=()=>{
         setVisible(!visible)
@@ -24,8 +23,8 @@ function GetManager(props){
             dataIndex: 'operate',
             render: (_, record) => (
                 <Space>
-                   <PutManager eventid={eventid} userId={record.studentId}/>
-                   <DeleteManager eventid={eventid} userId={record.studentId}/>
+                   <PutManager eventid={props.id} userId={record.userId} />
+                   <DeleteManager eventid={props.id} userId={record.userId} setData={setData}/>
                 </Space>
             )
         }
@@ -39,7 +38,7 @@ function GetManager(props){
         <>
             <Button theme="borderless" onClick={change}>活动权限</Button>
             <SideSheet title={props.title} visible={visible} onCancel={change} width='40wv'>
-                <AddManager eventid={eventid} setData={setData}/>
+                <AddManager eventid={props.id} setData={setData}/>
                 <Table columns={columns} dataSource={data} pagination={true}/>
             </SideSheet>
         </>

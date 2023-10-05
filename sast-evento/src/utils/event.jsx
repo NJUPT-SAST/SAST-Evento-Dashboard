@@ -1,163 +1,202 @@
 import request from "./request";
 import moment from 'moment';
 
-const token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYjIyMDcwMTIzIiwiZXhwIjoxNzMwMzUzODYxfQ.68v28NTtmNGORXlDf2zJO-jlSGV96ZgI6lBUNNsV__A"
+const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYjIyMDcwMTIzIiwiZXhwIjoxNzMwMzUzODYxfQ.68v28NTtmNGORXlDf2zJO-jlSGV96ZgI6lBUNNsV__A"
 
 
 //发起活动
-export const postEvent=(value)=>{
-    const departments=value.departments.map(item=>{
-        return {"id":item}
+export const postEvent = (value) => {
+    const departments = value.departments.map(item => {
+        return { "id": item }
     })
     return request({
-        method:'post',
-        url:'/api/event/info',
-        headers:{
+        method: 'post',
+        url: '/api/event/info',
+        headers: {
             token: token
         },
-        data:{
-            title:value.title,
-            description:value.description,
-            typeId:value.typeId,
-            locationId:Number(value.locationId),
-            tag:value.tag,
-            departments:departments,
-            gmtEventStart:moment(value.EventTime[0]).format('YYYY-MM-DD HH:mm:ss'),
-            gmtEventEnd:moment(value.EventTime[1]).format('YYYY-MM-DD HH:mm:ss'),
-            gmtRegistrationStart:moment(value.RegistrationTime[0]).format('YYYY-MM-DD HH:mm:ss'),
-            gmtRegistrationEnd:moment(value.RegistrationTime[1]).format('YYYY-MM-DD HH:mm:ss')
+        data: {
+            title: value.title,
+            description: value.description,
+            typeId: value.typeId,
+            locationId: Number(value.locationId),
+            tag: value.tag,
+            departments: departments,
+            gmtEventStart: moment(value.EventTime[0]).format('YYYY-MM-DD HH:mm:ss'),
+            gmtEventEnd: moment(value.EventTime[1]).format('YYYY-MM-DD HH:mm:ss'),
+            gmtRegistrationStart: moment(value.RegistrationTime[0]).format('YYYY-MM-DD HH:mm:ss'),
+            gmtRegistrationEnd: moment(value.RegistrationTime[1]).format('YYYY-MM-DD HH:mm:ss')
         }
     })
 }
 
 //获取活动
-export const getEvent=(page)=>{
+export const getEvent = (page) => {
     return request({
-        method:"get",
-        url:'/api/event/list',
-        headers:{
+        method: "get",
+        url: '/api/event/list',
+        headers: {
             token: token
         },
-        params:{
-            page:page,
-            size:10
+        params: {
+            page: page,
+            size: 10
         }
     })
 }
 
 //删除活动
-export const deleteEvent=(value)=>{
+export const deleteEvent = (value) => {
     return request({
-        method:'delete',
-        url:'/api/event/info',
-        headers:{
+        method: 'delete',
+        url: '/api/event/info',
+        headers: {
             token: token
         },
-        params:{
-            eventId:value
+        params: {
+            eventId: value
         }
     })
 }
 
 
 //取消活动
-export const patchEvent=(value)=>{
+export const patchEvent = (value) => {
     return request({
-        method:'patch',
-        url:'/api/event/info',
-        headers:{
-            token:token
+        method: 'patch',
+        url: '/api/event/info',
+        headers: {
+            token: token
         },
-        params:{
-            eventId:value
+        params: {
+            eventId: value
         },
-        data:{
-            id:value
+        data: {
+            id: value
         }
     })
 }
 
 //修改活动
-export const putEvent=(id,value,location)=>{
-    const departments=value.departments.map(item=>{
-        return {"id":item}
+export const putEvent = (id, value, location) => {
+    const departments = value.departments.map(item => {
+        return { "id": item }
     })
     return request({
-        method:'put',
-        url:'/api/event/info',
-        headers:{
-            token:token
+        method: 'put',
+        url: '/api/event/info',
+        headers: {
+            token: token
         },
-        params:{eventId:id},
-        data:{
-            id:id,
-            title:value.title,
-            description:value.description,
-            typeId:value.typeId,
-            locationId:location,
-            tag:value.tag,
-            state:Number(value.state),
-            departments:departments,
-            gmtEventStart:moment(value.EventTime[0]).format('YYYY-MM-DD HH:mm:ss'),
-            gmtEventEnd:moment(value.EventTime[1]).format('YYYY-MM-DD HH:mm:ss'),
-            gmtRegistrationStart:moment(value.RegistrationTime[0]).format('YYYY-MM-DD HH:mm:ss'),
-            gmtRegistrationEnd:moment(value.RegistrationTime[1]).format('YYYY-MM-DD HH:mm:ss')
+        params: { eventId: id },
+        data: {
+            id: id,
+            title: value.title,
+            description: value.description,
+            typeId: value.typeId,
+            locationId: location,
+            tag: value.tag,
+            state: Number(value.state),
+            departments: departments,
+            gmtEventStart: moment(value.EventTime[0]).format('YYYY-MM-DD HH:mm:ss'),
+            gmtEventEnd: moment(value.EventTime[1]).format('YYYY-MM-DD HH:mm:ss'),
+            gmtRegistrationStart: moment(value.RegistrationTime[0]).format('YYYY-MM-DD HH:mm:ss'),
+            gmtRegistrationEnd: moment(value.RegistrationTime[1]).format('YYYY-MM-DD HH:mm:ss')
         }
     })
 }
 
 //获取活动二维码
-export const authCode=(id)=>{
+export const authCode = (id) => {
     return request({
-        method:'get',
-        url:'/api/event/authcode',
-        headers:{
-            token:token,
+        method: 'get',
+        url: '/api/event/authcode',
+        headers: {
+            token: token,
         },
-        params:{
-            eventId:id,
+        params: {
+            eventId: id,
         }
     })
 }
 
 //获取活动管理者列表
-export const getManagers=(id)=>{
+export const getManagers = (id) => {
     return request({
-        method:'get',
-        url:'/api/permission/event/managers',
-        params:{
-            eventId:id
+        method: 'get',
+        url: '/api/permission/event/managers',
+        params: {
+            eventId: id
         }
     })
 }
 
-export const PutManagers=(id,userId,methodNames)=>{
+//修改活动管理者权限
+export const putManagers = (id, value) => {
     return request({
-        method:"put",
-        url:'/api/permission/event/manager',
-        params:{
-            eventId:id
+        method: "put",
+        url: '/api/permission/event/manager',
+        params: {
+            eventId: id
         },
-        data:{
-            userId,
-            methodNames
+        data: {
+            value
         }
     })
 }
 
-export const addManagers=(id,userId,methodNames)=>{
+//添加活动管理者
+export const addManagers = (id, userId, methodNames) => {
     return request({
-        method:'post',
-        url:'/api/permission/event/manager',
-        params:{
-            eventId:id
+        method: 'post',
+        url: '/api/permission/event/manager',
+        params: {
+            eventId: id
         },
+        headers: {
+            "Content-Type": 'multipart/form-data'
+        },
+        data: {
+            userId: userId,
+            methodNames: methodNames
+        }
+    })
+}
+
+//获取活动权限列表
+export const manageTreeData = (id) => {
+    return request({
+        method: 'get',
+        url: '/api/permission/manager/treeData',
+        params: {
+            eventId: id
+        }
+    })
+}
+
+//获取获取用户的活动权限
+export const managerUserList = (id, userId) => {
+    return request({
+        method: 'get',
+        url: '/api/permission/event/manager/user/list',
+        params: {
+            eventId: id,
+            userId: userId
+        }
+    })
+}
+
+//删除活动权限管理者
+export const deleteEventManager = (id, userId) => {
+    return request({
+        method: 'delete',
+        url: '/api/permission/event/manager',
         headers:{
             "Content-Type":'multipart/form-data'
         },
-        data:{
-            userId:userId,
-            methodNames:methodNames
-        }
+        params: {
+            eventId: id
+        },
+        data: { userId }
     })
 }

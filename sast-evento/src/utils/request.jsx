@@ -15,6 +15,9 @@ var request=axios.create({
 request.interceptors.response.use(
     (response)=>{
         const {data}=response;
+        if(data.success==false){
+            Toast.error(data.errMsg)
+        }
         const {errMsg}=data
         if(errMsg==="token错误"||errMsg==="token过期") window.location.replace('/login')
         return response

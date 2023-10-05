@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import React from "react";
 import { TreeSelect } from 'antd';
 import { IconPlusStroked } from '@douyinfe/semi-icons';
-import { addManagers,getManagers } from "../../utils/event";
+import { addManagers,getManagers,manageTreeData } from "../../utils/event";
 const { SHOW_CHILD } = TreeSelect;
 
 function AddManager(props) {
     const [visible, setVisible] = useState(false)
-    const [treeData, setData] = useState([])
+    const [treeData, setTreeData] = useState([])
     const [userId,setUserId] = useState()
     const [value, setValue] = useState([]);
     //获取userId
@@ -26,50 +26,52 @@ function AddManager(props) {
         setValue(newValue);
     };
     useEffect(() => {
-        setData([
-            {
-                "children": [
-                    {
-                        "title": "添加活动幻灯片",
-                        "value": "addEventSlide"
-                    },
-                    {
-                        "title": "删除活动管理者",
-                        "value": "deleteManager"
-                    },
-                    {
-                        "title": "删除活动幻灯片",
-                        "value": "deleteEventSlide"
-                    },
-                    {
-                        "title": "删除活动",
-                        "value": "deleteEvent"
-                    },
-                    {
-                        "title": "取消活动（部分修改活动信息）",
-                        "value": "patchEvent"
-                    },
-                    {
-                        "title": "添加活动管理者",
-                        "value": "addManager"
-                    },
-                    {
-                        "title": "编辑活动幻灯片",
-                        "value": "patchEventSlide"
-                    },
-                    {
-                        "title": "编辑活动管理者权限",
-                        "value": "putManager"
-                    },
-                    {
-                        "title": "修改活动",
-                        "value": "putEvent"
-                    }
-                ],
-                "title": "default",
-                "value": "default"
-            }
-        ])
+        manageTreeData(props.eventid)
+        .then(res=>setTreeData(res.data.data))
+        // setTreeData([
+        //     {
+        //         "children": [
+        //             {
+        //                 "title": "添加活动幻灯片",
+        //                 "value": "addEventSlide"
+        //             },
+        //             {
+        //                 "title": "删除活动管理者",
+        //                 "value": "deleteManager"
+        //             },
+        //             {
+        //                 "title": "删除活动幻灯片",
+        //                 "value": "deleteEventSlide"
+        //             },
+        //             {
+        //                 "title": "删除活动",
+        //                 "value": "deleteEvent"
+        //             },
+        //             {
+        //                 "title": "取消活动（部分修改活动信息）",
+        //                 "value": "patchEvent"
+        //             },
+        //             {
+        //                 "title": "添加活动管理者",
+        //                 "value": "addManager"
+        //             },
+        //             {
+        //                 "title": "编辑活动幻灯片",
+        //                 "value": "patchEventSlide"
+        //             },
+        //             {
+        //                 "title": "编辑活动管理者权限",
+        //                 "value": "putManager"
+        //             },
+        //             {
+        //                 "title": "修改活动",
+        //                 "value": "putEvent"
+        //             }
+        //         ],
+        //         "title": "default",
+        //         "value": "default"
+        //     }
+        // ])
     }, [])
     const tProps = {
         maxTagCount: 1,
