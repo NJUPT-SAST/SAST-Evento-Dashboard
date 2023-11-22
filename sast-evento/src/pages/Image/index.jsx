@@ -1,157 +1,134 @@
-import React, { useState,useEffect } from 'react';
-import { Pagination, Image,Button, Upload, RadioGroup, Radio } from '@douyinfe/semi-ui';
-import { IconDelete, IconPlus } from '@douyinfe/semi-icons';
-import { getPicturelist } from '../../utils/images';
-import './index.scss'
-
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Pagination,
+  Image,
+  Button,
+  Upload,
+  RadioGroup,
+  Radio,
+} from "@douyinfe/semi-ui";
+import { IconDelete, IconPlus } from "@douyinfe/semi-icons";
+import { getPicturelist } from "../../utils/images";
+import "./index.scss";
 
 const ImageList = () => {
-    const [hoveredIndex, setHoveredIndex] = useState(null);
-    const [page, setPage] = useState(1);
-    const [radiovalue, setRadiovalue] = useState('test')
-    const [imageUrls,setImageUrls] = useState(['https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png',
-    'https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png',
-    'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    ])
-    useEffect(()=>{
-        getPicturelist(radiovalue,page)
-        .then(res=>{
-            const images=res.data.data.images
-            const newimages=images.map((item)=> item.uri)
-            setImageUrls(newimages)
-        })
-    },[])
-    // const imageUrls = [
-        // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-        // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png',
-        // 'https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png',
-        // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-        // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-        // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png',
-        // 'https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png',
-        // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-        // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-        // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png',
+  const fileInputRef = useRef(null);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [page, setPage] = useState(1);
+  const [radiovalue, setRadiovalue] = useState("test");
+  const [imageUrls, setImageUrls] = useState([
+    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
+    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png",
+    "https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png",
+    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
+    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
 
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
+    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
+    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png",
+    "https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png",
+    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
+    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
+  ]);
 
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png',
-    //     // 'https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png',
+  useEffect(() => {
+    getPicturelist(radiovalue, page).then((res) => {
+      const images = res.data.data.images;
+      console.log(images);
+      const newimages = images.map((item) => item.uri);
+      console.log(newimages);
+      setImageUrls(newimages);
+    });
+  }, []);
 
-    //     // 'https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg',
-    //     // 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png',
-    // ];
+  useEffect(() => {
+    console.log(imageUrls);
+  }, [imageUrls]);
 
-    // const getCurrentPageImages = () => {
-    //     const startIndex = (page - 1) * 10;
-    //     const endIndex = startIndex + 10;
-    //     if (page == 1) {
-    //         return imageUrls.slice(startIndex, endIndex - 1);
-    //     }
-    //     else {
-    //         return imageUrls.slice(startIndex - 1, endIndex - 1);
-    //     }
-    // };
-    const handlePageChange = (page) => {
-        setPage(page);
-    };
-    const handleDeleteImage = (url) => {
-        console.log(url);
-    };
-    const handleMouseEnter = (index) => {
-        setHoveredIndex(index);
-    };
-    // 处理鼠标离开事件
-    const handleMouseLeave = () => {
-        setHoveredIndex(null);
-    };
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
 
-    const plainOptions = ['test','Guest', 'Developer', 'Maintainer'];
-    const ChangeRadio = (e) => {
-        setRadiovalue(e.target.value)
-    }
-    return (
-        <>
-            <div className='container'>
-                <div className='left'>
-                    <RadioGroup
-                        direction='vertical'
-                        options={plainOptions}
-                        onChange={ChangeRadio}
-                        value={radiovalue}
-                        aria-label="单选组合示例"
-                    />
-                </div>
-                <div className='grid right'>
-                    <div className='image-gallery'>
-                        {imageUrls.map((url, index) => (
-                            <div className='image' key={index}>
-                                <img src={url} alt={`Image ${index + 1}`} />
-                            </div>
-                        ))}
-                    </div>
-                    {/* <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-                        图片管理
-                    </div> */}
-                    {/* <br /> */}
-                    {/* <Row gutter={[4, 4]}>
-                        {page == 1 ? <Col span={4} style={{ margin: '10px' }}>
-                            <Upload
-                                // action={action}
-                                listType="picture"
-                                accept="image/*"
-                                multiple
-                                // defaultFileList={defaultFileList}
-                                picHeight={200}
-                                picWidth={200}
-                            >
-                                <IconPlus size="extra-large" />
-                            </Upload>
-                        </Col> : ""}
-                        {getCurrentPageImages().map((url, index) => (
-                            <Col span={4} key={index} style={{ margin: '10px' }}>
-                                <div
-                                    onMouseEnter={() => handleMouseEnter(index)}
-                                    onMouseLeave={handleMouseLeave}
-                                >
-                                    <img src={url} alt={`Image ${index + 1}`} style={{ width: '200px', height: '200px' }} />
-                                    {hoveredIndex === index && (
-                                        <Button
-                                            type='danger' icon={<IconDelete />}
-                                            style={{ position: 'absolute', top: '5px', right: '1px' }}
-                                            onClick={() => handleDeleteImage(url)}
-                                        />
-                                    )}
-                                </div>
-                            </Col>
-                        ))}
-                    </Row> */}
-                </div>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Pagination
-                    onChange={handlePageChange}
-                    total={imageUrls.length}
-                    pageSize={10}
-                    currentPage={page}
-                    style={{ marginTop: '10px' }}
+  const handleDeleteImage = (url) => {
+    console.log(url);
+  };
+
+  const handleMouseEnter = (index) => {
+    setHoveredIndex(index);
+  };
+
+  // 处理鼠标离开事件
+  const handleMouseLeave = () => {
+    setHoveredIndex(null);
+  };
+
+  useEffect(() => {
+    console.log(hoveredIndex);
+  }, [hoveredIndex]);
+
+  const plainOptions = ["test", "Guest", "Developer", "Maintainer"];
+
+  const ChangeRadio = (e) => {
+    setRadiovalue(e.target.value);
+    console.log(e.target.value);
+  };
+
+  const handleClick = () => {
+    fileInputRef.current.click();
+    console.log(fileInputRef);
+  };
+
+
+  return (
+    <>
+      <div className="container">
+        <div className="left">
+          <RadioGroup
+            direction="vertical"
+            options={plainOptions}
+            onChange={ChangeRadio}
+            value={radiovalue}
+            aria-label="单选组合示例"
+          />
+        </div>
+        <div className="grid right">
+          <label htmlFor="fileInput">
+            <Button className="addButton" onClick={handleClick}>add images</Button>
+          </label>
+          <input ref={fileInputRef} id="fileInput" type="file" style={{ display: "none" }} />
+
+          <div className="image-gallery">
+            {imageUrls.map((url, index) => (
+              <div className="image" key={index}>
+                <img
+                  src={url}
+                  alt={`Image ${index + 1}`}
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={() => handleMouseLeave(index)}
                 />
-            </div>
-        </>
-    );
+                <Button
+                  theme="solid"
+                  type="danger"
+                  style={{ marginRight: 8 }}
+                  className="hoverButton"
+                >
+                  X
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Pagination
+          onChange={handlePageChange}
+          total={imageUrls.length}
+          pageSize={10}
+          currentPage={page}
+          style={{ marginTop: "10px" }}
+        />
+      </div>
+    </>
+  );
 };
 
 export default ImageList;
