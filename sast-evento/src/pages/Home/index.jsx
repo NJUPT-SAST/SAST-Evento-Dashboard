@@ -235,8 +235,8 @@ function Home() {
 
     const getdepartment = (values) => {
         const departments = [];
-        for (var i = 0; i < values.length; i++) {
-            departments.push(values[i].departmentName + " ")
+        for (var i = 0; i < values?.length; i++) {
+            departments.push(values[i]?.departmentName + " ")
         }
         return departments
     }

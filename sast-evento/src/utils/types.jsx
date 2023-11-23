@@ -6,7 +6,7 @@ export const getTypes=()=>{
         method:'get',
         url:'/api/admin/types',
         headers:{
-            token:token
+            //token:token
         }
     })
 }
@@ -16,7 +16,7 @@ export const addType=(value)=>{
         method:'post',
         url:'/api/admin/type',
         headers:{
-            token:token
+            //token:token
         },
         data:{
             typeName:value.typeName,
@@ -30,7 +30,7 @@ export const deleteType=(value)=>{
         method:'delete',
         url:'/api/admin/type',
         headers:{
-            token:token,
+            //token:token,
             "Content-Type":'multipart/form-data'
         },
         params:{
@@ -43,9 +43,9 @@ export const updataType=(id,typeName,allowConflict)=>{
     return request({
         method:'put',
         url:'/api/admin/type',
-        headers:{
-            token:token,
-        },
+        // headers:{
+        //     //token:token,  
+        // }
         data:{
             id,
             typeName,

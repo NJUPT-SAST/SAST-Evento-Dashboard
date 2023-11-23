@@ -6,9 +6,9 @@ export const getSlide=(current)=>{
     return request({
         method:'get',
         url:'/api/slide/home/list',
-        headers:{
-            token:token,
-        },
+        // headers:{
+        //     token:token,  
+        // }
         params:{
             size:5,
             current:current

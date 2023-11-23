@@ -6,7 +6,7 @@ export const getLocations=()=>{
         method:'get',
         url:'/api/admin/locations',
         headers:{
-            token:token
+            //token:token
         }
     })
 }
@@ -16,7 +16,7 @@ export const postLocation=(locationName,parentId)=>{
         method:'post',
         url:'/api/admin/location',
         headers:{
-            token:token
+            //token:token
         },
         data:{
             locationName,
@@ -30,7 +30,7 @@ export const deleteLocation=(id)=>{
         method:'delete',
         url:'/api/admin/location',
         headers:{
-            token:token
+            //token:token
         },
         params:{
             locationId:id
@@ -43,7 +43,7 @@ export const updateLocation=(id,locationName)=>{
         method:'patch',
         url:'/api/admin/location',
         headers:{
-            token:token,
+            //token:token,
             "Content-Type":'multipart/form-data'
         },
         data:{

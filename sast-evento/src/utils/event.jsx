@@ -13,7 +13,7 @@ export const postEvent = (value) => {
         method: 'post',
         url: '/api/event/info',
         headers: {
-            token: token
+            //token:token
         },
         data: {
             title: value.title,
@@ -36,7 +36,7 @@ export const getEvent = (page) => {
         method: "get",
         url: '/api/event/list',
         headers: {
-            token: token
+            //token:token
         },
         params: {
             page: page,
@@ -51,7 +51,7 @@ export const deleteEvent = (value) => {
         method: 'delete',
         url: '/api/event/info',
         headers: {
-            token: token
+            //token:token
         },
         params: {
             eventId: value
@@ -66,7 +66,7 @@ export const patchEvent = (value) => {
         method: 'patch',
         url: '/api/event/info',
         headers: {
-            token: token
+            //token:token
         },
         params: {
             eventId: value
@@ -86,7 +86,7 @@ export const putEvent = (id, value, location) => {
         method: 'put',
         url: '/api/event/info',
         headers: {
-            token: token
+            //token:token
         },
         params: { eventId: id },
         data: {
@@ -112,7 +112,7 @@ export const authCode = (id) => {
         method: 'get',
         url: '/api/event/authcode',
         headers: {
-            token: token,
+            //token:token,
         },
         params: {
             eventId: id,
