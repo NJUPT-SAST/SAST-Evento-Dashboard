@@ -7,9 +7,12 @@ import {
   IconUserCircle,
   IconImage,
   IconExit,
+  IconUserCardVideo,
 } from "@douyinfe/semi-icons";
 import logo from "../../assets/Logo.png";
-import { Outlet, Link, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
+import "./index.scss";
+import { Content } from "antd/es/layout/layout";
 
 function TheLayout() {
   const { Header, Sider } = Layout;
@@ -57,13 +60,13 @@ function TheLayout() {
   }, []);
 
   const navigate = useNavigate();
-  const loginexit = () => {
-    navigate("/login");
+  const loginExit = () => {
+    console.log("退出登录");
+    // navigate("/login");
   };
+
   return (
-    <Layout
-      style={{ border: "1px solid var(--semi-color-border)", height: "100vh" }}
-    >
+    <Layout className="layout">
       <Header style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
         <div>
           <Nav mode="horizontal" defaultSelectedKeys={["Home"]}>
@@ -71,7 +74,7 @@ function TheLayout() {
               <img
                 src={logo}
                 alt="sast"
-                style={{ width: "120px", height: "45px" }}
+                style={{ width: "113.12px", height: "34.32px" }}
               />
             </Nav.Header>
             <Nav.Footer>
@@ -80,7 +83,7 @@ function TheLayout() {
                 position="bottom"
                 render={
                   <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => loginexit()}>
+                    <Dropdown.Item onClick={() => loginExit()}>
                       <IconExit /> 退出登录
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -101,7 +104,7 @@ function TheLayout() {
               const routerMap = {
                 Home: "/",
                 Activity: "/activity",
-                //   Roles:'/activity-role',
+                // Roles:'/activity-role',
                 Feedback: "/feedback",
                 Timetable: "/timetable",
                 Setting: "/roles",
@@ -124,10 +127,6 @@ function TheLayout() {
                 itemKey: "Activity",
                 text: "活动",
                 icon: <IconHome size="large" />,
-                // items:[
-                //     {itemKey:'Activity',text:'活动管理'},
-                //     {itemKey:'Roles',text:'活动权限'}
-                // ]
               },
               {
                 itemKey: "Feedback",
@@ -147,7 +146,7 @@ function TheLayout() {
               {
                 itemKey: "Picture",
                 text: "幻灯片",
-                icon: <IconImage size="large" />,
+                icon: <IconUserCardVideo size="large" />,
               },
               {
                 itemKey: "Image",
