@@ -4,33 +4,72 @@
   position: absolute;
   left: 0;
   top: 0;
-  /* // background:  center/cover; */
-}
 
-.login-logo {
-  width: 280px;
-  height: 70px;
-  display: block;
-  margin: 0 auto 20px;
-}
+  .login-container {
+    width: 440px;
+    //   height: 300px;
+    height: fit-content;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 50px rgb(0 0 0 / 10%);
 
-.login-container {
-  width: 440px;
-  //   height: 300px;
-  height: fit-content;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 50px rgb(0 0 0 / 10%);
-  /* .login-title{
-        font-size: 20px;
-        text-align: center;
+    .login-box {
+      margin-top: 50px;
+      width: 400px;
+
+      .formInput {
+        width: 100%;
+      }
+
+      .formButton {
+        width: 100%;
+      }
+
+      .formAuthorizedButtonContainer {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-evenly;
+        gap: 10px;
+        button {
+          box-sizing: border-box;
+          all: unset;
+          height: 50px;
+          width: 50px;
+          border-radius: 40px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          svg {
+            height: 35px;
+            width: 35px;
+          }
+          span{
+            font-weight: 1000;
+            font-size: 18px;
+          }
+        }
+
+        .formAuthorizedButtonLink {
+          border: 3px solid gray;
+        }
+        .formAuthorizedButtonWeChat {
+          border: 3px solid #09bb07;
+        }
+        .formAuthorizedButtonTicket {
+          border: 3px solid black;
+        }
+      }
     }
-    .login-box{
-        margin-top: 50px;
-    } */
-  .login-box {
-    margin-top: 50px;
+
+    .login-logo {
+      width: 282.8px;
+      height: 85.8px;
+      display: block;
+      margin: 0 auto 20px;
+    }
   }
 }
