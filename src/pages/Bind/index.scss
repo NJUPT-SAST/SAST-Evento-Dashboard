@@ -1,0 +1,40 @@
+.bind {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  .bind-container {
+    width: 440px;
+    height: fit-content;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 50px rgb(0 0 0 / 10%);
+    h2 {
+    //   width: 100%;
+    text-align: center;
+    }
+    .bind-box {
+      margin-top: 50px;
+      width: 400px;
+
+      .formInput {
+        width: 100%;
+      }
+
+      .formButton {
+        width: 100%;
+      }
+    }
+
+    .bind-logo {
+      width: 282.8px;
+      height: 85.8px;
+      display: block;
+      margin: 0 auto 20px;
+    }
+  }
+}

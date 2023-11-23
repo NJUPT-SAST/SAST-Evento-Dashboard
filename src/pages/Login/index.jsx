@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
-import { Card, Form, Button, Toast } from "@douyinfe/semi-ui";
+import { Card, Form, Button } from "@douyinfe/semi-ui";
 import logo from "../../assets/Logo.png";
 import "./index.scss";
 function Login() {
-  const navigate = useNavigate();
   const handleSubmit = (values) => {
     console.log(values);
     // window.location.href =
