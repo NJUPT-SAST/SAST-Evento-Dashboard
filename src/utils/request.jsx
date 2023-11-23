@@ -15,7 +15,7 @@ var request = axios.create({
 request.interceptors.response.use(
   (response) => {
     const { data } = response;
-    if (data.success == false) {
+    if (data.success === false) {
       Toast.error(data.errMsg);
     }
     const { errMsg } = data;

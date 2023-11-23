@@ -36,7 +36,7 @@ export const getEvent = (page) => {
     url: "/api/event/list",
     headers: {
       //token:token
-    },
+    },  
     params: {
       page: page,
       size: 10,

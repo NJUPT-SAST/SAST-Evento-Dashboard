@@ -6,8 +6,7 @@ import {
   Modal,
   Upload,
 } from "@douyinfe/semi-ui";
-import { IconDelete, IconPlus } from "@douyinfe/semi-icons";
-import { getPicturelist, addPicturelist } from "../../utils/images";
+import { getPictureList, addPictureList } from "../../utils/images";
 import "./index.scss";
 import { IconUpload } from "@douyinfe/semi-icons";
 
@@ -16,33 +15,21 @@ const ImageList = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const [radiovalue, setRadiovalue] = useState("test");
-  const [imageUrls, setImageUrls] = useState([
-    // "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
-    // "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png",
-    // "https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png",
-    // "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
-    // "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
-    // "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
-    // "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png",
-    // "https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png",
-    // "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
-    // "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
-  ]);
+  const [radioValue, setRadioValue] = useState("test");
+  const [imageUrls, setImageUrls] = useState([]);
+  const [testUpload, setTestUpload] = useState();
+  const fileInput = useRef();
 
   useEffect(() => {
-    getPicturelist(radiovalue, page).then((res) => {
+    getPictureList(radioValue, page).then((res) => {
       console.log(res.data.data);
       const images = res.data.data.images;
       setTotal(res.data.data.total);
-      const newimages = images.map((item) => item.url);
+      const newimages = images.map((item) => item.uri);
+      console.log(newimages);
       setImageUrls(newimages);
     });
   }, []);
-
-  useEffect(() => {
-    console.log(imageUrls);
-  }, [imageUrls]);
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -68,7 +55,7 @@ const ImageList = () => {
   const plainOptions = ["test", "Guest", "Developer", "Maintainer"];
 
   const ChangeRadio = (e) => {
-    setRadiovalue(e.target.value);
+    setRadioValue(e.target.value);
   };
 
   const handleClick = () => {
@@ -86,8 +73,8 @@ const ImageList = () => {
   const handleOkAddPicture = () => {
     //点击OK，上传文件
     console.log(fileData);
-    const dir = radiovalue;
-    addPicturelist(fileData, dir)
+    const dir = radioValue;
+    addPictureList(fileData, dir)
       .then((res) => {
         console.log(res);
       })
@@ -111,12 +98,11 @@ const ImageList = () => {
   const [fileData, setFileDate] = useState();
 
   function getFile(file) {
-    console.log(file);
-    setFileDate(file);
+    console.log("fileList", file.fileList[0].fileInstance);
+    console.log("current", file.currentFile);
+    setFileDate(file.fileList[0].fileInstance);
     return false;
   }
-
-  let action = "https://evento.sast.fun/api/picture/info"
 
   return (
     <>
@@ -126,7 +112,7 @@ const ImageList = () => {
             direction="vertical"
             options={plainOptions}
             onChange={ChangeRadio}
-            value={radiovalue}
+            value={radioValue}
             aria-label="单选组合示例"
           />
         </div>
@@ -182,14 +168,14 @@ const ImageList = () => {
         onCancel={handleCancelAddPicture}
         closeOnEsc={true}
       >
-        请从本地选择需要添加的图片到 <strong>{radiovalue}</strong> 文件夹中
+        请从本地选择需要添加的图片到 <strong>{radioValue}</strong> 文件夹中
         <br />
         <div style={{ display: "flex", marginTop: 12 }}>
           <Upload
             style={{ padding: 10 }}
             limit={1}
+            onChange={getFile}
             uploadTrigger="custom"
-            action={action}
           >
             <Button icon={<IconUpload />} theme="light">
               上传本地图片
