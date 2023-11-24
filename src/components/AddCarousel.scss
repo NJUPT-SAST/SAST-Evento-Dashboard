@@ -1,0 +1,53 @@
+.button {
+  margin: 20px;
+  width: 100px;
+}
+
+.addCarouselForm {
+  padding: 10;
+  width: 100%;
+}
+
+.uploadButton {
+  margin-top: 20px;
+}
+
+.addCarouselImageContainer {
+  width: 400px;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  .addCarouselImage {
+    width: 96.25px;
+    img {
+      width: 96.25px;
+    }
+  }
+  .addCarouselImageItem {
+    position: relative;
+    .addCarouselButton {
+      all: unset;
+      position: absolute;
+      cursor: pointer;
+      top: 2px;
+      left: 2px;
+      font-weight: 1000;
+      color: green;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+    &:hover .addCarouselButton {
+      opacity: 1;
+    }
+  }
+}
+
+.selectContainer {
+  margin-bottom: 10px;
+}
+
+.paginationContainer {
+  display: flex;
+  margin-top: 10px;
+}

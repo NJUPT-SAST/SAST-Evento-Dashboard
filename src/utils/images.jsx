@@ -1,11 +1,11 @@
 import request from "./request";
 
-export const getPictureList = (dir, num) => {
+export const getPictureList = (dir, num,size) => {
   return request({
     method: "get",
     url: "/api/picture/list",
     params: {
-      size: 10,
+      size: size,
       num: num,
       dir: dir,
     },

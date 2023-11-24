@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import {
   Modal,
   Button,
@@ -9,18 +9,19 @@ import {
   Row,
   Pagination,
   Image,
+  Select,
 } from "@douyinfe/semi-ui";
-import { IconUpload } from "@douyinfe/semi-icons";
+import { IconUpload, IconTick } from "@douyinfe/semi-icons";
 import "../component-scss/AddCarousel.scss";
+import { getPictureList } from "../utils/images";
+import "./AddCarousel.scss";
 
 function AddHomeSlide() {
-  const [imageUrls, setImageUrls] = useState([
-    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
-    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png",
-    "https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png",
-    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
-  ]);
+  const [imageUrls, setImageUrls] = useState([]);
+  const [total, setTotal] = useState(0);
   const [visible, setVisible] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hoverIndex,setHoveredIndex] = useState()
   const data = {
     url: "",
     title: "",
@@ -28,12 +29,28 @@ function AddHomeSlide() {
   };
   const [uploadImageVisible, setUploadImageVisible] = useState(false);
   let limit = 1;
+  const [select, setSelect] = useState("test");
+  const imageRef = useRef();
+
+  //这里将api请求和数据更新的代码封装起来
+  const getNewPictureList = () => {
+    getPictureList(select, page, 4).then((res) => {
+      console.log("数据更新了");
+      setTotal(res.data.data.total);
+      const images = res.data.data.images;
+      const newImages = images.map((item) => item.uri);
+      setImageUrls(newImages);
+    });
+  };
+
+  useEffect(() => {}, []);
+
+  //这里是第一个modal的逻辑代码
   function showDialog() {
     setVisible(true);
   }
   function handleOk() {
     setVisible(false);
-    console.log(data);
     //这里调用添加接口
   }
   function handleCancel() {
@@ -46,14 +63,12 @@ function AddHomeSlide() {
   function getLink(value) {
     data.link = value;
   }
-  function getFile(file) {
-    data.url = file;
-    return false;
-  }
 
+  //第二个modal的逻辑代码
   function showUploadImage() {
     setUploadImageVisible(true);
     setVisible(false);
+    getNewPictureList();
   }
 
   function handleImageOk() {
@@ -70,6 +85,40 @@ function AddHomeSlide() {
     console.log("After Close callback executed");
   };
 
+  //页面切换时的逻辑代码
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+  useEffect(() => {
+    getNewPictureList();
+  }, [page]);
+
+  //select切换时的逻辑代码
+  const handleSelectChange = (value) => {
+    setSelect(value);
+  };
+
+  useEffect(() => {
+    console.log(select);
+    getNewPictureList();
+  }, [select]);
+
+  //选中图片的代码
+  //这里直接操作dom，修改了指定的button的opacity，来设置被选中的图片
+  const handleSelect = () => {
+    console.log(hoverIndex);
+    console.log(imageRef.current.childNodes);
+    for (let i = 0; i < imageRef.current.childNodes.length; i++) {
+      const childNode = imageRef.current.childNodes[i];
+      console.log(childNode.childNodes[1].style.opacity = 0);
+    }
+    imageRef.current.childNodes[hoverIndex].childNodes[1].style.opacity = 1
+  };
+
+  const handleMouseEnter = (index) => {
+    setHoveredIndex(index);
+  };
+
   return (
     <>
       <Button theme="solid" className="button" onClick={showDialog}>
@@ -82,7 +131,7 @@ function AddHomeSlide() {
         onCancel={handleCancel}
         maskClosable={false}
       >
-        <Form style={{ padding: 10, width: "100%" }}>
+        <Form className="addCarouselForm">
           <Row>
             <Col span={12}>
               <Input
@@ -100,62 +149,59 @@ function AddHomeSlide() {
             </Col>
           </Row>
         </Form>
-        {/* <Upload
-          style={{ padding: 10 }}
-          limit={limit}
-          uploadTrigger="custom"
-          onChange={getFile}
-        > */}
-        <Button icon={<IconUpload />} theme="light" onClick={showUploadImage}>
+        <Button
+          className="uploadButton"
+          icon={<IconUpload />}
+          theme="light"
+          onClick={showUploadImage}
+        >
           上传图片
         </Button>
-        {/* </Upload> */}
       </Modal>
       <Modal
-        title="添加图片"
+        title="从图库中调用图片"
         visible={uploadImageVisible}
         onOk={handleImageOk}
         onCancel={handleImageCancel}
         afterClose={handleAfterClose}
         closeOnEsc={true}
+        maskClosable={false}
       >
-        <h3>图库</h3>
-        <div
-          style={{
-            width: 400,
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "5px",
-          }}
-        >
+        <div className="selectContainer">
+          <h3>请选择图库目录</h3>
+          <Select
+            defaultValue={select}
+            style={{ width: 120 }}
+            onChange={handleSelectChange}
+          >
+            <Select.Option value="test">test</Select.Option>
+            <Select.Option value="Guest">Guest</Select.Option>
+            <Select.Option value="Developer">Developer</Select.Option>
+            <Select.Option value="Maintainer">Maintainer</Select.Option>
+          </Select>
+        </div>
+        <div className="addCarouselImageContainer"  ref={imageRef}>
           {imageUrls.map((url, index) => (
-            <div className="image" key={index}>
-              <img
+            <div className="addCarouselImageItem" key={index}>
+              <Image
                 src={url}
                 alt={`Image ${index + 1}`}
-                style={{ width: "100%" }}
+                className="addCarouselImage"
+                onMouseEnter={() => handleMouseEnter(index)}
+
               />
+              <button className="addCarouselButton" onClick={handleSelect}>
+                <IconTick />
+              </button>
             </div>
           ))}
         </div>
-        <div style={{ display: "flex", marginTop: 5 }}>
-          <Pagination total={20} pageSize={4}></Pagination>
-        </div>
-        <div style={{ display: "flex", marginTop: 12 }}>
-          <Upload
-            style={{ padding: 10 }}
-            limit={limit}
-            uploadTrigger="custom"
-            onChange={getFile}
-          >
-            <Button
-              icon={<IconUpload />}
-              theme="light"
-              onClick={showUploadImage}
-            >
-              上传本地图片
-            </Button>
-          </Upload>
+        <div className="paginationContainer">
+          <Pagination
+            total={total}
+            pageSize={4}
+            onChange={handlePageChange}
+          ></Pagination>
         </div>
       </Modal>
     </>

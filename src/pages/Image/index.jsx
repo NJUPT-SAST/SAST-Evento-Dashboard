@@ -22,11 +22,9 @@ const ImageList = () => {
   const [total, setTotal] = useState(0);
   const [radioValue, setRadioValue] = useState("test");
   const [imageUrls, setImageUrls] = useState([]);
-  const [testUpload, setTestUpload] = useState();
   const [visible, setVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [responseUrls, setResponseUrls] = useState();
-  const fileInput = useRef();
 
   //将请求数据后的处理封装，增加复用性
   const getNewPictureList = () => {
@@ -186,7 +184,7 @@ const ImageList = () => {
                   className="hoverButton"
                   onClick={showDeleteModal}
                 >
-                  X
+                  ❌
                 </Button>
               </div>
             ))}

@@ -29,7 +29,8 @@
         box-sizing: border-box;
         position: relative;
         .hoverButton {
-          top: calc(10px + 2%);
+          background-color: transparent;
+          top: calc(10px + 1%);
           left: calc(10px + 2%);
           position: absolute;
           height: 24px;

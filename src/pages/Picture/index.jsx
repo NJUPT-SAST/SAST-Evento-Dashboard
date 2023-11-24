@@ -14,22 +14,6 @@ function Picture() {
       setData(res.data.data.slides);
       setTotal(res.data.data.total);
     });
-    // setData(
-    //     [
-    //         {
-    //             slideId: '1',
-    //             title: 'test',
-    //             link: '/packge/new/index',
-    //             url: 'https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png'
-    //         },
-    //         {
-    //             slideId: '2',
-    //             title: 'test',
-    //             link: '/packge/new/index',
-    //             url: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/dy.png'
-    //         },
-    //     ]
-    // )
   }, []);
   const columns = [
     {
