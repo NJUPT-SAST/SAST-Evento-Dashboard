@@ -312,7 +312,7 @@ function Home() {
         <Department />
       </div>
       <Table
-        rowKey="title"
+        rowKey="id"
         columns={columns}
         dataSource={data}
         expandedRowRender={expandRowRender}

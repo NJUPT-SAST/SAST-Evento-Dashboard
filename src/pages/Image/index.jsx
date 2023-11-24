@@ -5,8 +5,13 @@ import {
   RadioGroup,
   Modal,
   Upload,
+  Image,
 } from "@douyinfe/semi-ui";
-import { getPictureList, addPictureList } from "../../utils/images";
+import {
+  getPictureList,
+  addPictureList,
+  deletePictureList,
+} from "../../utils/images";
 import "./index.scss";
 import { IconUpload } from "@douyinfe/semi-icons";
 
@@ -18,22 +23,36 @@ const ImageList = () => {
   const [radioValue, setRadioValue] = useState("test");
   const [imageUrls, setImageUrls] = useState([]);
   const [testUpload, setTestUpload] = useState();
+  const [visible, setVisible] = useState(false);
+  const [deleteVisible, setDeleteVisible] = useState(false);
+  const [responseUrls, setResponseUrls] = useState();
   const fileInput = useRef();
 
-  useEffect(() => {
+  //将请求数据后的处理封装，增加复用性
+  const getNewPictureList = () => {
+    console.log("数据刷新了");
     getPictureList(radioValue, page).then((res) => {
-      console.log(res.data.data);
+      console.log(res);
       const images = res.data.data.images;
+      setResponseUrls(res.data.data.images);
       setTotal(res.data.data.total);
-      const newimages = images.map((item) => item.uri);
-      console.log(newimages);
-      setImageUrls(newimages);
+      const newImages = images.map((item) => item.uri);
+      setImageUrls(newImages);
     });
+  };
+
+  useEffect(() => {
+    getNewPictureList();
   }, []);
 
+  //当页面切换时，调用api刷新数据
   const handlePageChange = (page) => {
     setPage(page);
   };
+
+  useEffect(() => {
+    getNewPictureList();
+  }, [page]);
 
   const handleDeleteImage = (url) => {
     console.log(url);
@@ -45,7 +64,7 @@ const ImageList = () => {
 
   // 处理鼠标离开事件
   const handleMouseLeave = () => {
-    setHoveredIndex(null);
+    // setHoveredIndex(null);
   };
 
   useEffect(() => {
@@ -54,36 +73,35 @@ const ImageList = () => {
 
   const plainOptions = ["test", "Guest", "Developer", "Maintainer"];
 
+  //但radio的值发生变化时，请求api，调用数据
   const ChangeRadio = (e) => {
     setRadioValue(e.target.value);
   };
 
-  const handleClick = () => {
-    fileInputRef.current.click();
-    console.log(fileInputRef);
-  };
+  useEffect(() => {
+    console.log(radioValue);
+    setPage(1);
+    getNewPictureList();
+  }, [radioValue]);
 
   //设置modal界面
-  const [visible, setVisible] = useState(false);
-
   const showAddPicture = () => {
     setVisible(true);
   };
 
-  const handleOkAddPicture = () => {
-    //点击OK，上传文件
+  //点击OK，上传文件
+  const handleOkAddPicture = async () => {
     console.log(fileData);
     const dir = radioValue;
-    addPictureList(fileData, dir)
+    await addPictureList(fileData, dir)
       .then((res) => {
         console.log(res);
       })
       .catch((error) => {
         console.log(error);
       });
-    console.log("have post picture file");
+    getNewPictureList();
     setVisible(false);
-    console.log("Ok button clicked");
   };
 
   const handleCancelAddPicture = () => {
@@ -97,13 +115,35 @@ const ImageList = () => {
 
   const [fileData, setFileDate] = useState();
 
+  //当文件添加时，改变fileDate
   function getFile(file) {
-    console.log("fileList", file.fileList[0].fileInstance);
-    console.log("current", file.currentFile);
     setFileDate(file.fileList[0].fileInstance);
     return false;
   }
 
+  //这里是点击删除图片Modal的代码
+  const showDeleteModal = () => {
+    setDeleteVisible(true);
+  };
+
+  //设置异步，当delete完成之后，重新渲染数据
+  const deleteHandleOK = async () => {
+    const key = responseUrls[hoveredIndex].cosKey;
+    const dir = radioValue;
+    await deletePictureList(key, dir)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setDeleteVisible(false);
+    getNewPictureList();
+  };
+
+  const deleteHandleCancel = () => {
+    setDeleteVisible(false);
+  };
   return (
     <>
       <div className="container">
@@ -131,8 +171,9 @@ const ImageList = () => {
 
           <div className="image-gallery">
             {imageUrls.map((url, index) => (
-              <div className="image" key={index}>
-                <img
+              <div className="imageContainer" key={index}>
+                <Image
+                  className="image"
                   src={url}
                   alt={`Image ${index + 1}`}
                   onMouseEnter={() => handleMouseEnter(index)}
@@ -143,6 +184,7 @@ const ImageList = () => {
                   type="danger"
                   style={{ marginRight: 8 }}
                   className="hoverButton"
+                  onClick={showDeleteModal}
                 >
                   X
                 </Button>
@@ -154,7 +196,7 @@ const ImageList = () => {
       <div style={{ display: "flex", justifyContent: "flex-end" }}>
         <Pagination
           onChange={handlePageChange}
-          total={imageUrls.length}
+          total={total}
           pageSize={10}
           currentPage={page}
           style={{ marginTop: "10px" }}
@@ -182,6 +224,17 @@ const ImageList = () => {
             </Button>
           </Upload>
         </div>
+      </Modal>
+      <Modal
+        title="确定要删除该图片吗？"
+        visible={deleteVisible}
+        closeOnEsc={true}
+        onOk={deleteHandleOK}
+        onCancel={deleteHandleCancel}
+        okText={"删除!"}
+        okButtonProps={{ type: "danger" }}
+      >
+        <div style={{ display: "flex", marginTop: 12 }}></div>
       </Modal>
     </>
   );
