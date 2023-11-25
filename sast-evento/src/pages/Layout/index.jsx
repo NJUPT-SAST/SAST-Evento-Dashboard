@@ -1,25 +1,37 @@
 import React from 'react'
-import { Layout, Nav, Button, Breadcrumb, Skeleton, Avatar, Image } from '@douyinfe/semi-ui';
+import { Layout, Nav, Button,Dropdown ,Breadcrumb, Skeleton, Avatar, Image } from '@douyinfe/semi-ui';
 import {
     IconSemiLogo, IconBell, IconHelpCircle, IconBytedanceLogo,
-    IconHome, IconHistogram, IconLive, IconSetting, IconImage
+    IconHome, IconHistogram, IconLive, IconSetting, IconImage,IconClock,IconUserCircle,IconImage,IconExit
 } from '@douyinfe/semi-icons';
+import logo from '../../assets/Logo.png'
 import { Outlet, Link, useLocation, useNavigate } from "react-router-dom"
 
 function TheLayout() {
     const { Header, Sider } = Layout
+    
     return (
         <Layout style={{ border: '1px solid var(--semi-color-border)', height: '100vh' }}>
             <Header style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>
                 <div>
                     <Nav mode="horizontal" defaultSelectedKeys={['Home']}>
                         <Nav.Header>
-                            <Image src="./evento.png" alt='evento图标' height={50} preview={false} />
+                            <img src={logo} alt="sast" style={{ width: '120px', height: '45px' }} />
                         </Nav.Header>
                         <Nav.Footer>
-                            <Avatar color="orange" size="small">
-                                User
-                            </Avatar>
+                            <Dropdown
+                                trigger={'click'}
+                                position='bottom'
+                                render={
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item onClick={()=>loginexit()}><IconExit/> 退出登录</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                }
+                            >
+                                <Avatar color="orange" size="small">
+                                    User
+                                </Avatar>
+                            </Dropdown>
                         </Nav.Footer>
                     </Nav>
                 </div>
@@ -32,8 +44,12 @@ function TheLayout() {
                                 Home: '/',
                                 Feedback: '/feedback',
                                 Timetable: '/timetable',
+                                Activity: '/activity',
+                                Feedback: '/feedback',
+                                Timetable: '/timetable',
                                 Setting: '/roles',
-                                Picture: '/picture'
+                                Picture: '/picture',
+                                Image: '/image'
                             };
                             return (
                                 <Link
@@ -52,6 +68,8 @@ function TheLayout() {
                             { itemKey: 'Timetable', text: '活动时间', icon: <IconLive size="large" /> },
                             { itemKey: 'Setting', text: '用户管理', icon: <IconSetting size="large" /> },
                             { itemKey: 'Picture', text: '幻灯片', icon: <IconImage size="large" /> }
+                            { itemKey: 'Timetable', text: '活动时间', icon: <IconClock size="large" /> },
+                            { itemKey: 'Image', text: '图库', icon: <IconImage size="large" /> }
                         ]}
                         footer={{
                             collapseButton: true,
