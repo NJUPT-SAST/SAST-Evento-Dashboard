@@ -49,15 +49,7 @@ export default function Userlist() {
         "getFeedbacks",
         "addPicture",
         "patchHomeSlide",
-<<<<<<< HEAD:src/pages/Roles/userlist.jsx
-<<<<<<< HEAD:src/pages/Roles/userlist.jsx
-        //"putAdmin",
-=======
         "putAdmin",
->>>>>>> 77d934f (feat: add conditional rendering):sast-evento/src/pages/Roles/userlist.jsx
-=======
-        //"putAdmin",
->>>>>>> 792cf29 (feat: update packages):sast-evento/src/pages/Roles/userlist.jsx
         "deleteLocation",
         "addType",
         "getActionList",

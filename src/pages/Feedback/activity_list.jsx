@@ -37,18 +37,12 @@ export default function LoadMoreList() {
         getData();
     }, []);
 
-<<<<<<< HEAD:src/pages/Feedback/activity_list.jsx
-    const fetchData = async () => {
-        console.log("1");
-        setLoading(true);
-=======
     const pageSize = 10;
     const [page, setPage] = useState(1);
     const [thisPage, setThisPage] = useState([])
     const getData = (page) => {
         let start = (page - 1) * pageSize;
         let end = page * pageSize;
->>>>>>> 8b11972 (feat: add some fetch):sast-evento/src/pages/Feedback/activity_list.jsx
 
 
         // const params = {
@@ -89,18 +83,11 @@ export default function LoadMoreList() {
         setListVisible(false);
     };
 
-<<<<<<< HEAD:src/pages/Feedback/activity_list.jsx
-    const feedbackData = []
-    feedbackData.push({
-        feedback: '关注前端组谢谢喵~~~',
-        rating: 5,
-=======
     const feedbackList = []
     feedbackList.push({
         content: '灌注前端组谢谢喵~~~',
         score: 4.6,
         eventId: 1
->>>>>>> 8b11972 (feat: add some fetch):sast-evento/src/pages/Feedback/activity_list.jsx
     },
         {
             content: '我们前端组授课真是太强啦！！！',
@@ -155,14 +142,10 @@ export default function LoadMoreList() {
                 }
                 style={{ userSelect: 'none' }}
             />
-<<<<<<< HEAD:src/pages/Feedback/activity_list.jsx
-            <Modal title="活动反馈详情" fullScreen maskClosable={false} visible={visible} onOk={onClose} onCancel={onClose}>
-=======
             <Pagination size='small' style={{ width: '100%', flexBasis: '100%', justifyContent: 'center' }}
                 pageSize={pageSize} total={data.length} currentPage={page} onChange={cPage => setPage(cPage)} />
             <Modal title="活动反馈详情" width={500} height={650}
                 maskClosable={false} visible={visible} onOk={onClose} onCancel={onClose}>
->>>>>>> 8b11972 (feat: add some fetch):sast-evento/src/pages/Feedback/activity_list.jsx
                 <p>活动报名人数：{ }</p>
                 <p>活动签到人数：{ }</p>
                 <p>活动反馈评分平均分：{ }</p>
@@ -176,15 +159,8 @@ export default function LoadMoreList() {
                     dataSource={feedbackList}
                     renderItem={item => <List.Item>{
                         <>
-<<<<<<< HEAD:src/pages/Feedback/activity_list.jsx
-                            <p>
-                                <Rating defaultValue={5} value={item.rating} style={{ 'margin-right': '1vh' }} />
-                                <span>{item.feedback}</span>
-                            </p>
-=======
                             <Rating allowHalf defaultValue={5} value={item.score} disabled style={{ marginRight: '1', display: 'flex' }} />
                             <span style={{ display: 'flex' }}>{item.content}</span>
->>>>>>> 8b11972 (feat: add some fetch):sast-evento/src/pages/Feedback/activity_list.jsx
                         </>
 
                     }</List.Item>}
