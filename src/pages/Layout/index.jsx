@@ -41,7 +41,7 @@ function TheLayout() {
                     <Nav
                         renderWrapper={({ itemElement, isSubNav, isInSubNav, props }) => {
                             const routerMap = {
-                                Home: '/',
+                                Home: '/activity',
                                 Feedback: '/feedback',
                                 Timetable: '/timetable',
                                 Activity: '/activity',
