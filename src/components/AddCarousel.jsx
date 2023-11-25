@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   Modal,
   Button,
@@ -21,7 +21,7 @@ function AddHomeSlide() {
   const [total, setTotal] = useState(0);
   const [visible, setVisible] = useState(false);
   const [page, setPage] = useState(1);
-  const [hoverIndex,setHoveredIndex] = useState()
+  const [hoverIndex, setHoveredIndex] = useState();
   const data = {
     url: "",
     title: "",
@@ -39,6 +39,7 @@ function AddHomeSlide() {
       setTotal(res.data.data.total);
       const images = res.data.data.images;
       const newImages = images.map((item) => item.uri);
+      console.log(newImages);
       setImageUrls(newImages);
     });
   };
@@ -105,15 +106,7 @@ function AddHomeSlide() {
 
   //选中图片的代码
   //这里直接操作dom，修改了指定的button的opacity，来设置被选中的图片
-  const handleSelect = () => {
-    console.log(hoverIndex);
-    console.log(imageRef.current.childNodes);
-    for (let i = 0; i < imageRef.current.childNodes.length; i++) {
-      const childNode = imageRef.current.childNodes[i];
-      console.log(childNode.childNodes[1].style.opacity = 0);
-    }
-    imageRef.current.childNodes[hoverIndex].childNodes[1].style.opacity = 1
-  };
+  const handleSelect = () => {};
 
   const handleMouseEnter = (index) => {
     setHoveredIndex(index);
@@ -180,15 +173,15 @@ function AddHomeSlide() {
             <Select.Option value="Maintainer">Maintainer</Select.Option>
           </Select>
         </div>
-        <div className="addCarouselImageContainer"  ref={imageRef}>
+        <div className="addCarouselImageContainer" ref={imageRef}>
           {imageUrls.map((url, index) => (
             <div className="addCarouselImageItem" key={index}>
+              {/* 选定图片的动画没写好 */}
               <Image
                 src={url}
                 alt={`Image ${index + 1}`}
                 className="addCarouselImage"
                 onMouseEnter={() => handleMouseEnter(index)}
-
               />
               <button className="addCarouselButton" onClick={handleSelect}>
                 <IconTick />

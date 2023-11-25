@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   SideSheet,
   Button,
   Typography,
   Form,
-  Upload,
-  Image,
-  Tag,
   Select,
   Avatar,
 } from "@douyinfe/semi-ui";
-import { v4 as uuidv4 } from "uuid";
 
 function PatchHomeSlide(props) {
   const [visible, setVisible] = useState(false);
@@ -71,16 +67,6 @@ function PatchHomeSlide(props) {
       </Select.Option>
     );
   };
-
-  // const defaultFileList = [
-  //     {
-  //         uid: uuidv4(),
-  //         name: 'default.png',
-  //         status: 'success',
-  //         preview: true,
-  //         url: props.data.url
-  //     }
-  // ]
   const data = {
     slideId: props.data.slideId,
     title: props.data.title,
@@ -98,9 +84,7 @@ function PatchHomeSlide(props) {
     data.link = values.link;
     data.url = values.url;
   };
-  // const getFile = file => {
-  //     data.url = file
-  // }
+  
   function show() {
     setVisible(true);
   }

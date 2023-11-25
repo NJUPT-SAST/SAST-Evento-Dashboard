@@ -1,9 +1,13 @@
 import React from "react";
 import { Popconfirm, Button } from "@douyinfe/semi-ui";
+import { deleteSlide } from "../utils/homeSlide";
 
 function DeleteHomeSlide(props) {
-  const handledelete = () => {
-    console.log(props.slideId);
+  const handleDelete = () => {
+    const slideId = props.slideId;
+    deleteSlide(slideId).then((res) => {
+      console.log(res);
+    });
   };
   return (
     <>
@@ -11,7 +15,7 @@ function DeleteHomeSlide(props) {
         content="是否确认删除"
         title="确认"
         style={{ width: 320 }}
-        onConfirm={handledelete}
+        onConfirm={handleDelete}
       >
         <Button theme="borderless" type="danger">
           删除

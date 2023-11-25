@@ -159,7 +159,7 @@ function TheLayout() {
             }}
           ></Nav>
         </Sider>
-        <Layout>
+        <Layout style={{height: "100%"}}>
           <Outlet />
         </Layout>
       </Layout>

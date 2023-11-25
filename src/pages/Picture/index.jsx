@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Table, Space } from "@douyinfe/semi-ui";
 import AddHomeSlide from "../../components/AddCarousel";
 import DeleteHomeSlide from "../../components/DeleteCarousel";
@@ -8,9 +8,11 @@ import { getSlide } from "../../utils/homeSlide";
 function Picture() {
   const [data, setData] = useState([]);
   const [total, setTotal] = useState();
+  const [currentPage, setCurrentPage] = useState();
 
   useEffect(() => {
     getSlide(1).then((res) => {
+      console.log(res.data.data.slides);
       setData(res.data.data.slides);
       setTotal(res.data.data.total);
     });
@@ -42,18 +44,38 @@ function Picture() {
         //两个按钮删除 编辑
         <Space>
           <PatchHomeSlide data={record} />
-          <DeleteHomeSlide slideId={record.slideId} />
+          <DeleteHomeSlide slideId={record.id} />
         </Space>
       ),
     },
   ];
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    getSlide(page).then((res) => {
+      setData(res.data.data.slides);
+      console.log(res.data.data);
+    });
+  };
+
   return (
     //添加按钮和Table组件
     <>
       <div style={{ textAlign: "right" }}>
         <AddHomeSlide />
       </div>
-      <Table columns={columns} dataSource={data} pagination={true} />
+      <div style={{ padding: "20px" }}>
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={{
+            currentPage,
+            pageSize: 8,
+            total: total,
+            onPageChange: handlePageChange,
+          }}
+        />
+      </div>
     </>
   );
 }

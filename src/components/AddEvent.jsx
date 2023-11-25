@@ -61,6 +61,7 @@ function AddEvent(props) {
   //useEffect获取初始的组织、地点、类型
   useEffect(() => {
     getDepartments().then((res) => {
+      console.log(res);
       setDepartments(res.data.data);
     });
     getLocations().then((res) => {

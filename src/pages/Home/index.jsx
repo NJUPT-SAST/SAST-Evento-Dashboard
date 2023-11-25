@@ -65,45 +65,6 @@ function Home() {
         }
       },
     },
-    // {
-    //     title: '二维码',
-    //     dataIndex: ' QRcode',
-    //     align: "center",
-    //     render: (_, record) => (
-    //         <Space>
-    //             <EventQrcodeGet record={record} />
-    //         </Space>
-    //     )
-    // },
-    // {
-    //     title:'活动图片',
-    //     dataIndex:'picture',
-    //     align:'center',
-    //     render:(_,record)=>(
-    //         <Space>
-    //             <AddImage record={record}/>
-    //         </Space>
-    //     )
-    // },
-    // {
-    //     title: '操作',
-    //     dataIndex: 'operate',
-    //     align: "center",
-    //     render: (_, record) => (
-    //         <Space>
-    //             <AuthPermission>
-    //                 <PutEvent record={record} id={record.eventid} />
-    //             </AuthPermission>
-    //             <GetManager title={record.name} id={record.eventid} />
-    //             <AuthPermission>
-    //                 <PatchEvent record={record} id={record.eventid} />
-    //             </AuthPermission>
-    //             <AuthPermission>
-    //                 <DeleteEvent record={record} id={record.eventid} />
-    //             </AuthPermission>
-    //         </Space>
-    //     )
-    // },
     {
       title: "",
       dataIndex: "openrate",
@@ -119,130 +80,6 @@ function Home() {
       },
     },
   ];
-  // const data =
-  //     [
-  //         {
-  //             "id": 1,
-  //             "title": "后端联合授课",
-  //             "description": "描述",
-  //             "gmtEventStart": "2023-08-08 22:38:44",
-  //             "gmtEventEnd": "2023-08-08 22:38:49",
-  //             "gmtRegistrationStart": "2023-08-08 22:38:51",
-  //             "gmtRegistrationEnd": "2023-08-08 22:38:53",
-  //             "eventType": {
-  //                 "id": 2,
-  //                 "typeName": "日常授课",
-  //                 "allowConflict": true
-  //             },
-  //             "location": "9",
-  //             "tag": "标签",
-  //             "state": "IN_PROGRESS",
-  //             "departments": [
-  //                 {
-  //                     "id": 1,
-  //                     "departmentName": "后端组"
-  //                 },
-  //                 {
-  //                     "id": 2,
-  //                     "departmentName": "前端组"
-  //                 },
-  //                 {
-  //                     "id": 3,
-  //                     "departmentName": "运维组"
-  //                 }
-  //             ]
-  //         },
-  //         {
-  //             "id": 2,
-  //             "title": "前端联合授课",
-  //             "description": "描述",
-  //             "gmtEventStart": "2023-08-09 10:30:49",
-  //             "gmtEventEnd": "2023-08-09 10:30:52",
-  //             "gmtRegistrationStart": "2023-08-09 10:30:54",
-  //             "gmtRegistrationEnd": "2023-08-09 10:30:58",
-  //             "eventType": {
-  //                 "id": 2,
-  //                 "typeName": "日常授课",
-  //                 "allowConflict": true
-  //             },
-  //             "location": "4",
-  //             "tag": "标签",
-  //             "state": "IN_PROGRESS",
-  //             "departments": [
-  //                 {
-  //                     "id": 1,
-  //                     "departmentName": "后端组"
-  //                 },
-  //                 {
-  //                     "id": 2,
-  //                     "departmentName": "前端组"
-  //                 },
-  //                 {
-  //                     "id": 3,
-  //                     "departmentName": "运维组"
-  //                 }
-  //             ]
-  //         },
-  //         {
-  //             "id": 3,
-  //             "title": "运维组授课",
-  //             "description": "描述",
-  //             "gmtEventStart": "2023-08-09 10:31:19",
-  //             "gmtEventEnd": "2023-08-09 10:31:22",
-  //             "gmtRegistrationStart": "2023-08-09 10:31:25",
-  //             "gmtRegistrationEnd": "2023-08-09 10:31:28",
-  //             "eventType": {
-  //                 "id": 2,
-  //                 "typeName": "日常授课",
-  //                 "allowConflict": true
-  //             },
-  //             "location": "10",
-  //             "tag": "标签",
-  //             "state": "NOT_STARTED",
-  //             "departments": []
-  //         },
-  //         {
-  //             "id": 4,
-  //             "title": "游戏组授课",
-  //             "description": "描述",
-  //             "gmtEventStart": "2023-08-09 10:31:47",
-  //             "gmtEventEnd": "2023-08-09 10:31:50",
-  //             "gmtRegistrationStart": "2023-08-09 10:31:52",
-  //             "gmtRegistrationEnd": "2023-08-09 10:31:54",
-  //             "eventType": {
-  //                 "id": 2,
-  //                 "typeName": "日常授课",
-  //                 "allowConflict": true
-  //             },
-  //             "location": "11",
-  //             "tag": "标签",
-  //             "state": "CHECKING_IN",
-  //             "departments": []
-  //         },
-  //         {
-  //             "id": 5,
-  //             "title": "后端组授课",
-  //             "description": "描述",
-  //             "gmtEventStart": "2023-08-10 19:25:38",
-  //             "gmtEventEnd": "2023-08-10 19:25:42",
-  //             "gmtRegistrationStart": "2023-08-10 19:25:45",
-  //             "gmtRegistrationEnd": "2023-08-10 19:25:47",
-  //             "eventType": {
-  //                 "id": 2,
-  //                 "typeName": "日常授课",
-  //                 "allowConflict": true
-  //             },
-  //             "location": "9",
-  //             "tag": "标签",
-  //             "state": "ENDED",
-  //             "departments": [
-  //                 {
-  //                     "id": 1,
-  //                     "departmentName": "后端组"
-  //                 }
-  //             ]
-  //         }
-  //     ];
 
   const getdepartment = (values) => {
     const departments = [];
@@ -268,6 +105,7 @@ function Home() {
     setLoading(true);
     getEvent(currentPage)
       .then((res) => {
+        console.log(res);
         console.log(res.data.data);
         setData(res.data.data.result);
         setTotal(res.data.data.total);
