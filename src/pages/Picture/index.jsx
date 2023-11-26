@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {
-  Space,
   Input,
   Tabs,
   TabPane,
   Image,
   Button,
   Pagination,
+  Modal,
+  Card,
 } from "@douyinfe/semi-ui";
 import AddHomeSlide from "../../components/AddCarousel";
-import DeleteHomeSlide from "../../components/DeleteCarousel";
-import PatchHomeSlide from "../../components/EditCarousel";
 import { getSlide, deleteSlide } from "../../utils/homeSlide";
 import "./index.scss";
 
@@ -18,11 +17,12 @@ function Picture() {
   const [data, setData] = useState([]);
   const [total, setTotal] = useState();
   const [currentPage, setCurrentPage] = useState();
-  const [contentHeight, setContentHeight] = useState();
-  // const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteVisible, setDeleteVisible] = useState(false);
+  const [patchVisible, setPatchVisible] = useState(false);
+  const [chosenSlide, setChosenSlide] = useState();
 
   const getNewSlide = async () => {
-    await getSlide(1).then((res) => {
+    await getSlide(currentPage).then((res) => {
       console.log(res);
       console.log(res.data.data.slides);
       setData(res.data.data.slides);
@@ -33,72 +33,46 @@ function Picture() {
   useEffect(() => {
     //这里通过利用总视口高度，来根据window大小，动态调整目录的高度的大小
     getNewSlide();
-    const windowHeight = window.innerHeight;
-    const newContentHeight = windowHeight - 245;
-    setContentHeight(newContentHeight);
   }, []);
-
-  const handleDeleteLoadingChange = (deleteLoading) => {
-    // 在这里处理传递的 loading 值
-    console.log("deleteLoading:", deleteLoading);
-    if (deleteLoading === false) {
-      getNewSlide();
-    }
-  };
-
-  useEffect(() => {
-    console.log(contentHeight);
-  }, [contentHeight]);
-
-  const columns = [
-    {
-      title: "标题",
-      dataIndex: "title",
-      align: "center",
-    },
-    {
-      title: "链接",
-      dataIndex: "link",
-      align: "center",
-    },
-    {
-      title: "图片",
-      dataIndex: "url",
-      align: "center",
-      render: (url) => {
-        return <img src={url || " "} width={60} height={30} alt=""></img>;
-      },
-    },
-    {
-      title: "操作",
-      dataIndex: "operate",
-      align: "center",
-      render: (_, record) => (
-        //两个按钮删除 编辑
-        <Space>
-          <PatchHomeSlide data={record} />
-          <DeleteHomeSlide
-            slideId={record.id}
-            onDeleteLoadingChange={handleDeleteLoadingChange}
-          />
-        </Space>
-      ),
-    },
-  ];
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    getSlide(page).then((res) => {
-      setData(res.data.data.slides);
-      console.log(res.data.data);
-    });
+    getNewSlide();
   };
 
-  const deletePicture = async (slideId) => {
-    await deleteSlide(slideId).then(res=>{
+  const deletePicture = async () => {
+    await deleteSlide(chosenSlide.id).then((res) => {
       console.log(res);
-    })
+    });
     getNewSlide();
+  };
+
+  const changePictureMessage = async (slideId) => {
+    console.log("hello");
+    console.log(slideId);
+  };
+
+  //delete Modal框相关代码
+  const showDeleteModal = (slideId) => {
+    const newChosenSlide = data.find((obj) => obj.id === slideId);
+    setChosenSlide(newChosenSlide);
+    setDeleteVisible(true);
+  };
+
+  const handleDeleteOk = () => {
+    setDeleteVisible(false);
+    console.log("Ok button clicked");
+    // console.log();
+    deletePicture();
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteVisible(false);
+    console.log("Cancel button clicked");
+  };
+
+  const handleDeleteAfterClose = () => {
+    console.log("After Close callback executed");
   };
 
   return (
@@ -136,8 +110,10 @@ function Picture() {
                         className="input"
                         value={item.link}
                       ></Input>
-                      <Button>确认修改</Button>
-                      <Button onClick={() => deletePicture(item.id)}>
+                      <Button onClick={() => changePictureMessage(item.id)}>
+                        确认修改
+                      </Button>
+                      <Button onClick={() => showDeleteModal(item.id)}>
                         删除幻灯片
                       </Button>
                     </div>
@@ -150,6 +126,30 @@ function Picture() {
             <Pagination total={total} onChange={handlePageChange}></Pagination>
           </div>
         </div>
+        <Modal
+          title="删除幻灯片"
+          visible={deleteVisible}
+          onOk={handleDeleteOk}
+          afterClose={handleDeleteAfterClose} //>=1.16.0
+          onCancel={handleDeleteCancel}
+          closeOnEsc={true}
+        >
+          <span>
+            <strong> 确定要删除该张幻灯片吗？</strong>
+          </span>
+          {chosenSlide && (
+            <>
+              <Card
+                style={{ width: "100%" }}
+                cover={<img alt="example" src={chosenSlide.url} />}
+              >
+                <span>
+                  <strong>Title: {chosenSlide.title}</strong>
+                </span>
+              </Card>
+            </>
+          )}
+        </Modal>
       </div>
     </>
   );

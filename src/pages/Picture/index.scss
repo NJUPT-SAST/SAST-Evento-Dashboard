@@ -49,3 +49,15 @@
   justify-content: flex-end;
   margin-top: 12px;
 }
+
+.semi-modal-content {
+  img {
+    width: 100%;
+  }
+  .semi-card {
+    margin-top: 20px;
+    span {
+      font-size: 18px;
+    }
+  }
+}
