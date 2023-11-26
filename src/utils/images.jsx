@@ -1,6 +1,6 @@
 import request from "./request";
 
-export const getPictureList = (dir, num,size) => {
+export const getPictureList = (dir, num, size) => {
   return request({
     method: "get",
     url: "/api/picture/list",
@@ -13,7 +13,6 @@ export const getPictureList = (dir, num,size) => {
 };
 
 export const addPictureList = (picture, dir) => {
-  
   const formData = new FormData();
   formData.append("picture", picture);
   formData.append("dir", dir);
@@ -25,7 +24,6 @@ export const addPictureList = (picture, dir) => {
   });
 };
 
-
 export const deletePictureList = (key, dir) => {
   return request({
     method: "delete",
@@ -34,5 +32,12 @@ export const deletePictureList = (key, dir) => {
       key: key,
       dir: dir,
     },
+  });
+};
+
+export const getPictureDir = () => {
+  return request({
+    method: "get",
+    url: "/api/picture/dir",
   });
 };

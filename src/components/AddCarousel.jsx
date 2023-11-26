@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import {
   Modal,
   Button,
-  Upload,
   Input,
   Form,
   Col,
@@ -60,9 +59,11 @@ function AddHomeSlide() {
 
   function getTitle(value) {
     data.title = value;
+    console.log(data);
   }
   function getLink(value) {
     data.link = value;
+    console.log(data);
   }
 
   //第二个modal的逻辑代码

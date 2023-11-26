@@ -58,19 +58,22 @@ function Picture() {
     });
   };
 
+  const scroll = useMemo(() => ({ y: 1000 }), []);
+
   return (
     //添加按钮和Table组件
     <>
-      <div style={{ textAlign: "right" }}>
+      <div style={{ textAlign: "right", height: "45px"}}>
         <AddHomeSlide />
       </div>
       <div style={{ padding: "20px" }}>
         <Table
           columns={columns}
           dataSource={data}
+          scroll={scroll}
           pagination={{
             currentPage,
-            pageSize: 8,
+            pageSize: 10,
             total: total,
             onPageChange: handlePageChange,
           }}
