@@ -5,7 +5,7 @@ export const getSlide = (current) => {
     method: "get",
     url: "/api/slide/home/list",
     params: {
-      size: 8,
+      size: 10,
       current: current,
     },
   });
