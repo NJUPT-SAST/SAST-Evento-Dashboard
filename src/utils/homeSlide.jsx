@@ -5,7 +5,7 @@ export const getSlide = (current) => {
     method: "get",
     url: "/api/slide/home/list",
     params: {
-      size: 10,
+      size: 8,
       current: current,
     },
   });
@@ -21,3 +21,5 @@ export const deleteSlide = (slideId) => {
     data: formData,
   });
 };
+
+

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Popconfirm, Button } from "@douyinfe/semi-ui";
 import { deleteSlide } from "../utils/homeSlide";
 import "./DeleteCarousel.scss";

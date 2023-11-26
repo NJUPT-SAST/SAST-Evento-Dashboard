@@ -16,19 +16,17 @@ import { getPictureList } from "../utils/images";
 import "./AddCarousel.scss";
 
 function AddHomeSlide() {
+  const titleRef = useRef();
   const [imageUrls, setImageUrls] = useState([]);
   const [total, setTotal] = useState(0);
   const [visible, setVisible] = useState(false);
   const [page, setPage] = useState(1);
   const [hoverIndex, setHoveredIndex] = useState();
-  const data = {
-    url: "",
-    title: "",
-    link: "",
-  };
   const [uploadImageVisible, setUploadImageVisible] = useState(false);
-  let limit = 1;
   const [select, setSelect] = useState("test");
+  const [title, setTitle] = useState();
+  const [link,setLink] = useState();
+  const [url,setUrl] = useState();
   const imageRef = useRef();
 
   //这里将api请求和数据更新的代码封装起来
@@ -58,12 +56,10 @@ function AddHomeSlide() {
   }
 
   function getTitle(value) {
-    data.title = value;
-    console.log(data);
+    setTitle(value)
   }
   function getLink(value) {
-    data.link = value;
-    console.log(data);
+    setLink(value)
   }
 
   //第二个modal的逻辑代码
@@ -81,6 +77,7 @@ function AddHomeSlide() {
   function handleImageCancel() {
     setUploadImageVisible(false);
     setVisible(true);
+    console.log(title);
   }
 
   const handleAfterClose = () => {
@@ -115,7 +112,7 @@ function AddHomeSlide() {
 
   return (
     <>
-      <Button theme="solid" className="button" onClick={showDialog}>
+      <Button theme="borderless" className="button" onClick={showDialog}>
         添加首页图
       </Button>
       <Modal
@@ -129,9 +126,11 @@ function AddHomeSlide() {
           <Row>
             <Col span={12}>
               <Input
+                ref={titleRef}
                 placeholder={"添加标题"}
                 style={{ width: "90%" }}
                 onChange={getTitle}
+                value={title}
               />
             </Col>
             <Col span={12}>
@@ -139,6 +138,7 @@ function AddHomeSlide() {
                 placeholder={"添加链接"}
                 style={{ width: "90%" }}
                 onChange={getLink}
+                value={link}
               />
             </Col>
           </Row>
@@ -149,7 +149,7 @@ function AddHomeSlide() {
           theme="light"
           onClick={showUploadImage}
         >
-          上传图片
+          选择上传图片
         </Button>
       </Modal>
       <Modal

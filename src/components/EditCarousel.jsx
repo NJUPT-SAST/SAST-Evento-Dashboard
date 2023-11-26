@@ -7,16 +7,18 @@ import {
   Select,
   Avatar,
 } from "@douyinfe/semi-ui";
+import "./EditCarousel.scss";
 
 function PatchHomeSlide(props) {
-  const [visible, setVisible] = useState(false);
-
-  const list = [
-    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/dy.png",
-    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/bag.jpeg",
-    "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png",
-    "https://sf6-cdn-tos.douyinstatic.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/6fbafc2d-e3e6-4cff-a1e2-17709c680624.png",
-  ];
+  const [patchSliderVisible, setPatchSliderVisible] = useState(false);
+  const list = [];
+  //data初始化
+  const data = {
+    slideId: props.data.slideId,
+    title: props.data.title,
+    link: props.data.link,
+    url: props.data.url,
+  };
 
   const newList = list.map((url, index) => {
     return {
@@ -25,6 +27,7 @@ function PatchHomeSlide(props) {
       avatar: url,
     };
   });
+
   //渲染图片选择组件
   const renderSelectedItem = (optionNode) => (
     <div style={{ display: "flex", alignItems: "center" }}>
@@ -67,16 +70,10 @@ function PatchHomeSlide(props) {
       </Select.Option>
     );
   };
-  const data = {
-    slideId: props.data.slideId,
-    title: props.data.title,
-    link: props.data.link,
-    url: props.data.url,
-  };
 
   const onSubmit = () => {
     console.log(data);
-    setVisible(false);
+    setPatchSliderVisible(false);
   };
 
   const handleChange = (values) => {
@@ -84,9 +81,10 @@ function PatchHomeSlide(props) {
     data.link = values.link;
     data.url = values.url;
   };
-  
-  function show() {
-    setVisible(true);
+
+  function showPatchSlider() {
+    setPatchSliderVisible(true);
+    console.log(props);
   }
 
   const footer = (
@@ -98,16 +96,16 @@ function PatchHomeSlide(props) {
   );
   return (
     <>
-      <Button theme="borderless" onClick={show}>
+      <Button theme="borderless" onClick={showPatchSlider}>
         编辑
       </Button>
       <SideSheet
         title={<Typography.Title heading={4}>编辑幻灯片</Typography.Title>}
         headerStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
         bodyStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
-        visible={visible}
+        visible={patchSliderVisible}
         width="30wv"
-        onCancel={() => setVisible(false)}
+        onCancel={() => setPatchSliderVisible(false)}
         footer={footer}
       >
         <Form
@@ -122,14 +120,14 @@ function PatchHomeSlide(props) {
             label="标题"
             trigger="blur"
             style={{ width: 200 }}
-            initValue={props.data.title}
+            initValue={data.title}
           />
           <Form.Input
             field="link"
             label="链接"
             trigger="blur"
             style={{ width: 200 }}
-            initValue={props.data.link}
+            initValue={data.link}
           />
           <Form.Select
             field="url"
@@ -137,7 +135,7 @@ function PatchHomeSlide(props) {
             trigger="blur"
             style={{ width: 250 }}
             placeholder="请选择"
-            initValue={props.data.url}
+            initValue={data.url}
             renderSelectedItem={renderSelectedItem}
           >
             {newList.map((item, index) => renderCustomOption(item, index))}

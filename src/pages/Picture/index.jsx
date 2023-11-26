@@ -1,9 +1,18 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { Table, Space } from "@douyinfe/semi-ui";
+import React, { useEffect, useState } from "react";
+import {
+  Space,
+  Input,
+  Tabs,
+  TabPane,
+  Image,
+  Button,
+  Pagination,
+} from "@douyinfe/semi-ui";
 import AddHomeSlide from "../../components/AddCarousel";
 import DeleteHomeSlide from "../../components/DeleteCarousel";
 import PatchHomeSlide from "../../components/EditCarousel";
-import { getSlide } from "../../utils/homeSlide";
+import { getSlide, deleteSlide } from "../../utils/homeSlide";
+import "./index.scss";
 
 function Picture() {
   const [data, setData] = useState([]);
@@ -14,6 +23,7 @@ function Picture() {
 
   const getNewSlide = async () => {
     await getSlide(1).then((res) => {
+      console.log(res);
       console.log(res.data.data.slides);
       setData(res.data.data.slides);
       setTotal(res.data.data.total);
@@ -84,27 +94,62 @@ function Picture() {
     });
   };
 
-  // const scroll = useMemo(() => ({ y: 500 }), []);
-  const scroll = useMemo(() => ({ y: contentHeight }), [contentHeight]);
+  const deletePicture = async (slideId) => {
+    await deleteSlide(slideId).then(res=>{
+      console.log(res);
+    })
+    getNewSlide();
+  };
 
   return (
-    //添加按钮和Table组件
     <>
-      <div style={{ textAlign: "right", height: "45px" }}>
-        <AddHomeSlide />
-      </div>
-      <div style={{ padding: "20px" }}>
-        <Table
-          columns={columns}
-          dataSource={data}
-          scroll={scroll}
-          pagination={{
-            currentPage,
-            pageSize: 10,
-            total: total,
-            onPageChange: handlePageChange,
-          }}
-        />
+      <div className="pictureContainer">
+        <div className="mainContent">
+          <Tabs tabPosition="left" type="button">
+            {data &&
+              data.map((item, index) => (
+                <TabPane
+                  tab={
+                    <div className="TabNavContainer">
+                      <img src={item.url} alt={item.title}></img>
+                      <span>{item.title}</span>
+                    </div>
+                  }
+                  itemKey={item.id}
+                  key={index}
+                  className="rightContainer"
+                >
+                  <div className="upToolBar">
+                    <span>
+                      <strong>编辑幻灯片</strong>
+                    </span>
+                    <div className="inputContainer">
+                      <Input
+                        prefix="Title"
+                        showClear
+                        className="input"
+                        value={item.title}
+                      ></Input>
+                      <Input
+                        prefix="Link"
+                        showClear
+                        className="input"
+                        value={item.link}
+                      ></Input>
+                      <Button>确认修改</Button>
+                      <Button onClick={() => deletePicture(item.id)}>
+                        删除幻灯片
+                      </Button>
+                    </div>
+                  </div>
+                  <Image src={item.url}></Image>
+                </TabPane>
+              ))}
+          </Tabs>
+          <div className="PaginationContainer">
+            <Pagination total={total} onChange={handlePageChange}></Pagination>
+          </div>
+        </div>
       </div>
     </>
   );

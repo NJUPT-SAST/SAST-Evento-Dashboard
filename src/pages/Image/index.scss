@@ -28,6 +28,14 @@
           padding: 10px;
           box-sizing: border-box;
           position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          img {
+            object-fit: cover;
+            width: 100%;
+            height: calc((100vh - 60px - 45px - 20vh) / 2);
+          }
           .hoverButton {
             all: unset;
             cursor: pointer;
@@ -50,10 +58,6 @@
           &:hover .hoverButton {
             opacity: 1;
           }
-        }
-        .image img {
-          width: 100%;
-          height: 100%;
         }
       }
     }

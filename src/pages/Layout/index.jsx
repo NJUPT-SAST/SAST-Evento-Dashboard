@@ -6,8 +6,8 @@ import {
   IconLive,
   IconSetting,
   IconImage,
-  IconClock,
   IconExit,
+  IconUserCardVideo
 } from "@douyinfe/semi-icons";
 import logo from "../../assets/Logo.png";
 import { Outlet, Link } from "react-router-dom";
@@ -98,7 +98,7 @@ function TheLayout() {
               {
                 itemKey: "Picture",
                 text: "幻灯片",
-                icon: <IconImage size="large" />,
+                icon: <IconUserCardVideo size="large" />,
               },
               {
                 itemKey: "Image",
