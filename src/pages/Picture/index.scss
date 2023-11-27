@@ -28,7 +28,7 @@
           align-items: center;
           gap: 2.2vw;
           .input {
-            width: 18vw;
+            width: 14vw;
           }
         }
       }
@@ -46,8 +46,9 @@
 .PaginationContainer {
   width: 96%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 12px;
+  height: 32px;
 }
 
 .semi-modal-content {
