@@ -10,13 +10,13 @@
       width: 200px;
       img {
         height: 40px;
-        max-width: 60px;
+        width: 60px;
         overflow: hidden;
         object-fit: cover;
       }
     }
     .rightContainer {
-      margin-left: 5vw;
+      margin-left: 2vw;
       .upToolBar {
         height: 10vh;
         .inputContainer {
@@ -32,12 +32,19 @@
           }
         }
       }
-      img {
-        margin-top: 3vh;
-        height: calc(77vh - 60px - 20px);
-        max-width: calc(100vw - 220px - 20px - 200px - 6vw - 6vw);
-        overflow: hidden;
-        object-fit: contain;
+      .previewImageContainer {
+        min-width: 50vw;
+        width: fit-content;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          margin-top: 3vh;
+          height: calc(77vh - 60px - 20px);
+          max-width: calc(100vw - 220px - 20px - 200px - 6vw - 10vw);
+          overflow: hidden;
+          object-fit: contain;
+        }
       }
     }
   }

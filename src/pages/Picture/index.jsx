@@ -10,6 +10,10 @@ import {
   Card,
   Notification,
   Select,
+  Meta,
+  Avatar,
+  Text,
+  Space,
 } from "@douyinfe/semi-ui";
 import { IconTick } from "@douyinfe/semi-icons";
 import AddHomeSlide from "../../components/AddCarousel";
@@ -32,6 +36,7 @@ function Picture() {
   const [isAddPicture, setIsAddPicture] = useState(false);
   const [isSelect, setIsSelect] = useState();
   const [imagePage, setImagePage] = useState(1);
+  const { Meta } = Card;
 
   const handleValueChange = (value) => {
     setIsAddPicture(value);
@@ -129,16 +134,7 @@ function Picture() {
 
   //delete Modal框相关代码
   const showDeleteModal = () => {
-    if (title !== chosenSlide.title || link !== chosenSlide.link) {
-      Notification.open({
-        title: "幻灯片发生了修改",
-        content: "请先进行保存操作",
-        position: "top",
-        duration: 2,
-      });
-    } else {
-      setDeleteVisible(true);
-    }
+    setDeleteVisible(true);
   };
 
   const handleDeleteOk = () => {
@@ -228,41 +224,50 @@ function Picture() {
                   }
                   itemKey={`${item.id}`}
                   key={index}
-                  className="rightContainer"
                 >
-                  <div className="upToolBar">
-                    <span>
-                      <strong>编辑幻灯片</strong>
-                    </span>
-                    <div className="inputContainer">
-                      <Input
-                        prefix="Title"
-                        className="input"
-                        value={title}
-                        onChange={getTitle}
-                      ></Input>
-                      <Input
-                        prefix="Link"
-                        className="input"
-                        value={link}
-                        onChange={getLink}
-                      ></Input>
-                      <Button onClick={() => showChangeUrlModal()}>
-                        修改url
-                      </Button>
-                      <Button onClick={() => showPatchModal()}>保存修改</Button>
-                      <Button onClick={() => showDeleteModal()}>
-                        删除幻灯片
-                      </Button>
+                  <div className="rightContainer">
+                    <div className="upToolBar">
+                      <span>
+                        <strong>编辑幻灯片</strong>
+                      </span>
+                      <div className="inputContainer">
+                        <Input
+                          prefix="Title"
+                          className="input"
+                          value={title}
+                          onChange={getTitle}
+                        ></Input>
+                        <Input
+                          prefix="Link"
+                          className="input"
+                          value={link}
+                          onChange={getLink}
+                        ></Input>
+                        <Button onClick={() => showChangeUrlModal()}>
+                          修改url
+                        </Button>
+                        <Button onClick={() => showPatchModal()}>
+                          保存修改
+                        </Button>
+                        <Button onClick={() => showDeleteModal()}>
+                          删除幻灯片
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="previewImageContainer">
+                      <Image src={item.url}></Image>
                     </div>
                   </div>
-                  <Image src={item.url}></Image>
                 </TabPane>
               ))}
           </Tabs>
           <div className="PaginationContainer">
             <AddHomeSlide onValueChange={handleValueChange}></AddHomeSlide>
-            <Pagination total={total} onChange={handlePageChange}></Pagination>
+            <Pagination
+              total={total}
+              onChange={handlePageChange}
+              pageSize={10}
+            ></Pagination>
           </div>
         </div>
         <Modal
@@ -284,8 +289,16 @@ function Picture() {
                   <img alt="example" src={chosenSlide && chosenSlide.url} />
                 }
               >
-                <span>
-                  <strong>Title: {chosenSlide && chosenSlide.title}</strong>
+                <br></br>
+                <span style={{ fontSize: "20px",color:"black" }}>
+                  <strong>
+                    Title: <Space></Space>
+                    {chosenSlide && chosenSlide.title}
+                  </strong>
+                </span>
+                <br />
+                <span style={{ fontSize: "15px", fontWeight: "600" }}>
+                  Link: <Space></Space> {chosenSlide && chosenSlide.link}
                 </span>
               </Card>
             </>
