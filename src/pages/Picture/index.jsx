@@ -34,10 +34,18 @@ function Picture() {
   const [link, setLink] = useState();
   const [url, setUrl] = useState();
   const [isAddPicture, setIsAddPicture] = useState(false);
-  const [isSelect, setIsSelect] = useState();
+  const [isSelect, setIsSelect] = useState(false);
   const [imagePage, setImagePage] = useState(1);
-  const { Meta } = Card;
-
+  const [imageTotal, setImageTotal] = useState();
+  const [imageDir, setImageDir] = useState("test");
+  const [imagesDate, setImagesDate] = useState("");
+  const [chosenChangePicture, setChosenChangePicture] = useState();
+  let opts = {
+    title: "图片详情",
+    content: "请点击图片放大查看",
+    duration: 3,
+    position: "top",
+  };
   const handleValueChange = (value) => {
     setIsAddPicture(value);
   };
@@ -51,7 +59,6 @@ function Picture() {
       setTotal(res.data.data.total);
       setIsAddPicture(false);
     });
-    // getPictureList().then()
   }, [isAddPicture]);
 
   const getNewSlide = async () => {
@@ -62,6 +69,19 @@ function Picture() {
       setTotal(res.data.data.total);
     });
   };
+
+  const getNewImage = async () => {
+    await getPictureList(imageDir, imagePage, 8).then((res) => {
+      console.log(res.data.data.images);
+      console.log("imageTotal", res.data.data.total);
+      setImageTotal(res.data.data.total);
+      setImagesDate(res.data.data.images);
+    });
+  };
+
+  useEffect(() => {
+    console.log(imageTotal);
+  }, [imageTotal]);
 
   useEffect(() => {
     // 当页面刷新时，设置chosenSlide的索引值为第一张图片的id值，即为展示获得的幻灯片的第一张。
@@ -74,6 +94,7 @@ function Picture() {
       setChosenSlideIndex(`${res.data.data.slides[0].id}`);
       setData(res.data.data.slides);
       setTotal(res.data.data.total);
+      setUrl(res.data.data.uri);
     });
   }, []);
 
@@ -118,18 +139,36 @@ function Picture() {
 
   //change Url Modal框相关代码
 
-  const showChangeUrlModal = () => {
+  const showChangeUrlModal = async () => {
     setChangeUrlVisible(true);
+    await getPictureList(imageDir, imagePage, 8).then((res) => {
+      console.log(res.data.data.images);
+      console.log("imageTotal", res.data.data.total);
+      setImageTotal(res.data.data.total);
+      setImagesDate(res.data.data.images);
+      setChosenChangePicture(res.data.data.images[0]);
+    });
   };
 
   const handleChangeUrlOk = () => {
+    // if(isSelect)
+    console.log(isSelect);
+    if (isSelect) {
+      console.log("hello");
+      console.log(chosenChangePicture.uri);
+      setUrl(chosenChangePicture.uri);
+    }
+    console.log(chosenChangePicture);
     setChangeUrlVisible(false);
+    setIsSelect(false);
   };
   const handleChangeUrlAfterClose = () => {
     setChangeUrlVisible(false);
+    setIsSelect(false);
   };
   const handleChangeUrlCancel = () => {
     setChangeUrlVisible(false);
+    setIsSelect(false);
   };
 
   //delete Modal框相关代码
@@ -154,7 +193,12 @@ function Picture() {
 
   //patch Modal框相关代码
   const showPatchModal = () => {
-    if (title === chosenSlide.title && link === chosenSlide.link) {
+    console.log(chosenSlide.url);
+    if (
+      title === chosenSlide.title &&
+      link === chosenSlide.link &&
+      url === chosenSlide.url
+    ) {
       Notification.open({
         title: "幻灯片未发生修改",
         content: "请不要进行保存操作",
@@ -206,7 +250,40 @@ function Picture() {
 
   const changeImagePage = (page) => {
     console.log(page);
+    setImagePage(page);
   };
+
+  useEffect(() => {
+    getNewImage();
+  }, [imagePage]);
+
+  const changeSelect = (select) => {
+    console.log(select);
+    setImageDir(select);
+    setImagePage(1)
+  };
+
+  useEffect(() => {
+    getNewImage();
+  }, [imageDir,imagePage]);
+
+  useEffect(() => {
+    console.log(imagesDate);
+  }, [imagesDate]);
+
+  const tabChange = (tab) => {
+    console.log(tab);
+    console.log(imagesDate);
+    const newChosenImage = imagesDate.find((obj) => {
+      return `${obj.id}` === tab;
+    });
+    console.log(newChosenImage);
+    setChosenChangePicture(newChosenImage);
+  };
+
+  useEffect(() => {
+    console.log(chosenChangePicture);
+  }, [chosenChangePicture]);
 
   return (
     <>
@@ -243,7 +320,12 @@ function Picture() {
                           value={link}
                           onChange={getLink}
                         ></Input>
-                        <Button onClick={() => showChangeUrlModal()}>
+                        <Button
+                          onClick={() => {
+                            showChangeUrlModal();
+                            Notification.info(opts);
+                          }}
+                        >
                           修改url
                         </Button>
                         <Button onClick={() => showPatchModal()}>
@@ -255,7 +337,7 @@ function Picture() {
                       </div>
                     </div>
                     <div className="previewImageContainer">
-                      <Image src={item.url}></Image>
+                      <Image src={url}></Image>
                     </div>
                   </div>
                 </TabPane>
@@ -286,11 +368,15 @@ function Picture() {
               <Card
                 style={{ width: "100%" }}
                 cover={
-                  <img alt="example" src={chosenSlide && chosenSlide.url} />
+                  <img
+                    alt="example"
+                    src={chosenSlide && chosenSlide.url}
+                    className="deletePreviewPicture"
+                  />
                 }
               >
                 <br></br>
-                <span style={{ fontSize: "20px",color:"black" }}>
+                <span style={{ fontSize: "20px", color: "black " }}>
                   <strong>
                     Title: <Space></Space>
                     {chosenSlide && chosenSlide.title}
@@ -311,6 +397,7 @@ function Picture() {
           afterClose={handlePatchAfterClose} //>=1.16.0
           onCancel={handlePatchCancel}
           closeOnEsc={true}
+          className="saveModal"
         >
           <span>
             <strong> 确定要修改该张幻灯片吗？</strong>
@@ -320,15 +407,22 @@ function Picture() {
               <Card
                 style={{ width: "100%" }}
                 cover={
-                  <img alt="example" src={chosenSlide && chosenSlide.url} />
+                  <img
+                    alt="example"
+                    src={url}
+                    className="changePreviewPicture"
+                  />
                 }
               >
-                <span>
-                  <strong>Title: {title}</strong>
+                <span style={{ fontSize: "20px", color: "black " }}>
+                  <strong>
+                    Title: <Space></Space>
+                    {title}
+                  </strong>
                 </span>
-                <br></br>
-                <span>
-                  <strong>Link: {link}</strong>
+                <br />
+                <span style={{ fontSize: "15px", fontWeight: "600" }}>
+                  Link: <Space></Space> {link}
                 </span>
               </Card>
             </>
@@ -345,44 +439,56 @@ function Picture() {
         >
           <div className="selectContainer">
             <h3>请选择图库目录</h3>
-            <Select defaultValue="test" style={{ width: 120 }}>
+            <Select
+              defaultValue={imageDir}
+              style={{ width: 120 }}
+              onChange={changeSelect}
+            >
               <Select.Option value="test">test</Select.Option>
               <Select.Option value="Guest">Guest</Select.Option>
               <Select.Option value="Developer">Developer</Select.Option>
               <Select.Option value="Maintainer">Maintainer</Select.Option>
             </Select>
           </div>
-          <Tabs tabPosition="left" type="button" className="TabContent">
-            <TabPane>
-              <div className="tabPaneContainer">
-                <div className="addCarouselImageContainer">
-                  <Image src=""></Image>
-                </div>
-                {/* 这里设置了两个button，随着选定而跳转 */}
-                {!isSelect && (
-                  <Button
-                    style={{ marginRight: 14 }}
-                    onClick={() => selectPicture(true)}
-                  >
-                    选定
-                  </Button>
-                )}
-                {isSelect && (
-                  <Button
-                    icon={<IconTick />}
-                    style={{ marginRight: 14 }}
-                    onClick={() => selectPicture(false)}
-                  >
-                    选定
-                  </Button>
-                )}
-              </div>
-            </TabPane>
+          <Tabs
+            tabPosition="left"
+            type="button"
+            className="changeUrlTabsContent"
+            onChange={tabChange}
+          >
+            {imagesDate &&
+              imagesDate.map((item, index) => (
+                <TabPane tab={item.name} itemKey={`${item.id}`} key={index}>
+                  <div className="tabPaneContainer">
+                    <div className="changeUrlImageContainer">
+                      <Image src={item.uri}></Image>
+                    </div>
+                    {/* 这里设置了两个button，随着选定而跳转 */}
+                    {!isSelect && (
+                      <Button
+                        style={{ marginRight: 14, marginBottom: 2 }}
+                        onClick={() => selectPicture(true)}
+                      >
+                        选定
+                      </Button>
+                    )}
+                    {isSelect && (
+                      <Button
+                        icon={<IconTick />}
+                        style={{ marginRight: 14, marginBottom: 2 }}
+                        onClick={() => selectPicture(false)}
+                      >
+                        选定
+                      </Button>
+                    )}
+                  </div>
+                </TabPane>
+              ))}
           </Tabs>
           <div className="paginationContainer">
             <Pagination
-              total={total}
-              pageSize={4}
+              total={imageTotal}
+              pageSize={8}
               onChange={changeImagePage}
             ></Pagination>
           </div>

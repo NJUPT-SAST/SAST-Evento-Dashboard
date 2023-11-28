@@ -1,3 +1,5 @@
+@import "../../scss/common.scss";
+
 .pictureContainer {
   width: 98%;
   height: 100%;
@@ -68,4 +70,41 @@
       font-size: 18px;
     }
   }
+}
+
+.deletePreviewPicture {
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.changeUrlImageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  img {
+    object-fit: contain;
+    height: calc(36px * 4 + 15px * 3);
+  }
+}
+
+.paginationContainer {
+  width: 100%;
+}
+
+.changeUrlTabsContent {
+  .semi-tabs-bar-button {
+    height: 200px;
+    overflow: visible;
+    overflow-y: scroll;
+    width: 200px;
+  }
+  .tabPaneContainer {
+    margin-left: 10px;
+  }
+}
+
+.deletePreviewPicture,
+.changePreviewPicture {
+  @include modal-picture-preview;
 }

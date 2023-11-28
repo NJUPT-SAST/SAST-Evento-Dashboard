@@ -79,3 +79,18 @@
     }
   }
 }
+
+
+
+
+.addCarouselTabContent {
+  .semi-tabs-bar-button {
+    height: 200px;
+    overflow: visible;
+    overflow-y: scroll;
+    width: 200px;
+  }
+  .tabPaneContainer {
+    margin-left: 10px;
+  }
+}

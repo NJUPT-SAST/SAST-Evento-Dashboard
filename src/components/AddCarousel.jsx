@@ -46,7 +46,7 @@ function AddHomeSlide({ onValueChange }) {
   };
   //这里将api请求和数据更新的代码封装起来
   const getNewPictureList = () => {
-    getPictureList(select, page, 4).then((res) => {
+    getPictureList(select, page, 8).then((res) => {
       console.log("数据更新了");
       setTotal(res.data.data.total);
       setData(res.data.data);
@@ -128,12 +128,13 @@ function AddHomeSlide({ onValueChange }) {
   //select切换时的逻辑代码
   const handleSelectChange = (value) => {
     setSelect(value);
+    setPage(1)
   };
 
   useEffect(() => {
     console.log(select);
     getNewPictureList();
-  }, [select]);
+  }, [select,page]);
 
   const selectPicture = (value) => {
     setIsSelect(value);
@@ -243,7 +244,7 @@ function AddHomeSlide({ onValueChange }) {
         <Tabs
           tabPosition="left"
           type="button"
-          className="TabContent"
+          className="addCarouselTabContent"
           onChange={tabChange}
         >
           {data &&
@@ -261,7 +262,7 @@ function AddHomeSlide({ onValueChange }) {
                   {!isSelect && (
                     <Button
                       onClick={() => selectPicture(true)}
-                      style={{ marginRight: 14 }}
+                      style={{ marginRight: 14, marginBottom: 2 }}
                     >
                       选定
                     </Button>
@@ -270,7 +271,7 @@ function AddHomeSlide({ onValueChange }) {
                     <Button
                       icon={<IconTick />}
                       onClick={() => selectPicture(false)}
-                      style={{ marginRight: 14 }}
+                      style={{ marginRight: 14,marginBottom:2 }}
                     >
                       选定
                     </Button>
@@ -282,7 +283,7 @@ function AddHomeSlide({ onValueChange }) {
         <div className="paginationContainer">
           <Pagination
             total={total}
-            pageSize={4}
+            pageSize={8}
             onChange={handlePageChange}
           ></Pagination>
         </div>
