@@ -1,0 +1,21 @@
+.rolesContainer {
+  height: calc(100vh - 61px);
+  overflow-y: scroll;
+  .userListBarMessage {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    .nicknameSpan,
+    .studentIdSpan,
+    .organizationSpan {
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--semi-color-text-0);
+    }
+    .userMessage {
+      margin: 6px 0;
+      color: var(--semi-color-text-2);
+    }
+  }
+}
