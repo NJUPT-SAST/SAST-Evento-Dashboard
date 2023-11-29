@@ -1,6 +1,9 @@
 .rolesContainer {
   height: calc(100vh - 61px);
   overflow-y: scroll;
+  .userAvatar {
+    cursor: auto;
+  }
   .userListBarMessage {
     display: flex;
     flex-direction: column;
@@ -16,6 +19,28 @@
     .userMessage {
       margin: 6px 0;
       color: var(--semi-color-text-2);
+    }
+  }
+}
+
+.havePermissionShow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.addTreeSelect,
+.deleteTreeSelect {
+  width: 100%;
+}
+
+.semi-modal-content {
+  width: fit-content;
+
+  .semi-modal-body {
+    width: fit-content;
+    .semi-transfer {
+      min-width: 600px;
     }
   }
 }

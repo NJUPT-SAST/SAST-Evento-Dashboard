@@ -55,10 +55,8 @@ function TheLayout() {
             renderWrapper={({ itemElement, isSubNav, isInSubNav, props }) => {
               const routerMap = {
                 Home: "/activity",
-                Feedback: "/feedback",
                 Timetable: "/timetable",
                 Activity: "/activity",
-                Feedback: "/feedback",
                 Setting: "/roles",
                 Picture: "/picture",
                 Image: "/image",
@@ -79,11 +77,6 @@ function TheLayout() {
                 itemKey: "Home",
                 text: "活动管理",
                 icon: <IconHome size="large" />,
-              },
-              {
-                itemKey: "Feedback",
-                text: "活动反馈",
-                icon: <IconHistogram size="large" />,
               },
               {
                 itemKey: "Timetable",

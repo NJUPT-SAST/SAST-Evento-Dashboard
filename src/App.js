@@ -25,7 +25,6 @@ function App() {
               <Route path='activity-role' element={<Activity_roles />}></Route> */}
             </Route>
             <Route path="timetable" element={<Timetable />}></Route>
-            <Route path="feedback" element={<Feedback />}></Route>
             <Route path="roles" element={<Roles />}></Route>
             <Route path="picture" element={<Picture />}></Route>
             <Route path="image" element={<ImageList />}></Route>
