@@ -2,18 +2,26 @@ import React from "react";
 import { Layout, Nav, Dropdown, Avatar } from "@douyinfe/semi-ui";
 import {
   IconHome,
-  IconHistogram,
   IconLive,
   IconSetting,
   IconImage,
   IconExit,
-  IconUserCardVideo
+  IconUserCardVideo,
 } from "@douyinfe/semi-icons";
 import logo from "../../assets/Logo.png";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 
 function TheLayout() {
   const { Header, Sider } = Layout;
+  const location = useLocation();
+  const pathName = location.pathname;
+  const upPathName = capitalizeFirstLetter(pathName.split("/")[1]);
+  console.log(upPathName);
+  console.log(typeof upPathName);
+
+  function capitalizeFirstLetter(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }
 
   return (
     <Layout
@@ -54,10 +62,9 @@ function TheLayout() {
           <Nav
             renderWrapper={({ itemElement, isSubNav, isInSubNav, props }) => {
               const routerMap = {
-                Home: "/activity",
                 Timetable: "/timetable",
                 Activity: "/activity",
-                Setting: "/roles",
+                Roles: "/roles",
                 Picture: "/picture",
                 Image: "/image",
               };
@@ -71,10 +78,10 @@ function TheLayout() {
               );
             }}
             style={{ maxWidth: 220, height: "100%" }}
-            defaultSelectedKeys={["Home"]}
+            defaultSelectedKeys={[upPathName]}
             items={[
               {
-                itemKey: "Home",
+                itemKey: "Activity",
                 text: "活动管理",
                 icon: <IconHome size="large" />,
               },
@@ -84,7 +91,7 @@ function TheLayout() {
                 icon: <IconLive size="large" />,
               },
               {
-                itemKey: "Setting",
+                itemKey: "Roles",
                 text: "用户管理",
                 icon: <IconSetting size="large" />,
               },
