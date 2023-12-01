@@ -37,7 +37,7 @@ function AddEvent(props) {
   const handleSubmit = () => {
     // console.log(addEventDate);
     props.setLoading(true);
-    postEvent(addEventDate)  
+    postEvent(addEventDate)
       .then((res) => {
         console.log(res);
         getEvent(props.currentPage).then((res) => {
@@ -72,10 +72,9 @@ function AddEvent(props) {
     });
   }, []);
 
-
   return (
     <>
-      <Button theme="solid" className="button" onClick={change}>
+      <Button theme="solid" onClick={change}>
         发起活动
       </Button>
       <SideSheet

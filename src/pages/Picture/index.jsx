@@ -10,9 +10,6 @@ import {
   Card,
   Notification,
   Select,
-  Meta,
-  Avatar,
-  Text,
   Space,
 } from "@douyinfe/semi-ui";
 import { IconTick } from "@douyinfe/semi-icons";

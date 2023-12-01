@@ -1,40 +1,72 @@
-import React from 'react';
-import { Dropdown, Button } from '@douyinfe/semi-ui';
-import { IconMore } from '@douyinfe/semi-icons';
-import EventQrcodeGet from '../GetQRcode';
-import AddImage from '../AddImage';
-import PutEvent from '../EditEvent';
-import PatchEvent from '../CancelEvent';
-import DeleteEvent from '../DeleteEvent';
-import GetManager from '../Roles/GetManage';
-
+import React from "react";
+import { Dropdown, Button } from "@douyinfe/semi-ui";
+import { IconMore } from "@douyinfe/semi-icons";
+import EventQRcodeGet from "../GetQRcode";
+// import AddImage from "../AddImage";
+import PutEvent from "../EditEvent";
+import PatchEvent from "../CancelEvent";
+import DeleteEvent from "../DeleteEvent";
+import GetManager from "../Roles/GetManage";
 
 function MoreOperate(props) {
-    const menu=[
-        {node:'item',name:<EventQrcodeGet id={props.record.id}/>},
-        {node:'item',name:<AddImage/>},
-        {node:'item',name:<GetManager title={props.record.name} id={props.record.id}/>},
-        {node:'item',name:<PutEvent setData={props.setData} currentPage={props.currentPage} record={props.record} id={props.record.id}/>},
-        {node:"item",name:<PatchEvent setData={props.setData} setTotal={props.setTotal} currentPage={props.currentPage} id={props.record.id}/>},
-        {node:'item',name:<DeleteEvent setData={props.setData} setTotal={props.setTotal} currentPage={props.currentPage} id={props.record.id}/>},
-    ]
-    const nomenu=[
-        {node:'item',name:'暂无权限'}
-    ]
-    const initmenu=menu.every(obj=>Object.keys(obj).length===0)
-    return (
-        <>
-            <Dropdown
-                trigger={'click'}
-                position={'bottom'}
-                menu={initmenu==true?nomenu:menu}
-                clickToHide
-                keepDOM={'true'}
-            >
-                <IconMore/>
-            </Dropdown>
-        </>
-    )
+  const menu = [
+    { node: "item", name: <EventQRcodeGet id={props.record.id} /> },
+    // { node: "item", name: <AddImage /> },
+    {
+      node: "item",
+      name: <GetManager title={props.record.name} id={props.record.id} />,
+    },
+    {
+      node: "item",
+      name: (
+        <PutEvent
+          setData={props.setData}
+          currentPage={props.currentPage}
+          record={props.record}
+          id={props.record.id}
+        />
+      ),
+    },
+    {
+      node: "item",
+      name: (
+        <PatchEvent
+          setData={props.setData}
+          setTotal={props.setTotal}
+          currentPage={props.currentPage}
+          id={props.record.id}
+        />
+      ),
+    },
+    {
+      node: "item",
+      name: (
+        <DeleteEvent
+          setData={props.setData}
+          setTotal={props.setTotal}
+          currentPage={props.currentPage}
+          id={props.record.id}
+        />
+      ),
+    },
+  ];
+  const nomenu = [{ node: "item", name: "暂无权限" }];
+  const initmenu = menu.every((obj) => Object.keys(obj).length === 0);
+  return (
+    <>
+      <Dropdown
+        trigger={"click"}
+        position={"bottom"}
+        menu={initmenu == true ? nomenu : menu}
+        clickToHide
+        keepDOM={"true"}
+      >
+        <div style={{ cursor: "pointer" }}>
+          <IconMore />
+        </div>
+      </Dropdown>
+    </>
+  );
 }
 
-export default MoreOperate
+export default MoreOperate;

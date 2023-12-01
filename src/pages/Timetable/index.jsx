@@ -6,6 +6,7 @@ import {
   Radio,
   DatePicker,
   Select,
+  Space,
 } from "@douyinfe/semi-ui";
 import "./index.scss";
 import { getEventsList } from "../../utils/timeTable";
@@ -17,6 +18,7 @@ const TimeTable = () => {
   const [events, setEvents] = useState();
   const [department, setDepartment] = useState("");
   const [chosenDepartment, setChosenDepartment] = useState("");
+  const [data, setData] = useState("");
 
   const getNewEventsList = (typeId, departmentId, time) => {
     console.log(time);
@@ -30,29 +32,27 @@ const TimeTable = () => {
     console.log(time);
     getEventsList(typeId, departmentId, time).then((res) => {
       console.log(res.data.data);
+      setData(res.data.data);
       const resDate = res.data.data;
       // console.log(res.data.data[0].departments.departmentName);
       const newEvent = resDate.map((obj) => {
-        console.log(obj);
+        // console.log(obj);
         return {
           start: new Date(obj.gmtEventStart),
           end: new Date(obj.gmtEventEnd),
           key: `${obj.id}`,
           children: (
             <div className="CalendarItem" key={obj.id}>
-              <div>
-                日期：
-                {obj.gmtEventStart} ~ {obj.gmtEventEnd}
-              </div>
-              <div>
-                地点：
-                {obj.location}
-              </div>
-              <div>
-                部门：
+              <div className="title">
                 {obj.departments.map((obj) => {
                   return <>{obj.departmentName}</>;
                 })}
+                ：{obj.title}
+              </div>
+              {/* <div>{obj.gmtEventStart.split("")[1]}</div> */}
+              <div className="content">
+                {obj.gmtEventStart.split(" ")[1]}， 地点：
+                {obj.location}
               </div>
             </div>
           ),
@@ -100,8 +100,60 @@ const TimeTable = () => {
     setChosenDepartment(value);
   };
 
+  //这里是调整日历的逻辑代码
+  // const test = () => {
+  //   const target = document.getElementsByClassName("semi-calendar-event-items");
+  //   const eventItems = target[1].childNodes;
+  //   let allDate = data.map((obj) => {
+  //     const start = new Date(obj.gmtEventStart);
+  //     const end = new Date(obj.gmtEventEnd);
+  //     return {
+  //       dateId: obj.id,
+  //       start: start,
+  //       end: end,
+  //       isOneDay: start.getDate() === end.getDate(),
+  //     };
+  //   });
+  //   console.log(allDate);
+  //   allDate.filter((obj) => obj.isOneDay === true);
+  //   console.log(allDate);
+  //   const dateWidth = allDate.map((obj, index) => {
+  //     let dividerWidth = 1;
+  //     console.log(obj);
+  //     // console.log(index);
+  //     for (let index = 0; index < allDate.length; index++) {
+  //       // const element = array[index];
+  //       if (obj.start < allDate[index].end && obj.end > allDate[index].end) {
+  //         // console.log("hello");
+  //         dividerWidth++;
+  //         console.log(allDate[index].dateId);
+  //       }
+  //       if (
+  //         obj.start > allDate[index].start &&
+  //         obj.end < allDate[index].start
+  //       ) {
+  //         // console.log("hi");
+  //         dividerWidth++;
+  //         console.log(allDate[index].dateId);
+  //       }
+  //     }
+  //     // if(obj.start > )
+  //     return {
+  //       id: obj.dateId,
+  //       dividerWidth: dividerWidth,
+  //     };
+  //   });
+  //   console.log(eventItems[0]);
+  //   console.log(dateWidth);
+  //   // for (let item in eventItems){
+  //   //   console.log(item);
+  //   // }
+  // };
+
   return (
     <>
+      {/* 这里是调整日历的逻辑代码 */}
+      {/* <button onClick={test}>test</button> */}
       <div className="timetableContainer">
         <RadioGroup type="button" onChange={changeMode} value={mode}>
           <Radio value={"day"}>日视图</Radio>

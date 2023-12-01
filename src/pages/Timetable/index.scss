@@ -3,13 +3,24 @@
   .calendarContent {
     height: calc(100vh - 60px - 4px - 32px - 28px - 5vh - 2vh) !important;
     .CalendarItem {
-      border-radius: 3px;
+      border-radius: 4px;
       box-sizing: border-box;
       border: var(--semi-color-bg-1) 1px solid;
       padding: 2px 4px;
-      background-color: var(--semi-color-primary-light-active);
+      background-color: var(--semi-color-secondary-light-default);
       height: 100%;
       overflow: hidden;
+      border-left: 4px solid rgb(103, 156, 211);
+      font-size: 12px;
+      .title {
+        color: rgb(93, 146, 255);
+        font-size: 14px;
+        font-weight: 800;
+      }
+      .content {
+        color: rgb(103, 156, 233);
+        font-weight: 400;
+      }
     }
   }
 }

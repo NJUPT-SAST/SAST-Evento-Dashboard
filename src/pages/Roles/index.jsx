@@ -7,7 +7,6 @@ import {
   Avatar,
   Modal,
   ButtonGroup,
-  TreeSelect,
   Transfer,
   Tag,
 } from "@douyinfe/semi-ui";
@@ -15,7 +14,6 @@ import {
   getUserList,
   getAdminTreeDate,
   getUserPermission,
-  addUserPermission,
   changeUserPermission,
 } from "../../utils/roles";
 import "./index.scss";
@@ -167,7 +165,7 @@ const Roles = () => {
                       <span className="emailSpan">邮箱：{item.email}</span>
                       <br></br>
                       <span className="biographySpan">
-                        简历：{item.biography}
+                        签名：{item.biography}
                       </span>
                     </div>
                   </div>
@@ -209,11 +207,12 @@ const Roles = () => {
         </div>
       </Modal>
       <Modal
-        title="权限添加"
+        title="权限修改"
         maskClosable={false}
         visible={changePermissionVisible}
         onOk={onChangeOk}
         onCancel={onChangeClose}
+        className=""
       >
         <Transfer
           dataSource={treeData}

@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import Timetable from "./pages/Timetable";
 import Picture from "./pages/Picture";
 import Roles from "./pages/Roles";
-import Feedback from "./pages/Feedback";
 import Page404 from "./pages/Page404";
 import ImageList from "./pages/Image";
 import Bind from "./pages/Bind";

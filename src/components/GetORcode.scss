@@ -1,0 +1,14 @@
+.QRcodeFooter {
+  text-align: center;
+}
+
+.QRcodeContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.QRcodeSpan {
+  color: var(--semi-color-info);
+  font-weight: 900;
+}

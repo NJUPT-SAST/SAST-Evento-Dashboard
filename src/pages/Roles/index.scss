@@ -34,13 +34,15 @@
   width: 100%;
 }
 
-.semi-modal-content {
-  width: fit-content;
-
-  .semi-modal-body {
+.changeModal {
+  .semi-modal-content {
     width: fit-content;
-    .semi-transfer {
-      min-width: 600px;
+
+    .semi-modal-body {
+      width: fit-content;
+      .semi-transfer {
+        min-width: 600px;
+      }
     }
   }
 }
