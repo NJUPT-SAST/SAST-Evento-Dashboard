@@ -1,4 +1,4 @@
-import { Button, Modal, Input } from "@douyinfe/semi-ui";
+import { Button, Modal, Input, Toast } from "@douyinfe/semi-ui";
 import { useState, useEffect } from "react";
 import React from "react";
 import { TreeSelect } from "antd";
@@ -13,10 +13,6 @@ function AddManager(props) {
   const [value, setValue] = useState([]);
 
   useEffect(() => {
-    manageTreeData(props.eventid).then((res) => {
-      console.log(res);
-      setTreeData(res.data.data);
-    });
     console.log(props);
   }, []);
 
@@ -27,7 +23,19 @@ function AddManager(props) {
 
   //控制弹窗
   const showDialog = () => {
-    setVisible(true);
+    const myStudentId = localStorage.getItem("myStudentId");
+    const names = props.managerDate.map((obj) => {
+      return obj.studentId;
+    });
+    if (names.includes(myStudentId)) {
+      manageTreeData(props.eventid).then((res) => {
+        console.log(res);
+        setTreeData(res.data.data);
+      });
+      setVisible(true);
+    } else {
+      Toast.error("无权限");
+    }
   };
 
   //对多选树状选择的管理

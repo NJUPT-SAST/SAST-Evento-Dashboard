@@ -5,3 +5,11 @@
 .semi-dropdown-item {
   justify-content: center;
 }
+
+.buttonSpan {
+  font-weight: 900;
+  color: rgb(12, 103, 250);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

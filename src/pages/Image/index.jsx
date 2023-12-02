@@ -170,8 +170,7 @@ const ImageList = () => {
                             className="hoverButton"
                             onClick={showDeleteModal}
                           >
-                          {/* 这里的叉号的居中有问题需要修改 */}
-                            X
+                            {/* 这里的叉号的居中有问题需要修改 */}X
                           </button>
                         </div>
                       ))}

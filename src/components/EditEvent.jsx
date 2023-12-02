@@ -108,7 +108,7 @@ function PutEvent(props) {
     putEvent(props.id, editdata, result).then((res) => {
       getEvent(props.currentPage).then((res) => {
         props.setData(res.data.data.result);
-        Toast.success("修改成功");
+        // Toast.success("修改成功");
       });
     });
 
@@ -138,9 +138,9 @@ function PutEvent(props) {
 
   return (
     <>
-      <Button theme="borderless" onClick={change}>
-        编辑活动
-      </Button>
+      {/* <Button theme="borderless" onClick={change}> */}
+      <span className="buttonSpan" onClick={change}>编辑活动</span>
+      {/* </Button> */}
       <SideSheet
         title="编辑活动信息"
         visible={visible}

@@ -4,28 +4,14 @@ import AddManager from "./AddManager";
 import DeleteManager from "./DeleteManager";
 import PutManager from "./PutManager";
 import { getManagers } from "../../utils/event";
+import "./GetManage.scss";
 
 function GetManager(props) {
   const [visible, setVisible] = useState(false);
-  const [mangerData, setMangerData] = useState([]);
-
-  const exampleDate = [
-    {
-      key: "1715371988584902657",
-      linkId: "b22050029",
-      studentId: "b22050029",
-      email: "b22050029@njupt.edu.cn",
-      nickname: "Love98",
-      avatar:
-        "https://sast-link-1309205610.cos.ap-shanghai.myqcloud.com/avatar/110.jpg",
-      organization: null,
-      biography: "后端组全干人员",
-      link: ["blog.love98.net", "", ""],
-    },
-  ];
+  const [managerData, setManagerData] = useState([]);
 
   useEffect(() => {
-    console.log(props.id);
+    console.log(props);
     getManagers(props.id).then((res) => {
       console.log(res.data.data.users);
       const newDate = res.data.data.users.map((obj) => {
@@ -36,9 +22,8 @@ function GetManager(props) {
         };
       });
       console.log(newDate);
-      setMangerData(newDate);
+      setManagerData(newDate);
     });
-    console.log(exampleDate);
   }, []);
   const change = () => {
     setVisible(!visible);
@@ -56,14 +41,14 @@ function GetManager(props) {
       title: "权限操作",
       dataIndex: "linkId",
       render: (_, record) => {
-        console.log(record);
+        console.log("44行de$", record);
         return (
           <Space>
-            <PutManager eventid={props.id} userId={record.studentId} />
+            <PutManager eventid={props.id} userId={record.key} />
             <DeleteManager
               eventid={props.id}
-              userId={record.studentId}
-              setData={setMangerData}
+              userId={record.key}
+              setData={setManagerData}
             />
           </Space>
         );
@@ -73,18 +58,22 @@ function GetManager(props) {
 
   return (
     <>
-      <Button theme="borderless" onClick={change}>
+      <div className="buttonSpan" onClick={change}>
         活动权限
-      </Button>
+      </div>
       <SideSheet
         title={props.title}
         visible={visible}
         onCancel={change}
         width="40wv"
       >
-        <AddManager eventid={props.id} setData={setMangerData} />
-        {mangerData && (
-          <Table columns={columns} pagination={true} dataSource={mangerData} />
+        <AddManager
+          eventid={props.id}
+          setData={setManagerData}
+          managerDate={managerData}
+        />
+        {managerData && (
+          <Table columns={columns} pagination={true} dataSource={managerData} />
         )}
       </SideSheet>
     </>

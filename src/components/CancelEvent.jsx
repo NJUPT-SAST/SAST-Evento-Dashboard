@@ -14,7 +14,7 @@ function PatchEvent(props) {
       getEvent(props.currentPage).then((res) => {
         props.setData(res.data.data.result);
         props.setTotal(res.data.data.total);
-        Toast.success("取消成功");
+        // Toast.success("取消成功");
       });
     });
     setVisible(false);
@@ -25,9 +25,15 @@ function PatchEvent(props) {
   };
   return (
     <>
-      <Button onClick={showModal} theme="borderless" type="warning">
+      {/* <Button onClick={showModal} theme="borderless" type="warning"> */}
+      <span
+        onClick={showModal}
+        className="buttonSpan"
+        style={{ color: "rgb(255,174,67)" }}
+      >
         取消活动
-      </Button>
+      </span>
+      {/* </Button> */}
       <Modal
         title="取消活动"
         maskClosable={false}

@@ -2,7 +2,7 @@ import axios from "axios";
 import { Toast } from "@douyinfe/semi-ui";
 
 const token =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjIwNjEzNDc2MDAsInVzZXIiOiJ7XCJpZFwiOlwiMTcyNzMwNTM5Njk1NzM2NDIyNVwiLFwic3R1ZGVudElkXCI6XCJiMjIwNTAxMDZcIixcImVtYWlsXCI6XCJiMjIwNTAxMDZAbmp1cHQuZWR1LmNuXCJ9In0.q_u6h79cZegxB2yy30FxXvqvQLHe3TdeP0eHqgDLcYM";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjIwNjE0OTczMjcsInVzZXIiOiJ7XCJpZFwiOlwiMTcyNzMwNTM5Njk1NzM2NDIyNVwiLFwic3R1ZGVudElkXCI6XCJiMjIwNTAxMDZcIixcImVtYWlsXCI6XCJiMjIwNTAxMDZAbmp1cHQuZWR1LmNuXCJ9In0.zaSbF9qwJ5QC9JP9-6UUebWHWomNII3LTJxdYoc0Y0o";
 var request = axios.create({
   baseURL: "https://evento.sast.fun/",
   // withCredentials:true,

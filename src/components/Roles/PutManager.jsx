@@ -48,9 +48,9 @@ function PutManager(props) {
     const formData = new FormData();
     formData.append("userId", props.userId);
     formData.append("methodNames", value);
-    putManagers(props.eventid, formData).then((res) =>
-      Toast.success("修改成功")
-    );
+    putManagers(props.eventid, formData).then((res) => {
+      // Toast.success("修改成功");
+    });
     //调用添加活动地点的接口
   };
   const handleCancel = () => {

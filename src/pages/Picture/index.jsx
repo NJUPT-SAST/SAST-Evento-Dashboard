@@ -257,12 +257,12 @@ function Picture() {
   const changeSelect = (select) => {
     console.log(select);
     setImageDir(select);
-    setImagePage(1)
+    setImagePage(1);
   };
 
   useEffect(() => {
     getNewImage();
-  }, [imageDir,imagePage]);
+  }, [imageDir, imagePage]);
 
   useEffect(() => {
     console.log(imagesDate);
@@ -427,6 +427,7 @@ function Picture() {
         </Modal>
 
         <Modal
+          width={{ width: 600 }}
           title="是否要更换图片"
           visible={changeUrlVisible}
           onOk={handleChangeUrlOk}

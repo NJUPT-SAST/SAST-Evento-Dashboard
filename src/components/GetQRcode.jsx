@@ -60,7 +60,7 @@ function EventQRcodeGet(props) {
   );
   return (
     <>
-        <span onClick={getQRcode} className="QRcodeSpan">活动二维码</span>
+        <span onClick={getQRcode} className="buttonSpan">活动二维码</span>
       {/* 这里css居中出现问题，将code展示代码放在footer中,完美解决 */}
       <Modal visible={visible} onCancel={handleCancel} footer={footer}></Modal>
     </>

@@ -6,10 +6,14 @@ function DeleteManager(props) {
     console.log(props);
     deleteEventManager(props.eventid, props.userId).then((res) => {
       console.log(res);
-      getManagers(props.eventid).then((res) => {
-        console.log(res);
-        // props.setData(res.data.data);
-      });
+      getManagers(props.eventid)
+        .then((res) => {
+          console.log(res);
+          // props.setData(res.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       if (res.data.success === true) Toast.success("删除成功");
     });
   };
