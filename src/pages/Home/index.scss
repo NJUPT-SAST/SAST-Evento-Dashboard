@@ -1,4 +1,15 @@
-.activity-header{
+.activityContainer {
+  padding: 20px;
+  .activityHeader {
     display: flex;
     justify-content: flex-end;
+    gap: 25px;
+    margin: 10px;
+  }
+  .activityTable {
+    .semi-table-body {
+      overflow-y: scroll;
+      max-height: calc(100vh - 20px - 60px - 72px - 90px - 20px);
+    }
+  }
 }

@@ -45,12 +45,11 @@ function Login() {
                 placeholder="请输入密码"
                 autoComplete="off"
               />
-              {/* <code style={{ marginTop: 24 }}>{JSON.stringify(formState)}</code> */}
               <Button
                 className="formButton"
                 theme="solid"
                 htmlType="submit"
-                type="tertiary"
+                type="primary"
               >
                 登录
               </Button>

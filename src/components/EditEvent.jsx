@@ -1,271 +1,277 @@
-import React, { useState, useEffect } from 'react';
-import { SideSheet, Button, Form, Col, Row, DatePicker, Select,Toast } from '@douyinfe/semi-ui';
-import { getDepartments } from '../utils/departments';
-import { getLocations } from '../utils/location';
-import { getTypes } from '../utils/types';
-import { putEvent, getEvent } from '../utils/event';
-
-
-
+import React, { useState, useEffect } from "react";
+import { SideSheet, Button, Form, Col, Row, Toast } from "@douyinfe/semi-ui";
+import { getDepartments } from "../utils/departments";
+import { getLocations } from "../utils/location";
+import { getTypes } from "../utils/types";
+import { putEvent, getEvent } from "../utils/event";
 
 function PutEvent(props) {
+  const [visible, setVisible] = useState(false);
+  //活动地点(树结构)
+  const [treeData, setTreeData] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [type, setType] = useState([]);
 
-    const [visible, setVisible] = useState(false);
-    //活动地点(树结构)
-    const [treeData, setTreeData] = useState([])
-    const [departments, setDepartments] = useState([])
-    const [type, setType] = useState([])
+  //使用正则表达式获取label
+  // const lastLocation=props.record.location.match(/(\S+)$/)[1];
 
+  //使用split分隔
+  const locationList = props.record.location.split(" ");
+  const lastLocation = locationList[locationList.length - 1];
+  var editdata;
 
-    //使用正则表达式获取label
-    // const lastLocation=props.record.location.match(/(\S+)$/)[1];
+  //获取活动组别、小组并且进行处理
+  const transformedData = departments.map(({ id, departmentName }) => ({
+    value: id,
+    label: departmentName,
+  }));
 
-    //使用split分隔
-    const locationlist = props.record.location.split(" ")
-    const lastLocation = locationlist[locationlist.length - 1]
-    var editdata
+  const transformedType = type.map(({ id, typeName }) => ({
+    value: id,
+    label: typeName,
+  }));
 
+  //活动状态的选项列表
+  const stateList = [
+    { value: "0", label: "未开始" },
+    { value: "1", label: "报名中" },
+    { value: "2", label: "进行中" },
+    { value: "3", label: "已取消" },
+    { value: "4", label: "已结束" },
+  ];
 
-    //获取活动组别、小组并且进行处理
-    const transformedData = departments.map(({ id, departmentName }) => ({
-        value: id,
-        label: departmentName
-    }));
+  const initState = (value) => {
+    switch (value) {
+      case "NOT_STARTED":
+        return "0";
+      case "CHECKING_IN":
+        return "1";
+      case "IN_PROGRESS":
+        return "2";
+      case "CANCELED":
+        return "3";
+      case "ENDED":
+        return "4";
+    }
+  };
 
-    const transformedType = type.map(({ id, typeName }) => ({
-        value: id,
-        label: typeName
-    }))
+  //组别的初始值
+  const initDepartment = (values) => {
+    const departments = [];
+    for (var i = 0; i < values.length; i++) {
+      departments.push(values[i].id);
+    }
+    return departments;
+  };
 
+  //用于Select组件搜索
+  const searchLabel = (sugInput, option) => {
+    let label = option.label.toUpperCase();
+    let sug = sugInput.toUpperCase();
+    return label.includes(sug);
+  };
 
-    //活动状态的选项列表
-    const stateList=[
-        {value:'0',label:'未开始'},
-        {value:'1',label:'报名中'},
-        {value:'2',label:'进行中'},
-        {value:'3',label:'已取消'},
-        {value:'4',label:'已结束'}
-    ]
-
-    const initState=(value)=>{
-        switch(value){
-            case 'NOT_STARTED':return '0';
-            case 'CHECKING_IN':return '1';
-            case 'IN_PROGRESS':return '2';
-            case 'CANCELED':return '3';
-            case 'ENDED':return '4';
+  //通过label获取对应的value,进行初始值的赋值
+  function findValueByLabel(data, label) {
+    if (data.label === label) {
+      return data.value;
+    }
+    if (data.children) {
+      for (var i = 0; i < data.children.length; i++) {
+        var result = findValueByLabel(data.children[i], label);
+        if (result !== undefined) {
+          return result;
         }
+      }
     }
 
+    return undefined;
+  }
 
-    //组别的初始值
-    const initDepartment = (values) => {
-        const departments = [];
-        for (var i = 0; i < values.length; i++) {
-            departments.push(values[i].id)
-        }
-        return departments
+  //获取最终的LocationId
+  function getLocationId(initLocation, value2) {
+    const number = Number(initLocation);
+    if (isNaN(number)) {
+      return Number(value2);
+    } else {
+      return Number(initLocation);
     }
+  }
 
-    //用于Select组件搜索
-    const searchLabel = (sugInput, option) => {
-        let label = option.label.toUpperCase();
-        let sug = sugInput.toUpperCase();
-        return label.includes(sug);
-    }
+  const change = () => {
+    setVisible(!visible);
+  };
 
+  const handleSubmit = () => {
+    const resultLocation = findValueByLabel(treeData[0], lastLocation);
+    const result = getLocationId(editdata.locationId, resultLocation);
+    putEvent(props.id, editdata, result).then((res) => {
+      getEvent(props.currentPage).then((res) => {
+        props.setData(res.data.data.result);
+        // Toast.success("修改成功");
+      });
+    });
 
-    //通过label获取对应的value,进行初始值的赋值
-    function findValueByLabel(data, label) {
-        if (data.label === label) {
-            return data.value;
-        }
-        if (data.children) {
-            for (var i = 0; i < data.children.length; i++) {
-                var result = findValueByLabel(data.children[i], label);
-                if (result !== undefined) {
-                    return result;
-                }
-            }
-        }
+    setVisible(false);
+  };
 
-        return undefined;
-    }
+  const footer = (
+    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+      <Button onClick={handleSubmit} theme="solid">
+        确认修改
+      </Button>
+    </div>
+  );
 
-    //获取最终的LocationId
-    function getLocationId(initLocation,value2){
-        const number=Number(initLocation)
-        if(isNaN(number)){
-            return Number(value2)
-        }
-        else{
-            return Number(initLocation)
-        }
-    }
+  //useEffect获取初始的组织、地点、类型
+  useEffect(() => {
+    getDepartments().then((res) => {
+      setDepartments(res.data.data);
+    });
+    getLocations().then((res) => {
+      setTreeData(res.data.data);
+    });
+    getTypes().then((res) => {
+      setType(res.data.data);
+    });
+  }, []);
 
-    const change = () => {
-        setVisible(!visible);
-    };
-
-    const handleSubmit = () => {
-        const resultLocation = findValueByLabel(treeData[0], lastLocation)
-        const result=getLocationId(editdata.locationId,resultLocation)
-        putEvent(props.id,editdata,result)
-        .then(res=>{
-            getEvent(props.currentPage)
-            .then(res=>{
-                props.setData(res.data.data.result)
-                Toast.success('修改成功')
-            })
-        })
-  
-        setVisible(false)
-    }
-
-    const footer = (
-        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button onClick={handleSubmit} theme="solid">确认修改</Button>
-        </div>
-    )
-
-    //useEffect获取初始的组织、地点、类型
-    useEffect(() => {
-        getDepartments()
-            .then(res => {
-                setDepartments(res.data.data)
-            })
-        getLocations()
-            .then(res => {
-                setTreeData(res.data.data)
-            })
-        getTypes()
-            .then(res => {
-                setType(res.data.data)
-            })
-    }, [])
-
-
-    return (
-        <>
-            <Button theme="borderless" onClick={change}>编辑活动</Button>
-            <SideSheet
-                title="编辑活动信息" visible={visible} onCancel={change}
-                footer={footer}
-                width='40vw'
-                headerStyle={{ borderBottom: '1px solid var(--semi-color-border)' }}
-                bodyStyle={{ borderBottom: '1px solid var(--semi-color-border)' }}
-            >
-                <Form
-                    onValueChange={values => { editdata = values }}>
-                    <Row>
-                        <Col span={12}>
-                            <Form.Input
-                                initValue={props.record.title}
-                                field="title"
-                                label="标题"
-                                trigger="blur"
-                                placeholder="添加标题"
-                                style={{ width: '90%' }}
-                            />
-                        </Col>
-                        <Col span={12}>
-                            <Form.Input
-                                initValue={props.record.tag}
-                                field="tag"
-                                label="标签"
-                                trigger="blur"
-                                placeholder="添加标签"
-                                style={{ width: '90%' }}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={12}>
-                            <Form.DatePicker
-                                initValue={[props.record.gmtEventStart, props.record.gmtEventEnd]}
-                                type="dateTimeRange"
-                                field="EventTime"
-                                label="活动时间"
-                                trigger="blur"
-                                insetInput
-                                style={{ width: '90%' }}
-                            />
-                        </Col>
-                        <Col span={12}>
-                            <Form.DatePicker
-                                initValue={[props.record.gmtRegistrationStart, props.record.gmtRegistrationEnd]}
-                                type="dateTimeRange"
-                                field="RegistrationTime"
-                                label="报名时间"
-                                trigger="blur"
-                                insetInput
-                                style={{ width: '90%' }}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={12}>
-                            <Form.Select
-                                multiple
-                                initValue={initDepartment(props.record.departments)}
-                                maxTagCount={1}
-                                filter={searchLabel}
-                                field='departments'
-                                label="活动组别"
-                                trigger='blur'
-                                placeholder='选择活动组别'
-                                style={{ width: '90%' }}
-                                optionList={transformedData}
-                            />
-                        </Col>
-                        <Col span={12}>
-                            <Form.Select
-                                initValue={props.record.eventType.id}
-                                filter={searchLabel}
-                                field='typeId'
-                                label="活动类型"
-                                trigger='blur'
-                                placeholder="选择活动类型"
-                                style={{ width: '90%' }}
-                                optionList={transformedType} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span={12}>
-                            <Form.TreeSelect
-                                filterTreeNode
-                                field='locationId'
-                                label="活动地点"
-                                trigger='blur'
-                                placeholder="请选择活动地点"
-                                style={{ width: '90%' }}
-                                initValue={lastLocation}
-                                treeData={treeData} />
-                        </Col>
-                        <Col span={12}>
-                            <Form.Select
-                            initValue={initState(props.record.state)}
-                            field="state"
-                            label="活动状态"
-                            trigger='blur'
-                            style={{ width: '90%' }}
-                            optionList={stateList}
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Form.TextArea
-                            initValue={props.record.description}
-                            field='description'
-                            label='活动介绍'
-                            trigger='blur'
-                            placeholder="请简单地描述一下活动喵"
-                        />
-                    </Row>
-                </Form>
-            </SideSheet>
-        </>
-    );
+  return (
+    <>
+      {/* <Button theme="borderless" onClick={change}> */}
+      <span className="buttonSpan" onClick={change}>编辑活动</span>
+      {/* </Button> */}
+      <SideSheet
+        title="编辑活动信息"
+        visible={visible}
+        onCancel={change}
+        footer={footer}
+        width="40vw"
+        headerStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
+        bodyStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
+      >
+        <Form
+          onValueChange={(values) => {
+            editdata = values;
+          }}
+        >
+          <Row>
+            <Col span={12}>
+              <Form.Input
+                initValue={props.record.title}
+                field="title"
+                label="标题"
+                trigger="blur"
+                placeholder="添加标题"
+                style={{ width: "90%" }}
+              />
+            </Col>
+            <Col span={12}>
+              <Form.Input
+                initValue={props.record.tag}
+                field="tag"
+                label="标签"
+                trigger="blur"
+                placeholder="添加标签"
+                style={{ width: "90%" }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <Form.DatePicker
+                initValue={[
+                  props.record.gmtEventStart,
+                  props.record.gmtEventEnd,
+                ]}
+                type="dateTimeRange"
+                field="EventTime"
+                label="活动时间"
+                trigger="blur"
+                insetInput
+                style={{ width: "90%" }}
+              />
+            </Col>
+            <Col span={12}>
+              <Form.DatePicker
+                initValue={[
+                  props.record.gmtRegistrationStart,
+                  props.record.gmtRegistrationEnd,
+                ]}
+                type="dateTimeRange"
+                field="RegistrationTime"
+                label="报名时间"
+                trigger="blur"
+                insetInput
+                style={{ width: "90%" }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <Form.Select
+                multiple
+                initValue={initDepartment(props.record.departments)}
+                maxTagCount={1}
+                filter={searchLabel}
+                field="departments"
+                label="活动组别"
+                trigger="blur"
+                placeholder="选择活动组别"
+                style={{ width: "90%" }}
+                optionList={transformedData}
+              />
+            </Col>
+            <Col span={12}>
+              <Form.Select
+                initValue={props.record.eventType.id}
+                filter={searchLabel}
+                field="typeId"
+                label="活动类型"
+                trigger="blur"
+                placeholder="选择活动类型"
+                style={{ width: "90%" }}
+                optionList={transformedType}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <Form.TreeSelect
+                filterTreeNode
+                field="locationId"
+                label="活动地点"
+                trigger="blur"
+                placeholder="请选择活动地点"
+                style={{ width: "90%" }}
+                initValue={lastLocation}
+                treeData={treeData}
+              />
+            </Col>
+            <Col span={12}>
+              <Form.Select
+                initValue={initState(props.record.state)}
+                field="state"
+                label="活动状态"
+                trigger="blur"
+                style={{ width: "90%" }}
+                optionList={stateList}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Form.TextArea
+              initValue={props.record.description}
+              field="description"
+              label="活动介绍"
+              trigger="blur"
+              placeholder="请简单地描述一下活动喵"
+            />
+          </Row>
+        </Form>
+      </SideSheet>
+    </>
+  );
 }
 
-export default PutEvent
+export default PutEvent;

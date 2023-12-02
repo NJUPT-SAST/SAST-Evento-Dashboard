@@ -6,7 +6,6 @@ import Home from "./pages/Home";
 import Timetable from "./pages/Timetable";
 import Picture from "./pages/Picture";
 import Roles from "./pages/Roles";
-import Feedback from "./pages/Feedback";
 import Page404 from "./pages/Page404";
 import ImageList from "./pages/Image";
 import Bind from "./pages/Bind";
@@ -25,7 +24,6 @@ function App() {
               <Route path='activity-role' element={<Activity_roles />}></Route> */}
             </Route>
             <Route path="timetable" element={<Timetable />}></Route>
-            <Route path="feedback" element={<Feedback />}></Route>
             <Route path="roles" element={<Roles />}></Route>
             <Route path="picture" element={<Picture />}></Route>
             <Route path="image" element={<ImageList />}></Route>

@@ -34,9 +34,6 @@ export const getEvent = (page) => {
   return request({
     method: "get",
     url: "/api/event/list",
-    headers: {
-      //token:token
-    },  
     params: {
       page: page,
       size: 10,
@@ -113,9 +110,6 @@ export const authCode = (id) => {
   return request({
     method: "get",
     url: "/api/event/authcode",
-    headers: {
-      //token:token,
-    },
     params: {
       eventId: id,
     },
@@ -123,12 +117,12 @@ export const authCode = (id) => {
 };
 
 //获取活动管理者列表
-export const getManagers = (id) => {
+export const getManagers = (eventId) => {
   return request({
     method: "get",
     url: "/api/permission/event/managers",
     params: {
-      eventId: id,
+      eventId: eventId,
     },
   });
 };
@@ -149,19 +143,16 @@ export const putManagers = (id, value) => {
 
 //添加活动管理者
 export const addManagers = (id, userId, methodNames) => {
+  const formDate = new FormData();
+  formDate.append("userId", userId);
+  formDate.append("methodNames", methodNames);
   return request({
     method: "post",
     url: "/api/permission/event/manager",
     params: {
       eventId: id,
     },
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    data: {
-      userId: userId,
-      methodNames: methodNames,
-    },
+    data: formDate,
   });
 };
 

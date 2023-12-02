@@ -1,0 +1,48 @@
+.rolesContainer {
+  height: calc(100vh - 61px);
+  overflow-y: scroll;
+  .userAvatar {
+    cursor: auto;
+  }
+  .userListBarMessage {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    .nicknameSpan,
+    .studentIdSpan,
+    .organizationSpan {
+      font-weight: 600;
+      font-size: 17px;
+      color: var(--semi-color-text-0);
+    }
+    .userMessage {
+      margin: 6px 0;
+      color: var(--semi-color-text-2);
+    }
+  }
+}
+
+.havePermissionShow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.addTreeSelect,
+.deleteTreeSelect {
+  width: 100%;
+}
+
+.changeModal {
+  .semi-modal-content {
+    width: fit-content;
+
+    .semi-modal-body {
+      width: fit-content;
+      .semi-transfer {
+        min-width: 600px;
+      }
+    }
+  }
+}

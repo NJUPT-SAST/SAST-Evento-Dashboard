@@ -1,48 +1,83 @@
-import React,{useEffect, useState} from "react";
-import { Button,SideSheet,Table,Space} from "@douyinfe/semi-ui";
+import React, { useEffect, useState } from "react";
+import { Button, SideSheet, Table, Space } from "@douyinfe/semi-ui";
 import AddManager from "./AddManager";
 import DeleteManager from "./DeleteManager";
 import PutManager from "./PutManager";
 import { getManagers } from "../../utils/event";
+import "./GetManage.scss";
 
+function GetManager(props) {
+  const [visible, setVisible] = useState(false);
+  const [managerData, setManagerData] = useState([]);
 
-function GetManager(props){
-    const [visible,setVisible]=useState(false)
-    const [data,setData]=useState([])
-    const change=()=>{
-        setVisible(!visible)
-    }
+  useEffect(() => {
+    console.log(props);
+    getManagers(props.id).then((res) => {
+      console.log(res.data.data.users);
+      const newDate = res.data.data.users.map((obj) => {
+        const { id, ...rest } = obj;
+        return {
+          ...rest,
+          key: obj.id,
+        };
+      });
+      console.log(newDate);
+      setManagerData(newDate);
+    });
+  }, []);
+  const change = () => {
+    setVisible(!visible);
+  };
 
-    const columns=[
-        {
-            title:'学号',
-            dataIndex:'userId',
-        },
-        {
-            title: '权限操作',
-            dataIndex: 'operate',
-            render: (_, record) => (
-                <Space>
-                   <PutManager eventid={props.id} userId={record.userId} />
-                   <DeleteManager eventid={props.id} userId={record.userId} setData={setData}/>
-                </Space>
-            )
-        }
-    ]
+  const columns = [
+    {
+      title: "学号",
+      dataIndex: "studentId",
+      render: (text) => {
+        return <span className="studentIdSpan">{text}</span>;
+      },
+    },
+    {
+      title: "权限操作",
+      dataIndex: "linkId",
+      render: (_, record) => {
+        console.log("44行de$", record);
+        return (
+          <Space>
+            <PutManager eventid={props.id} userId={record.key} />
+            <DeleteManager
+              eventid={props.id}
+              userId={record.key}
+              setData={setManagerData}
+            />
+          </Space>
+        );
+      },
+    },
+  ];
 
-    useEffect(()=>{
-        getManagers(props.id)
-        .then(res=>{setData(res.data.data)})
-    },[])
-    return(
-        <>
-            <Button theme="borderless" onClick={change}>活动权限</Button>
-            <SideSheet title={props.title} visible={visible} onCancel={change} width='40wv'>
-                <AddManager eventid={props.id} setData={setData}/>
-                <Table columns={columns} dataSource={data} pagination={true}/>
-            </SideSheet>
-        </>
-    )
+  return (
+    <>
+      <div className="buttonSpan" onClick={change}>
+        活动权限
+      </div>
+      <SideSheet
+        title={props.title}
+        visible={visible}
+        onCancel={change}
+        width="40wv"
+      >
+        <AddManager
+          eventid={props.id}
+          setData={setManagerData}
+          managerDate={managerData}
+        />
+        {managerData && (
+          <Table columns={columns} pagination={true} dataSource={managerData} />
+        )}
+      </SideSheet>
+    </>
+  );
 }
 
 export default GetManager;
