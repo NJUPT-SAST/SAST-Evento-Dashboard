@@ -1,13 +1,11 @@
 import axios from "axios";
 import { Toast } from "@douyinfe/semi-ui";
 
-const token =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjIwNjE0OTczMjcsInVzZXIiOiJ7XCJpZFwiOlwiMTcyNzMwNTM5Njk1NzM2NDIyNVwiLFwic3R1ZGVudElkXCI6XCJiMjIwNTAxMDZcIixcImVtYWlsXCI6XCJiMjIwNTAxMDZAbmp1cHQuZWR1LmNuXCJ9In0.zaSbF9qwJ5QC9JP9-6UUebWHWomNII3LTJxdYoc0Y0o";
 var request = axios.create({
   baseURL: "https://evento.sast.fun/",
   // withCredentials:true,
   headers: {
-    token: token,
+    token: localStorage.getItem("token"),
   },
   timeout: 30000,
 });
@@ -20,7 +18,7 @@ request.interceptors.response.use(
     }
     const { errMsg } = data;
     if (errMsg === "token错误" || errMsg === "token过期")
-      window.location.replace("/login");
+      window.location.href = "/console/login";
     return response;
   },
   (error) => {

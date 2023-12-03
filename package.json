@@ -22,7 +22,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "set \"GENERATE_SOURCEMAP=false\" &&  react-scripts build",
+    "release": "set \"GENERATE_SOURCEMAP=false\" && set \"PUBLIC_URL=/console\" &&  react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
