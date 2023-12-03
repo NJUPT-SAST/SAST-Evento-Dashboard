@@ -3,7 +3,14 @@ import styles from "./AuthorizedButton.module.scss";
 export default function AuthorizedButton() {
   const AuthorizedLink = () => {
     console.log("授权link登录");
+
+    const redirect_uri = "https://evento.sast.fun/console/oauth2";
+    const client_id = "123f24cf-2aca-44dc-93a0-c54214be2861";
+
+    const linkUrl = `https://link.sast.fun/auth?client_id=${client_id}&code_challenge=YillThSRrGTj6mXqFfDPinX7G35qEQ1QEyWV6PDSEuc%3D&code_challenge_method=S256&redirect_uri=${redirect_uri}&response_type=code&scope=all&state=xyz`;
     //授权link逻辑
+    window.location.href = linkUrl;
+    
   };
 
   const AuthorizedWeChat = () => {
