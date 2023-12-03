@@ -71,7 +71,7 @@ function TheLayout() {
               return (
                 <Link
                   style={{ textDecoration: "none" }}
-                  to={routerMap[props.itemKey]}
+                  to={"/console" + routerMap[props.itemKey]}
                 >
                   {itemElement}
                 </Link>
