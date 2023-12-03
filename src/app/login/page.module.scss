@@ -1,0 +1,38 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6rem;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.loginContainer {
+  width: 30vw;
+  .logoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .logo {
+    width: 282.8px;
+    height: 85.8px;
+  }
+
+  .inputItem {
+    margin: 15px 10px;
+  }
+
+  .loginButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    .loginButton {
+      width: 100px;
+      margin: 8px 10px;
+      box-sizing: border-box;
+    }
+  }
+}

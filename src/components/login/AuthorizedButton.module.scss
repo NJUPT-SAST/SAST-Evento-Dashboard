@@ -1,0 +1,20 @@
+.authorizedButtonContainer {
+  margin-top: 3vh;
+  display: flex;
+  justify-content: space-evenly;
+  .buttonItem {
+    all: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid black;
+    border-radius: 35px;
+    box-sizing: border-box;
+    height: 65px;
+    width: 65px;
+    .svg {
+      height: 45px;
+      width: 45px;
+    }
+  }
+}
