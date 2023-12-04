@@ -3,9 +3,93 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6rem;
+  padding: 22rem;
   height: 100vh;
   min-height: 100vh;
+}
+
+.buttonContainer {
+  margin-top: 70px;
+  text-align: center;
+  height: fit-content;
+  .button {
+    all: unset;
+    width: 6vw;
+    height: 30px;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 25px;
+    font-family: "Lato", sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+      7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
+    outline: none;
+  }
+  .button {
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    color: #000;
+    animation: fadeInAnimation 1s linear;
+  }
+  .button:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    direction: rtl;
+    z-index: -1;
+    box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9,
+      7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
+    transition: all 0.3s ease;
+  }
+  .button:hover {
+    color: #000;
+  }
+  .button:hover:after {
+    left: auto;
+    right: 0;
+    width: 100%;
+  }
+  .button:active {
+    top: 2px;
+  }
+  @keyframes fadeInAnimation {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes rotateAnimation {
+    0% {
+      // opacity: 0;
+      transform: rotate(0deg);
+      background-color: aqua;
+    }
+    50% {
+      // opacity: 1;
+      transform: rotate(180deg);
+      background-color: brown;
+    }
+    100% {
+      // opacity: 0;
+      transform: rotate(360deg);
+      background-color: aqua;
+    }
+  }
 }
 
 .description {
@@ -98,7 +182,7 @@
 
 .center::before,
 .center::after {
-  content: '';
+  content: "";
   left: 50%;
   position: absolute;
   filter: blur(45px);

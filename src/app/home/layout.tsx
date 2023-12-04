@@ -18,14 +18,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const { Header, Sider } = Layout;
-  const pathName = location.pathname;
-  const upPathName = capitalizeFirstLetter(pathName.split("/")[1]);
-  console.log(upPathName);
-  console.log(typeof upPathName);
 
-  function capitalizeFirstLetter(word: string) {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }
+  let PathName = window.location.href;
+  PathName = PathName.split("/")[PathName.split("/").length - 1];
 
   return (
     <section>
@@ -74,16 +69,17 @@ export default function DashboardLayout({
                   Picture: "home/picture",
                   Image: "home/image",
                 };
-                console.log("props", props);
-
                 return (
-                    <Link style={{ textDecoration: "none" }} href={`/home/${props.itemKey}`}>
-                      {itemElement}
-                    </Link>
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    href={`/home/${props.itemKey}`}
+                  >
+                    {itemElement}
+                  </Link>
                 );
               }}
               style={{ maxWidth: 220, height: "100%" }}
-              defaultSelectedKeys={[upPathName]}
+              defaultSelectedKeys={[`${PathName}`]}
               items={[
                 {
                   itemKey: "activity",

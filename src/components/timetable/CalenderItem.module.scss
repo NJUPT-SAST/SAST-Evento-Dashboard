@@ -1,0 +1,52 @@
+.CalendarItem {
+  cursor: pointer;
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: var(--semi-color-bg-1) 1px solid;
+  padding: 2px 4px;
+  background-color: rgb(233, 247, 253, 0.3);
+  height: 100%;
+  overflow: hidden;
+  border-left: 4px solid rgb(103, 156, 211);
+  font-size: 12px;
+  .title {
+    color: rgb(93, 146, 255);
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .content {
+    color: rgb(103, 156, 233);
+    font-weight: 400;
+  }
+}
+
+.popover {
+  //TODO: background image
+//   background-image: url("../../../public/eventoicon.ico");
+//   background-repeat: no-repeat;
+//   background-size: contain;
+//   background-position: center center;
+  .popoverContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    .organizationContainer {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .barItem {
+      margin-top: 10px;
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
+}

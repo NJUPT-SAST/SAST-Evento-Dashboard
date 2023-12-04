@@ -1,10 +1,13 @@
+"use client";
+
 import { Button } from "@douyinfe/semi-ui";
 import { useEffect } from "react";
-import "./index.scss";
+// import "./index.scss";
 import { linkLogin } from "@/apis/login";
 import { useRouter } from "next/router";
 
 const OAuth2 = () => {
+
   const code = window.location.href.split("?")[1].split("&")[0].split("=")[1];
   const router = useRouter();
   const info = "Authorizing...";

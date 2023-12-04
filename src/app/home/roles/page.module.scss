@@ -1,0 +1,44 @@
+@mixin importantMessage {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+@mixin secondMessage {
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.main {
+  height: 100%;
+  background-color: white;
+  .avatar {
+    cursor: unset;
+  }
+  .userListBarMessage {
+    .nicknameSpan {
+      @include importantMessage;
+    }
+    .studentIdSpan {
+      @include importantMessage;
+    }
+  }
+  .organizationSpan {
+    @include importantMessage;
+  }
+  .emailSpan {
+    @include secondMessage;
+  }
+  .biographySpan {
+    @include secondMessage;
+  }
+  .list {
+    height: calc(100vh - 60px - 80px - 10px);
+    overflow-y: scroll;
+  }
+  .pagination {
+    margin-top: 20px;
+    height: 60px;
+    display: flex;
+    justify-content: flex-end;
+  }
+}

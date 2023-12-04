@@ -1,0 +1,18 @@
+.main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .container {
+    width: fit-content;
+    height: fit-content;
+    background: linear-gradient(rgb(0, 0, 0, 8), rgb(0, 0, 0, 0.3));
+    background-clip: text;
+    color: transparent;
+    .title {
+      font-size: 75px;
+      font-weight: 700;
+    }
+  }
+}
