@@ -12,6 +12,10 @@ export default function Activity() {
   const [total, setTotal] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
 
+  const windowHeight = window.innerHeight;
+  console.log(windowHeight);
+  const tableHeight = windowHeight - 60 - 40 - 0.1 * windowHeight;
+
   //TODO: 这里有大量的typeScript类型问题,都已经设置为any，保证能正常运行
   const columns: any = useMemo(
     () => [
@@ -56,8 +60,8 @@ export default function Activity() {
       {
         title: "",
         dataIndex: "operate",
-        render: (_: any, record: { id: number }) => {
-          console.log(record);
+        render: (_: any, record: { id: number; title: string }) => {
+          // console.log(record);
           return (
             <MoreOperate
               setDate={setData}
@@ -95,7 +99,7 @@ export default function Activity() {
 
   useEffect(() => {
     setLoading(true);
-    getEvent(currentPage, 10)
+    getEvent(currentPage, 20)
       .then((res) => {
         console.log(res);
         console.log(res.data);
@@ -117,8 +121,8 @@ export default function Activity() {
 
   const handlePageChange = (page: number) => {
     setLoading(true);
-    setPage(page);
-    getEvent(page, 10)
+    setCurrentPage(page);
+    getEvent(page, 20)
       .then((res) => {
         setData(res.data.result);
         setTotal(res.data.total);
@@ -138,6 +142,10 @@ export default function Activity() {
     console.log("columns", columns);
   }, [columns]);
 
+  const y = 300;
+
+  const scroll = useMemo(() => ({ y: tableHeight }), [tableHeight]);
+
   return (
     <>
       <div className={styles.main}>
@@ -156,7 +164,8 @@ export default function Activity() {
 
           {/* TODO:app-index.js:32  Warning: CustomExpandIcon: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.目前不影响使用 */}
           <Table
-            className="activityTable"
+            className={styles.table}
+            scroll={scroll}
             rowKey="id"
             columns={columns}
             dataSource={data}
@@ -164,7 +173,7 @@ export default function Activity() {
             loading={loading}
             pagination={{
               currentPage,
-              pageSize: 10,
+              pageSize: 20,
               total,
               onChange: handlePageChange,
             }}

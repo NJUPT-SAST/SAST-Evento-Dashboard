@@ -38,6 +38,7 @@ export const ChangePermission = ({ userId }: ShowPermissionProps) => {
     setHavePermission(value);
   }
 
+  //   TODO: 封装hook时，将这个数据修改封装在一个工具里面
   //这里后端传入的数据不含有key，在这个函数中给每一个树形结构加上一个key，用来渲染
   function addKeysToData(
     data: Array<{ children: any }>,

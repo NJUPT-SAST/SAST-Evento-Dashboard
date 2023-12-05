@@ -1,0 +1,18 @@
+.permissionContent {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  .button {
+    margin: 10px 0;
+  }
+}
+
+.studentIdContent {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  .input {
+    width: 40%;
+  }
+}

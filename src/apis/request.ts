@@ -3,7 +3,7 @@ import { Toast } from "@douyinfe/semi-ui";
 
 //开发时临时用的token，正式运行时，从localStorage中获取
 const token =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjIwNjE0OTczMjcsInVzZXIiOiJ7XCJpZFwiOlwiMTcyNzMwNTM5Njk1NzM2NDIyNVwiLFwic3R1ZGVudElkXCI6XCJiMjIwNTAxMDZcIixcImVtYWlsXCI6XCJiMjIwNTAxMDZAbmp1cHQuZWR1LmNuXCJ9In0.zaSbF9qwJ5QC9JP9-6UUebWHWomNII3LTJxdYoc0Y0o";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjIwNjE3NzgwOTAsInVzZXIiOiJ7XCJpZFwiOlwiMTcyNzMwNTM5Njk1NzM2NDIyNVwiLFwic3R1ZGVudElkXCI6XCJiMjIwNTAxMDZcIixcImVtYWlsXCI6XCJiMjIwNTAxMDZAbmp1cHQuZWR1LmNuXCJ9In0.DGF4mj-nb7OepQgHYJm46Lr1ZXRrbWJMuCn-a4HdLo8";
 
   const request = axios.create({
   baseURL: "https://evento.sast.fun/api",

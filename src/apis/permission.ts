@@ -51,3 +51,69 @@ export const changeUserPermission = async (
 
   return response.data;
 };
+
+export const manageTreeData = async (eventId: number) => {
+  const response = await request({
+    method: "get",
+    url: "/permission/manager/treeData",
+    params: {
+      eventId: eventId,
+    },
+  });
+
+  return response.data;
+};
+
+export const managerUserList = async (eventId: number, userId: string) => {
+  const response = await request({
+    method: "get",
+    url: "/permission/event/manager/user/list",
+    params: {
+      eventId: eventId,
+      userId: userId,
+    },
+  });
+
+  return response.data;
+};
+
+export const putManagers = async (
+  eventId: number,
+  methodNames: Array<string>,
+  userId: string
+) => {
+  const formDate = new FormData();
+  formDate.append("userId", userId);
+  methodNames.forEach((name) => formDate.append("methodNames", name));
+
+  const response = await request({
+    method: "put",
+    url: "/permission/event/manager",
+    params: {
+      eventId: eventId,
+    },
+    data: formDate,
+  });
+
+  return response.data;
+};
+
+export const addManagers = async (
+  eventId: number,
+  userId: string,
+  methodNames: Array<string>
+) => {
+  const formDate = new FormData();
+  formDate.append("userId", userId);
+  methodNames.forEach((name) => formDate.append("methodNames", name));
+  const response = await request({
+    method: "post",
+    url: "/permission/event/manager",
+    params: {
+      eventId: eventId,
+    },
+    data: formDate,
+  });
+
+  return response.data;
+};

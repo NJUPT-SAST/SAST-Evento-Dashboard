@@ -43,3 +43,15 @@ export const authCode = async (eventId: number) => {
 
   return response.data;
 };
+
+export const getManagers = async (eventId: number) => {
+  const response = await request({
+    method: "get",
+    url: "/permission/event/managers",
+    params: {
+      eventId: eventId,
+    },
+  });
+
+  return response.data;
+};

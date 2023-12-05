@@ -3,19 +3,17 @@ import React, { useState, useRef, useEffect, LegacyRef } from "react";
 import { Button, Modal } from "@douyinfe/semi-ui";
 import { authCode } from "@/apis/event";
 import QRCode from "qrcode.react";
+import styles from "./EventQRcodeGet.module.scss";
+import commonStyles from "./common.module.scss";
 
-type EventQRcodeGetProps = {
+interface EventQRcodeGetProps {
   eventId: number;
-};
+}
 
-function EventQRcodeGet({ eventId }: EventQRcodeGetProps) {
+const EventQRcodeGet: React.FC<EventQRcodeGetProps> = ({ eventId }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [text, setText] = useState<string>("0");
   const QRcodeRef = useRef<HTMLDivElement>(null);
-
-  const handleCancel = () => {
-    setVisible(false);
-  };
 
   const getQRcode = () => {
     setVisible(true);
@@ -23,10 +21,6 @@ function EventQRcodeGet({ eventId }: EventQRcodeGetProps) {
       setText(res.data);
     });
   };
-
-  useEffect(() => {
-    console.log(text);
-  }, [text]);
 
   //实现二维码的下载;
   const downloadQRCode = () => {
@@ -40,7 +34,7 @@ function EventQRcodeGet({ eventId }: EventQRcodeGetProps) {
   };
 
   const footer = (
-    <div className="QRcodeFooter">
+    <div className={styles.QRcodeFooter}>
       <div className="QRcodeContainer" ref={QRcodeRef}>
         <QRCode value={text}></QRCode>
       </div>
@@ -59,7 +53,7 @@ function EventQRcodeGet({ eventId }: EventQRcodeGetProps) {
       <Button
         type="primary"
         theme="borderless"
-        onClick={handleCancel}
+        onClick={() => setVisible(false)}
         style={{ width: 240, marginTop: 10 }}
       >
         取消
@@ -68,13 +62,22 @@ function EventQRcodeGet({ eventId }: EventQRcodeGetProps) {
   );
   return (
     <>
-      <span onClick={getQRcode} className="buttonSpan">
+      <span
+        onClick={getQRcode}
+        className={commonStyles.buttonSpan}
+        style={{ color: "rgb(12,103,250)" }}
+      >
         活动二维码
       </span>
       {/* 这里css居中出现问题，将code展示代码放在footer中,完美解决 */}
-      <Modal visible={visible} onCancel={handleCancel} footer={footer}></Modal>
+      <Modal
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        footer={footer}
+        maskClosable={true}
+      ></Modal>
     </>
   );
-}
+};
 
 export default EventQRcodeGet;
