@@ -1,10 +1,10 @@
 import { Button, SideSheet, Space, Table } from "@douyinfe/semi-ui";
-import commonStyles from "./common.module.scss";
+import commonStyles from "../common.module.scss";
 import { useEffect, useState } from "react";
 import { getManagers } from "@/apis/event";
-import PutManager from "./manger/PutManager";
-import DeleteManager from "./manger/DeleteManager";
-import AddManager from "./manger/AddManager";
+import PutManager from "./PutManager";
+import DeleteManager from "./DeleteManager";
+import AddManager from "./AddManager";
 
 interface ManagerPermissionProps {
   title: string;

@@ -4,5 +4,6 @@
   padding: 20px;
   box-sizing: border-box;
   .calendar {
+    height: calc(100vh - 60px - 32px - 20px - 12vh) !important;
   }
 }

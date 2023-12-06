@@ -5,6 +5,8 @@ import { useEffect, useMemo, useState } from "react";
 import styles from "./page.module.scss";
 import { getEvent } from "@/apis/event";
 import MoreOperate from "@/components/activity/MoreOperate";
+import ActivityType from "@/components/activity/handleActivityType/ActivityType";
+import Department from "@/components/activity/handleDepartment/Department";
 
 export default function Activity() {
   const [data, setData] = useState<Array<object>>([{}]);
@@ -60,8 +62,23 @@ export default function Activity() {
       {
         title: "",
         dataIndex: "operate",
-        render: (_: any, record: { id: number; title: string }) => {
-          // console.log(record);
+        render: (
+          _: any,
+          record: {
+            title: string;
+            tag: string;
+            gmtEventStart: string;
+            gmtEventEnd: string;
+            gmtRegistrationStart: string;
+            gmtRegistrationEnd: string;
+            departments: Array<{ id: number; departmentName: string }>;
+            eventType: { allowConflict: boolean; id: number; typeName: string };
+            location: string;
+            state: string;
+            description: string;
+            id: number;
+          }
+        ) => {
           return (
             <MoreOperate
               setDate={setData}
@@ -84,7 +101,7 @@ export default function Activity() {
     return departments;
   };
 
-  const expandData = data.map((msg: any, _index: number) => {
+  const expandData = data?.map((msg: any, _index: number) => {
     return [
       { key: "活动开始时间", value: msg.gmtEventStart },
       { key: "活动结束时间", value: msg.gmtEventEnd },
@@ -160,9 +177,11 @@ export default function Activity() {
           <ActivityType />
           <ActivityLocation />
           <Department /> */}
+            <Department></Department>
+            <ActivityType></ActivityType>
           </div>
 
-          {/* TODO:app-index.js:32  Warning: CustomExpandIcon: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.目前不影响使用 */}
+          {/* TODO :app-index.js:32  Warning: CustomExpandIcon: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.目前不影响使用 */}
           <Table
             className={styles.table}
             scroll={scroll}
