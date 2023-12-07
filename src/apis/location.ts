@@ -21,3 +21,31 @@ export const postLocation = async (locationName: string, parentId: number) => {
 
   return response.data;
 };
+
+export const changeLocation = async (id: number, locationName: string) => {
+  const response = await request({
+    method: "patch",
+    url: "/admin/location",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data: {
+      id,
+      locationName,
+    },
+  });
+
+  return response.data;
+};
+
+export const deleteLocation = async (id: number) => {
+  const response = await request({
+    method: "delete",
+    url: "/admin/location",
+    params: {
+      locationId: id,
+    },
+  });
+
+  return response.data;
+};

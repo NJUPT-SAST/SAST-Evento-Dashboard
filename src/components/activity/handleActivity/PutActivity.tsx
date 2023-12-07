@@ -15,12 +15,24 @@ interface PutActivityProps {
   departments: Array<{ id: number; departmentName: string }>;
   eventType: { allowConflict: boolean; id: number; typeName: string };
   location: string;
-  state: string;
+  state: number;
   description: string;
   id: number;
 }
 
+interface eventData {
+  EvenTime: Array<string>;
+  RegistrationTime: Array<string>;
+  departments: Array<string>;
+  description: string;
+  state: number;
+  tag: string;
+  title: string;
+  typeId: number;
+}
+
 //TODO:修改请求未做，需要与后端交流，接口出现问题
+// FIXING
 
 const PutActivity: React.FC<PutActivityProps> = ({
   title,
@@ -43,19 +55,13 @@ const PutActivity: React.FC<PutActivityProps> = ({
   const [types, setTypes] = useState<Array<{ value: number; label: string }>>(
     []
   );
-  console.log(id);
+  console.log(location);
+  console.log("state", state);
 
   const [locations, setLocations] = useState<Array<any>>([]);
-  const [eventData, setEventData] = useState<{
-    EvenTime: Array<string>;
-    RegistrationTime: Array<string>;
-    departments: Array<string>;
-    description: string;
-    state: string;
-    tag: string;
-    title: string;
-    typeId: number;
-  }>();
+  const [eventData, setEventData] = useState<eventData>();
+
+  console.log(state);
 
   const showSideSheet = () => {
     setVisible(true);
@@ -137,44 +143,29 @@ const PutActivity: React.FC<PutActivityProps> = ({
     return departments;
   };
 
-  const initState = (value: string) => {
+  const initState = (value: number) => {
     switch (value) {
-      case "NOT_STARTED":
-        return "0";
-      case "CHECKING_IN":
+      case 1:
         return "1";
-      case "IN_PROGRESS":
+      case 2:
         return "2";
-      case "CANCELED":
+      case 3:
         return "3";
-      case "ENDED":
+      case 4:
         return "4";
+      case 5:
+        return "5";
     }
   };
 
   const stateList = [
-    { value: "0", label: "未开始" },
-    { value: "1", label: "报名中" },
-    { value: "2", label: "进行中" },
-    { value: "3", label: "已取消" },
-    { value: "4", label: "已结束" },
+    { value: "1", label: "未开始" },
+    { value: "2", label: "签到中" },
+    { value: "3", label: "进行中" },
+    { value: "4", label: "已取消" },
+    { value: "5", label: "已结束" },
   ];
 
-  const test = (values: {
-    values: {
-      EvenTime: Array<string>;
-      RegistrationTime: Array<string>;
-      departments: Array<string>;
-      description: string;
-      state: string;
-      tag: string;
-      title: string;
-      typeId: number;
-    };
-  }) => {
-    setEventData(values.values);
-    console.log(values.values);
-  };
 
   return (
     <>

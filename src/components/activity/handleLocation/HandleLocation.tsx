@@ -3,11 +3,14 @@ import { Button, SideSheet, TreeSelect } from "@douyinfe/semi-ui";
 import { useEffect, useState } from "react";
 import styles from "./HandleLocation.module.scss";
 import AddLocation from "./AddLocation";
+import ChangeLocation from "./ChangeLocation";
+import DeleteLocation from "./DeleteLocation";
 
 const HandleLocation: React.FC = () => {
   const [treeData, setTreeData] = useState<Array<object>>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [id, setId] = useState<number>(0);
+  const [location, setLocation] = useState<string>("");
 
   useEffect(() => {
     getLocations().then((res) => {
@@ -38,9 +41,9 @@ const HandleLocation: React.FC = () => {
           placeholder="地点(可搜索)"
         />
         <div className={styles.buttonContainer}>
-          <AddLocation></AddLocation>
-          <Button>更改</Button>
-          <Button>删除</Button>
+          <AddLocation parentId={id} setTreeDate={setTreeData}></AddLocation>
+          <ChangeLocation id={id} setTreeDate={setTreeData}></ChangeLocation>
+          <DeleteLocation id={id} setTreeDate={setTreeData}></DeleteLocation>
         </div>
       </SideSheet>
     </>

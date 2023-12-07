@@ -22,7 +22,7 @@ interface MoreOperateProps {
     departments: Array<{ id: number; departmentName: string }>;
     eventType: { allowConflict: boolean; id: number; typeName: string };
     location: string;
-    state: string;
+    state: number;
     description: string;
     id: number;
   };

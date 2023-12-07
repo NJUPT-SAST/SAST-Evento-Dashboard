@@ -17,7 +17,7 @@ export default function Activity() {
 
   const windowHeight = window.innerHeight;
   console.log(windowHeight);
-  const tableHeight = windowHeight - 60 - 40 - 0.1 * windowHeight;
+  const tableHeight = windowHeight - 60 - 40 - 0.12 * windowHeight;
 
   //TODO: 这里有大量的typeScript类型问题,都已经设置为any，保证能正常运行
   const columns: any = useMemo(
@@ -46,17 +46,17 @@ export default function Activity() {
         title: "状态",
         dataIndex: "state",
         align: "center",
-        render: (state: string, record: object, index: number) => {
-          if (state === "IN_PROGRESS") {
-            return <Tag color="green">进行中</Tag>;
-          } else if (state === "NOT_STARTED") {
-            return <Tag color="blue">未开始</Tag>;
-          } else if (state === "ENDED") {
-            return <Tag color="grey">已结束</Tag>;
-          } else if (state === "CHECKING_IN") {
-            return <Tag color="yellow">报名中</Tag>;
+        render: (state: number, record: object, index: number) => {
+          if (state === 1) {
+            return <Tag color="green">未开始</Tag>;
+          } else if (state === 2) {
+            return <Tag color="blue">签到中</Tag>;
+          } else if (state === 3) {
+            return <Tag color="grey">进行中</Tag>;
+          } else if (state === 4) {
+            return <Tag color="yellow">已取消</Tag>;
           } else {
-            return <Tag color="red">已取消</Tag>;
+            return <Tag color="red">已结束</Tag>;
           }
         },
       },
@@ -75,7 +75,7 @@ export default function Activity() {
             departments: Array<{ id: number; departmentName: string }>;
             eventType: { allowConflict: boolean; id: number; typeName: string };
             location: string;
-            state: string;
+            state: number;
             description: string;
             id: number;
           }
@@ -185,7 +185,6 @@ export default function Activity() {
 
           {/* TODO :app-index.js:32  Warning: CustomExpandIcon: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.目前不影响使用 */}
           <Table
-            className={styles.table}
             scroll={scroll}
             rowKey="id"
             columns={columns}
