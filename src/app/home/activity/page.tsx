@@ -7,6 +7,7 @@ import { getEvent } from "@/apis/event";
 import MoreOperate from "@/components/activity/MoreOperate";
 import ActivityType from "@/components/activity/handleActivityType/ActivityType";
 import Department from "@/components/activity/handleDepartment/Department";
+import HandleLocation from "@/components/activity/handleLocation/HandleLocation";
 
 export default function Activity() {
   const [data, setData] = useState<Array<object>>([{}]);
@@ -177,6 +178,7 @@ export default function Activity() {
           <ActivityType />
           <ActivityLocation />
           <Department /> */}
+            <HandleLocation></HandleLocation>
             <Department></Department>
             <ActivityType></ActivityType>
           </div>

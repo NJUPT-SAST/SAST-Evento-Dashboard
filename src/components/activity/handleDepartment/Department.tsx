@@ -4,6 +4,7 @@ import { Button, SideSheet, Space, Table, Tag } from "@douyinfe/semi-ui";
 import { useEffect, useState } from "react";
 import ChangeDepartment from "./ChangeDepartment";
 import DeleteDepartments from "./DeleteDepartment";
+import AddDepartment from "./AddDepartment";
 
 const ActivityType: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -59,7 +60,7 @@ const ActivityType: React.FC = () => {
         onCancel={() => setVisible(false)}
         width="30vw"
       >
-        <Button>添加部门</Button>
+        <AddDepartment setDepartments={setDepartments}></AddDepartment>
         <Table
           columns={columns}
           dataSource={departments}

@@ -8,3 +8,16 @@ export const getLocations = async () => {
 
   return response.data;
 };
+
+export const postLocation = async (locationName: string, parentId: number) => {
+  const response = await request({
+    method: "post",
+    url: "/admin/location",
+    data: {
+      locationName,
+      parentId,
+    },
+  });
+
+  return response.data;
+};

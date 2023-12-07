@@ -39,3 +39,18 @@ export const deleteDepartment = async (departmentId: number) => {
 
   return response.data;
 };
+
+export const addDepartment = async (departmentName: string) => {
+  const response = await request({
+    url: "/admin/department",
+    method: "post",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    data: {
+      departmentName: departmentName,
+    },
+  });
+
+  return response.data;
+};
