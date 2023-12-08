@@ -4,49 +4,22 @@ import { useEffect, useState } from "react";
 import { getDepartments } from "@/apis/departments";
 import { getTypes } from "@/apis/type";
 import { getLocations } from "@/apis/location";
+import fixEventDate from "@/utils/formaEventData";
+import { getEvent, postEvent } from "@/apis/event";
 import { getEventData } from "@/utils/commonInterface";
-import formaEventData from "@/utils/formaEventData";
-import { getEvent, putEvent } from "@/apis/event";
 
-interface PutActivityProps {
+interface AddActivityProps {
   setData: (date: Array<object>) => void;
+  currentPage: number;
   setTotal: (total: number) => void;
   setLoading: (loading: boolean) => void;
-  currentPage: number;
-  title: string;
-  tag: string;
-  eventStart: string;
-  eventEnd: string;
-  registrationStart: string;
-  registrationEnd: string;
-  departments: Array<{ id: number; departmentName: string }>;
-  eventType: { allowConflict: boolean; id: number; typeName: string };
-  location: string;
-  state: number;
-  description: string;
-  id: number;
 }
 
-//TODO:修改请求未做，需要与后端交流，接口出现问题
-//FIXING
-
-const PutActivity: React.FC<PutActivityProps> = ({
-  title,
-  tag,
-  eventStart,
-  eventEnd,
-  registrationStart,
-  registrationEnd,
-  departments,
-  eventType,
-  location,
-  state,
-  description,
-  id,
+const AddActivity: React.FC<AddActivityProps> = ({
   setData,
-  setLoading,
-  setTotal,
   currentPage,
+  setTotal,
+  setLoading,
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [totalDepartments, setTotalDepartments] = useState<
@@ -55,16 +28,11 @@ const PutActivity: React.FC<PutActivityProps> = ({
   const [types, setTypes] = useState<Array<{ value: number; label: string }>>(
     []
   );
-  console.log(location);
-  console.log("state", state);
 
   const [locations, setLocations] = useState<Array<any>>([]);
   const [eventData, setEventData] = useState<getEventData>();
 
-  console.log(state);
-
-  const showSideSheet = (event: any) => {
-    event.stopPropagation();
+  const showSideSheet = () => {
     setVisible(true);
     getDepartments().then(
       (res: { data: [{ id: number; departmentName: string }] }) => {
@@ -126,13 +94,10 @@ const PutActivity: React.FC<PutActivityProps> = ({
     return []; // 添加默认的返回结果，当data为null时返回空数组
   }
 
-  const changeOk = () => {
-    console.log(eventData);
-    const newValue = formaEventData(eventData);
-    console.log(id);
-    if (newValue) {
-      console.log(id);
-      putEvent(id, newValue).then((res) => {
+  const addOk = () => {
+    const newValues = fixEventDate(eventData);
+    if (newValues) {
+      postEvent(newValues).then((res) => {
         console.log(res);
         if (res.success) {
           getEvent(currentPage, 20)
@@ -158,8 +123,8 @@ const PutActivity: React.FC<PutActivityProps> = ({
 
   const footer = (
     <div style={{ display: "flex", justifyContent: "flex-end" }}>
-      <Button theme="solid" onClick={changeOk}>
-        确认修改
+      <Button theme="solid" onClick={addOk}>
+        确认发起
       </Button>
     </div>
   );
@@ -206,15 +171,9 @@ const PutActivity: React.FC<PutActivityProps> = ({
 
   return (
     <>
-      <span
-        className={commonStyles.buttonSpan}
-        style={{ color: "rgb(12,103,250)" }}
-        onClick={showSideSheet}
-      >
-        编辑活动
-      </span>
+      <Button onClick={showSideSheet}>发起活动</Button>
       <SideSheet
-        title="编辑活动信息"
+        title="发起活动信息"
         visible={visible}
         onCancel={() => setVisible(false)}
         footer={footer}
@@ -226,7 +185,6 @@ const PutActivity: React.FC<PutActivityProps> = ({
           <Row>
             <Col span={12}>
               <Form.Input
-                initValue={title}
                 field="title"
                 label="标题"
                 trigger="blur"
@@ -236,7 +194,6 @@ const PutActivity: React.FC<PutActivityProps> = ({
             </Col>
             <Col span={12}>
               <Form.Input
-                initValue={tag}
                 field="tag"
                 label="标签"
                 trigger="blur"
@@ -248,7 +205,6 @@ const PutActivity: React.FC<PutActivityProps> = ({
           <Row>
             <Col span={12}>
               <Form.DatePicker
-                initValue={[eventStart, eventEnd]}
                 type="dateTimeRange"
                 field="EventTime"
                 label="活动时间"
@@ -259,7 +215,6 @@ const PutActivity: React.FC<PutActivityProps> = ({
             </Col>
             <Col span={12}>
               <Form.DatePicker
-                initValue={[registrationStart, registrationEnd]}
                 type="dateTimeRange"
                 field="RegistrationTime"
                 label="报名时间"
@@ -273,9 +228,7 @@ const PutActivity: React.FC<PutActivityProps> = ({
             <Col span={12}>
               <Form.Select
                 multiple
-                initValue={initDepartment(departments)}
                 maxTagCount={1}
-                // filter={searchLabel}
                 field="departments"
                 label="活动组别"
                 trigger="blur"
@@ -286,8 +239,6 @@ const PutActivity: React.FC<PutActivityProps> = ({
             </Col>
             <Col span={12}>
               <Form.Select
-                initValue={eventType.id}
-                // filter={searchLabel}
                 field="typeId"
                 label="活动类型"
                 trigger="blur"
@@ -306,14 +257,21 @@ const PutActivity: React.FC<PutActivityProps> = ({
                 trigger="blur"
                 placeholder="请选择活动地点"
                 style={{ width: "90%" }}
-                initValue={location}
                 treeData={locations}
               />
             </Col>
+            {/* <Col span={12}>
+              <Form.Select
+                field="state"
+                label="活动状态"
+                trigger="blur"
+                style={{ width: "90%" }}
+                optionList={stateList}
+              />
+            </Col> */}
           </Row>
           <Row>
             <Form.TextArea
-              initValue={description}
               field="description"
               label="活动介绍"
               trigger="blur"
@@ -326,4 +284,4 @@ const PutActivity: React.FC<PutActivityProps> = ({
   );
 };
 
-export default PutActivity;
+export default AddActivity;

@@ -4,7 +4,7 @@ import { Modal } from "@douyinfe/semi-ui";
 import { deleteEvent, getEvent } from "@/apis/event";
 
 interface DeleteActivityProps {
-  setDate: (date: Array<object>) => void;
+  setData: (date: Array<object>) => void;
   setTotal: (total: number) => void;
   eventId: number;
   currentPage: number;
@@ -12,7 +12,7 @@ interface DeleteActivityProps {
 }
 
 const DeleteActivity: React.FC<DeleteActivityProps> = ({
-  setDate,
+  setData,
   setTotal,
   eventId,
   currentPage,
@@ -27,7 +27,7 @@ const DeleteActivity: React.FC<DeleteActivityProps> = ({
         getEvent(currentPage, 20).then((res) => {
           console.log(res.data);
           setTotal(res.data.total);
-          setDate(res.data.result);
+          setData(res.data.result);
           setVisible(false);
         });
       }

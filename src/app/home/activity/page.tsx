@@ -8,6 +8,7 @@ import MoreOperate from "@/components/activity/MoreOperate";
 import ActivityType from "@/components/activity/handleActivityType/ActivityType";
 import Department from "@/components/activity/handleDepartment/Department";
 import HandleLocation from "@/components/activity/handleLocation/HandleLocation";
+import AddActivity from "@/components/activity/handleActivity/AddActivity";
 
 export default function Activity() {
   const [data, setData] = useState<Array<object>>([{}]);
@@ -82,7 +83,8 @@ export default function Activity() {
         ) => {
           return (
             <MoreOperate
-              setDate={setData}
+              setLoading={setLoading}
+              setData={setData}
               setTotal={setTotal}
               currentPage={currentPage}
               record={record}
@@ -115,6 +117,24 @@ export default function Activity() {
     ];
   });
 
+  const gewNewEvent = () => {
+    getEvent(currentPage, 20)
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        const newDate = res.data.result.map((obj: { id: number }) => {
+          return {
+            ...obj,
+            key: `${obj.id}`,
+          };
+        });
+        console.log(newDate);
+        setData(newDate);
+        setTotal(res.data.total);
+      })
+      .then((res) => setLoading(false));
+  };
+
   useEffect(() => {
     setLoading(true);
     getEvent(currentPage, 20)
@@ -132,9 +152,6 @@ export default function Activity() {
         setTotal(res.data.total);
       })
       .then((res) => setLoading(false));
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
   }, [currentPage]);
 
   const handlePageChange = (page: number) => {
@@ -168,16 +185,13 @@ export default function Activity() {
     <>
       <div className={styles.main}>
         <div className="activityContainer">
-          <div className="activityHeader">
-            {/* <AddEvent
-            setLoading={setLoading}
-            setTotal={setTotal}
-            setData={setData}
-            currentPage={currentPage}
-          />
-          <ActivityType />
-          <ActivityLocation />
-          <Department /> */}
+          <div className={styles.activityHeader}>
+            <AddActivity
+              setData={setData}
+              currentPage={currentPage}
+              setTotal={setTotal}
+              setLoading={setLoading}
+            ></AddActivity>
             <HandleLocation></HandleLocation>
             <Department></Department>
             <ActivityType></ActivityType>
@@ -185,6 +199,7 @@ export default function Activity() {
 
           {/* TODO :app-index.js:32  Warning: CustomExpandIcon: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.目前不影响使用 */}
           <Table
+            // expandRowByClick={true}
             scroll={scroll}
             rowKey="id"
             columns={columns}

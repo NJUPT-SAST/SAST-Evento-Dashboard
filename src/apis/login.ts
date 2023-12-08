@@ -1,4 +1,4 @@
-import request from "./request";
+import request from "../utils/request";
 
 export const linkLogin = async (code: string, type = 1) => {
   let data = new FormData();

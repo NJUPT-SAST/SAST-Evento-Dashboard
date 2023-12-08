@@ -1,4 +1,4 @@
-import request from "./request";
+import request from "../utils/request";
 
 export const getAdminsList = async (current: number, size: number) => {
   const response = await request({

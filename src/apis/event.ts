@@ -1,4 +1,6 @@
-import request from "./request";
+import { log } from "util";
+import request from "../utils/request";
+import { eventData } from "@/utils/commonInterface";
 
 export const getEventsList = async (
   typeId: string,
@@ -56,37 +58,6 @@ export const getManagers = async (eventId: number) => {
   return response.data;
 };
 
-//TODO:修改请求未做，需要与后端交流，接口出现问题
-
-// export const putEvent = (id, value, location) => {
-//   const departments = value.departments.map((item) => {
-//     return { id: item };
-//   });
-//   return request({
-//     method: "put",
-//     url: "/event/info",
-//     params: { eventId: id },
-//     data: {
-//       id: id,
-//       title: value.title,
-//       description: value.description,
-//       typeId: value.typeId,
-//       locationId: location,
-//       tag: value.tag,
-//       state: Number(value.state),
-//       departments: departments,
-//       // gmtEventStart: moment(value.EventTime[0]).format("YYYY-MM-DD HH:mm:ss"),
-//       // gmtEventEnd: moment(value.EventTime[1]).format("YYYY-MM-DD HH:mm:ss"),
-//       // gmtRegistrationStart: moment(value.RegistrationTime[0]).format(
-//       //   "YYYY-MM-DD HH:mm:ss"
-//       // ),
-//       // gmtRegistrationEnd: moment(value.RegistrationTime[1]).format(
-//       //   "YYYY-MM-DD HH:mm:ss"
-//       // ),
-//     },
-//   });
-// };
-
 export const deleteEvent = async (eventId: number) => {
   const response = await request({
     method: "delete",
@@ -108,6 +79,60 @@ export const cancelEvent = async (eventId: number) => {
     },
     data: {
       id: eventId,
+    },
+  });
+
+  return response.data;
+};
+
+export const postEvent = async (eventDate: eventData) => {
+  console.log(eventDate);
+  const departments = eventDate.departments.map((item) => {
+    return { id: item };
+  });
+  const response = await request({
+    method: "post",
+    url: "/event/info",
+    data: {
+      title: eventDate.title,
+      description: eventDate.description,
+      typeId: eventDate.typeId,
+      locationId: eventDate.locationId,
+      tag: eventDate.tag,
+      departments: departments,
+      gmtEventStart: eventDate.gmtEventStart,
+      gmtEventEnd: eventDate.gmtEventEnd,
+      gmtRegistrationStart: eventDate.gmtRegistrationStart,
+      gmtRegistrationEnd: eventDate.gmtRegistrationEnd,
+    },
+  });
+
+  return response.data;
+};
+
+export const putEvent = async (eventId: number, eventDate: eventData) => {
+  console.log(eventDate);
+  const departments = eventDate.departments.map((item) => {
+    return { id: item };
+  });
+  const response = await request({
+    method: "put",
+    url: "/event/info",
+    params: {
+      eventId: eventId,
+    },
+    data: {
+      id: eventId,
+      title: eventDate.title,
+      description: eventDate.description,
+      typeId: eventDate.typeId,
+      locationId: eventDate.locationId,
+      tag: eventDate.tag,
+      departments: departments,
+      gmtEventStart: eventDate.gmtEventStart,
+      gmtEventEnd: eventDate.gmtEventEnd,
+      gmtRegistrationStart: eventDate.gmtRegistrationStart,
+      gmtRegistrationEnd: eventDate.gmtRegistrationEnd,
     },
   });
 

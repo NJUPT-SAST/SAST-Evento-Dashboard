@@ -1,4 +1,4 @@
-import request from "./request";
+import request from "../utils/request";
 
 export const addPictureList = async (picture: File, dir: string) => {
   const formData = new FormData();

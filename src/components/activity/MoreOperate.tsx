@@ -9,8 +9,9 @@ import DeleteActivity from "./handleActivity/DeleteActivity";
 import CancelActivity from "./handleActivity/CancelActivity";
 
 interface MoreOperateProps {
-  setDate: (date: Array<object>) => void;
+  setData: (date: Array<object>) => void;
   setTotal: (total: number) => void;
+  setLoading: (loading: boolean) => void;
   currentPage: number;
   record: {
     title: string;
@@ -29,8 +30,9 @@ interface MoreOperateProps {
 }
 
 const MoreOperate: React.FC<MoreOperateProps> = ({
-  setDate,
+  setData,
   setTotal,
+  setLoading,
   currentPage,
   record,
 }) => {
@@ -39,8 +41,8 @@ const MoreOperate: React.FC<MoreOperateProps> = ({
   return (
     <>
       <Dropdown
-        clickToHide
         trigger="click"
+        clickToHide
         keepDOM={true}
         render={
           <Dropdown.Menu>
@@ -67,11 +69,15 @@ const MoreOperate: React.FC<MoreOperateProps> = ({
                 state={record.state}
                 description={record.description}
                 id={record.id}
+                setData={setData}
+                setTotal={setTotal}
+                setLoading={setLoading}
+                currentPage={currentPage}
               ></PutActivity>
             </Dropdown.Item>
             <Dropdown.Item>
               <CancelActivity
-                setDate={setDate}
+                setData={setData}
                 setTotal={setTotal}
                 eventId={record.id}
                 currentPage={currentPage}
@@ -80,7 +86,7 @@ const MoreOperate: React.FC<MoreOperateProps> = ({
             </Dropdown.Item>
             <Dropdown.Item>
               <DeleteActivity
-                setDate={setDate}
+                setData={setData}
                 setTotal={setTotal}
                 eventId={record.id}
                 currentPage={currentPage}
