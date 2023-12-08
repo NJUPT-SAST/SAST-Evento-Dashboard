@@ -29,3 +29,15 @@ export interface slideDate {
   link: string;
   url: string;
 }
+
+export interface pictureDate {
+  cosDir: string;
+  cosKey: string;
+  extension: string;
+  gmtUploadTime: string;
+  id: number;
+  name: string;
+  size: number;
+  uri: string;
+  userId: string;
+}

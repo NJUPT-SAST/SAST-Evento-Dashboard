@@ -8,18 +8,23 @@ import {
   Image,
   Pagination,
   Toast,
+  Input,
 } from "@douyinfe/semi-ui";
 import { useEffect, useState } from "react";
 import { IconTick } from "@douyinfe/semi-icons";
-import { pictureDate } from "@/utils/commonInterface";
-import styles from "./ChangeUrl.module.scss";
-import { Value } from "sass";
+import { pictureDate, slideDate } from "@/utils/commonInterface";
+import styles from "./AddPicture.module.scss";
+import { addSlide, getSlide } from "@/apis/slide";
 
-interface ChangeUrlProps {
-  setUrl: (url: string) => void;
+interface AddPictureProps {
+  setParentTotal: (total: number) => void;
+  setParentData: (data: any) => void;
 }
 
-const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
+const AddPicture: React.FC<AddPictureProps> = ({
+  setParentTotal,
+  setParentData,
+}) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [pictureDir, setPictureDir] = useState<Array<string>>([""]);
   const [chosenPictureDir, setChosenPictureDir] = useState<string>("");
@@ -28,6 +33,8 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
   const [total, setTotal] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [chosenPicture, setChosenPicture] = useState<number>(0);
+  const [title, setTitle] = useState<string>("");
+  const [link, setLink] = useState<string>("");
 
   const showChangeModal = () => {
     getPictureDir().then((res) => {
@@ -57,15 +64,34 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
   };
 
   const handleOk = () => {
-    if (isSelect) {
-      console.log(imagesData);
-      const newPictureData = imagesData.find((obj) => obj.id === chosenPicture);
-      if (newPictureData) {
-        console.log(newPictureData.uri);
-        setUrl(newPictureData.uri);
-        setVisible(false);
+    if (isSelect && title && link) {
+      if (imagesData) {
+        console.log("hello");
+        const uri = imagesData.find((obj) => obj.id === chosenPicture)?.uri;
+        console.log(uri);
+        console.log(title);
+        console.log(link);
+        addSlide(uri, link, title).then((res) => {
+          console.log(res);
+          if (res.success === true) {
+            getSlide(currentPage).then((res: any) => {
+              console.log(res.data);
+              console.log(res.data.slides);
+              setParentData(res.data.slides);
+              setParentTotal(res.data.total);
+              setVisible(false);
+            });
+          }
+        });
       }
-    } else {
+    }
+    if (!title) {
+      Toast.info({ content: "没有title" });
+    }
+    if (!link) {
+      Toast.info({ content: "没有link" });
+    }
+    if (!isSelect) {
       Toast.info({ content: "没有选中" });
     }
   };
@@ -80,9 +106,9 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
 
   return (
     <>
-      <Button onClick={showChangeModal}>修改url</Button>
+      <Button onClick={showChangeModal}>添加新的幻灯片</Button>
       <Modal
-        title="是否要更换图片"
+        title="添加新的幻灯片"
         visible={visible}
         size="large"
         onOk={handleOk}
@@ -90,19 +116,37 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
         closeOnEsc={true}
       >
         <div className={styles.selectContainer}>
-          <h4>请选择图库目录</h4>
-          <Select
-            defaultValue={chosenPictureDir}
-            style={{ width: 120 }}
-            onChange={changeSelect}
-          >
-            {pictureDir &&
-              pictureDir.map((item, index) => (
-                <Select.Option key={index} value={item}>
-                  {item}
-                </Select.Option>
-              ))}
-          </Select>
+          <div>
+            <h4>请输入title</h4>
+            <Input
+              className={styles.input}
+              value={title}
+              onChange={setTitle}
+            ></Input>
+          </div>
+          <div>
+            <h4>请输入link</h4>
+            <Input
+              className={styles.input}
+              value={link}
+              onChange={setLink}
+            ></Input>
+          </div>
+          <div>
+            <h4>请从图库中选择图片</h4>
+            <Select
+              defaultValue={chosenPictureDir}
+              style={{ width: 120 }}
+              onChange={changeSelect}
+            >
+              {pictureDir &&
+                pictureDir.map((item, index) => (
+                  <Select.Option key={index} value={item}>
+                    {item}
+                  </Select.Option>
+                ))}
+            </Select>
+          </div>
         </div>
         <div className={styles.changeUrlTabsContainer}>
           <Tabs tabPosition="left" type="button" onChange={changeTab}>
@@ -145,4 +189,4 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
   );
 };
 
-export default ChangeUrl;
+export default AddPicture;

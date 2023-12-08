@@ -13,14 +13,17 @@ import {
   Select,
   Space,
 } from "@douyinfe/semi-ui";
-import { IconTick } from "@douyinfe/semi-icons";
 import styles from "./page.module.scss";
 import { getSlide } from "@/apis/slide";
 import { slideDate } from "@/utils/commonInterface";
 import Image from "next/image";
+import ChangeUrl from "@/components/picture/ChangeUrl";
+import SavePicture from "@/components/picture/SavePicture";
+import DeletePicture from "@/components/picture/DeletePicture";
+import AddPicture from "@/components/picture/AddPicture";
 
 export default function Picture() {
-  const [data, setData] = useState<Array<slideDate>>();
+  const [data, setData] = useState<Array<slideDate>>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   let opts = {
     title: "图片详情",
@@ -101,8 +104,21 @@ export default function Picture() {
                         value={link}
                         onChange={setLink}
                       ></Input>
-                      <Button>保存修改</Button>
-                      <Button>删除幻灯片</Button>
+                      <ChangeUrl setUrl={setUrl}></ChangeUrl>
+                      <SavePicture
+                        url={url}
+                        title={title}
+                        link={link}
+                        slideId={item.id}
+                        setData={setData}
+                        currentPage={currentPage}
+                      ></SavePicture>
+                      <DeletePicture
+                        eventId={item.id}
+                        currentPage={currentPage}
+                        setData={setData}
+                        setTotal={setTotal}
+                      ></DeletePicture>
                     </div>
                   </div>
                   <div className={styles.previewImageContainer}>
@@ -119,7 +135,10 @@ export default function Picture() {
             ))}
         </Tabs>
         <div className={styles.PaginationContainer}>
-          <Button>添加新的幻灯片</Button>
+          <AddPicture
+            setParentData={setData}
+            setParentTotal={setTotal}
+          ></AddPicture>
           <Pagination
             total={total}
             // onChange={handlePageChange}
