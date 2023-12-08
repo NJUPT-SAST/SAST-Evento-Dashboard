@@ -59,9 +59,8 @@ export default function Picture() {
       setUrl(newData.url);
     }
   };
-  const test = () => {
-    console.log(title);
-    console.log(link);
+  const handlePageChange = (value: number) => {
+    setCurrentPage(value);
   };
 
   return (
@@ -141,7 +140,7 @@ export default function Picture() {
           ></AddPicture>
           <Pagination
             total={total}
-            // onChange={handlePageChange}
+            onChange={handlePageChange}
             pageSize={10}
           ></Pagination>
         </div>

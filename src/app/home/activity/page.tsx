@@ -18,7 +18,7 @@ export default function Activity() {
 
   const windowHeight = window.innerHeight;
   console.log(windowHeight);
-  const tableHeight = windowHeight - 60 - 40 - 0.12 * windowHeight;
+  const tableHeight = windowHeight - 60 - 40 - 32 -  0.12 * windowHeight;
 
   //TODO: 这里有大量的typeScript类型问题,都已经设置为any，保证能正常运行
   const columns: any = useMemo(

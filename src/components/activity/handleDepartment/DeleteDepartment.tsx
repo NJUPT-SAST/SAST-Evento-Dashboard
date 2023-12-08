@@ -17,7 +17,6 @@ const DeleteDepartments: React.FC<DeleteDepartmentProps> = ({
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
   console.log(id);
-  //TODO: 这里后端传入的数据有问题，按照后端传入的id删除部门，发生id不存在的问题
   const handleOk = () => {
     deleteDepartment(id).then((res) => {
       if (res.success === true) {

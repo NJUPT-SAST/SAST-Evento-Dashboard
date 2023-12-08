@@ -7,7 +7,7 @@ import styles from "./AddImageButton.module.scss";
 type AddImageButtonProps = {
   page: number;
   chosenDir: string;
-  setImageDate: Dispatch<SetStateAction<{ uri: string }[]>>;
+  setImageDate: Dispatch<SetStateAction<{ uri: string; id: number }[]>>;
   setTotal: Dispatch<SetStateAction<number>>;
 };
 

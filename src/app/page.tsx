@@ -3,6 +3,7 @@
 import "./welcomeAnimate.scss";
 import styles from "./page.module.scss";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 function TypingComponent() {
   const [animate, setAnimate] = useState(true);
@@ -15,7 +16,13 @@ function TypingComponent() {
 
   setTimeout(() => {
     setShowButton(true);
-  }, 9500);
+  }, 0);
+
+  const router = useRouter();
+
+  const toLogin = () => {
+    router.push("/login", { scroll: false });
+  };
 
   return (
     <>
@@ -27,7 +34,11 @@ function TypingComponent() {
           ></div>
         </div>
         <div className={styles.buttonContainer}>
-          {showButton && <button className={styles.button}>toLogin</button>}
+          {showButton && (
+            <button className={styles.button} onClick={toLogin}>
+              toLogin
+            </button>
+          )}
         </div>
       </div>
     </>

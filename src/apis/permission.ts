@@ -117,3 +117,12 @@ export const addManagers = async (
 
   return response.data;
 };
+
+export const getMyAdminPermission = async () => {
+  const response = await request({
+    method: "get",
+    url: "/permission/admin/self",
+  });
+
+  return response.data;
+};

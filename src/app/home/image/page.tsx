@@ -2,14 +2,18 @@
 
 import AddImageButton from "@/components/image/AddImageButton";
 import styles from "./page.module.scss";
-import { Pagination, Tabs, TabPane } from "@douyinfe/semi-ui";
+import { Pagination, Tabs, TabPane, Button } from "@douyinfe/semi-ui";
 import { Image as SemiImage } from "@douyinfe/semi-ui";
 import { useEffect, useState } from "react";
 import { getPictureDir, getPictureList } from "@/apis/picture";
+import Numeral from "@douyinfe/semi-ui/lib/es/typography/numeral";
+import DeleteImagesButton from "@/components/image/DeleteImageButton";
 
 export default function Image() {
   const [pictureDir, setPictureDir] = useState<Array<string>>([]);
-  const [imageData, setImageData] = useState<Array<{ uri: string }>>([]);
+  const [imageData, setImageData] = useState<
+    Array<{ uri: string; id: number }>
+  >([]);
   const [total, setTotal] = useState<number>(0);
   const [chosenTab, setChosenTab] = useState<string>("developer");
   const [page, setPage] = useState<number>(1);
@@ -80,6 +84,12 @@ export default function Image() {
                             src={obj.uri}
                             alt={`Image ${index + 1}`}
                           />
+                          <DeleteImagesButton
+                            id={obj.id}
+                            dir={chosenTab}
+                            setImageData={setImageData}
+                            setTotal={setTotal}
+                          ></DeleteImagesButton>
                         </div>
                       ))}
                     </div>

@@ -19,8 +19,8 @@ export default function DashboardLayout({
 }) {
   const { Header, Sider } = Layout;
 
-  // let PathName = window.location.href;
-  // PathName = PathName.split("/")[PathName.split("/").length - 1];
+  let PathName = window.location.href;
+  PathName = PathName.split("/")[PathName.split("/").length - 1];
   //TODO: 刷新时，无法正常显示活动的sidebar标签
   return (
     <section>
@@ -79,7 +79,7 @@ export default function DashboardLayout({
                 );
               }}
               style={{ maxWidth: 220, height: "100%" }}
-              defaultSelectedKeys={[`home`]}
+              defaultSelectedKeys={[PathName]}
               items={[
                 {
                   itemKey: "activity",
