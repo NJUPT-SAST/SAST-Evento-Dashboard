@@ -9,6 +9,8 @@ import ActivityType from "@/components/activity/handleActivityType/ActivityType"
 import Department from "@/components/activity/handleDepartment/Department";
 import HandleLocation from "@/components/activity/handleLocation/HandleLocation";
 import AddActivity from "@/components/activity/handleActivity/AddActivity";
+import permissions from "@/utils/getAdminPermisson";
+import getAdminPermission from "@/utils/getAdminPermisson";
 
 export default function Activity() {
   const [data, setData] = useState<Array<object>>([{}]);
@@ -18,9 +20,11 @@ export default function Activity() {
 
   const windowHeight = window.innerHeight;
   console.log(windowHeight);
-  const tableHeight = windowHeight - 60 - 40 - 32 -  0.12 * windowHeight;
+  const tableHeight = windowHeight - 60 - 40 - 32 - 0.12 * windowHeight;
 
-  //TODO: 这里有大量的typeScript类型问题,都已经设置为any，保证能正常运行
+  const permissions = getAdminPermission();
+  console.log(permissions.addEvent);
+
   const columns: any = useMemo(
     () => [
       {
@@ -186,12 +190,14 @@ export default function Activity() {
       <div className={styles.main}>
         <div className="activityContainer">
           <div className={styles.activityHeader}>
-            <AddActivity
-              setData={setData}
-              currentPage={currentPage}
-              setTotal={setTotal}
-              setLoading={setLoading}
-            ></AddActivity>
+            {permissions.addEvent && (
+              <AddActivity
+                setData={setData}
+                currentPage={currentPage}
+                setTotal={setTotal}
+                setLoading={setLoading}
+              ></AddActivity>
+            )}
             <HandleLocation></HandleLocation>
             <Department></Department>
             <ActivityType></ActivityType>
@@ -199,7 +205,6 @@ export default function Activity() {
 
           {/* TODO :app-index.js:32  Warning: CustomExpandIcon: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.目前不影响使用 */}
           <Table
-            // expandRowByClick={true}
             scroll={scroll}
             rowKey="id"
             columns={columns}

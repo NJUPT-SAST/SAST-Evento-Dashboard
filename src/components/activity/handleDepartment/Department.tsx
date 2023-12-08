@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import ChangeDepartment from "./ChangeDepartment";
 import DeleteDepartments from "./DeleteDepartment";
 import AddDepartment from "./AddDepartment";
+import getAdminPermission from "@/utils/getAdminPermisson";
 
 const ActivityType: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -12,6 +13,7 @@ const ActivityType: React.FC = () => {
     Array<{ id: number; departmentName: string }>
   >([]);
 
+  useEffect(() => {}, []);
   const showActivitySheet = () => {
     getDepartments().then((res) => {
       console.log(res);
@@ -19,6 +21,8 @@ const ActivityType: React.FC = () => {
       setVisible(true);
     });
   };
+
+  const permissions = getAdminPermission();
 
   const columns: any = [
     {
@@ -37,16 +41,20 @@ const ActivityType: React.FC = () => {
       align: "center",
       render: (_: any, record: { id: number; departmentName: string }) => (
         <Space>
-          <ChangeDepartment
-            id={record.id}
-            departmentName={record.departmentName}
-            setDepartments={setDepartments}
-          ></ChangeDepartment>
-          <DeleteDepartments
-            id={record.id}
-            departmentName={record.departmentName}
-            setDepartments={setDepartments}
-          ></DeleteDepartments>
+          {permissions.putDepartment && (
+            <ChangeDepartment
+              id={record.id}
+              departmentName={record.departmentName}
+              setDepartments={setDepartments}
+            ></ChangeDepartment>
+          )}
+          {permissions.deleteDepartment && (
+            <DeleteDepartments
+              id={record.id}
+              departmentName={record.departmentName}
+              setDepartments={setDepartments}
+            ></DeleteDepartments>
+          )}
         </Space>
       ),
     },
@@ -60,7 +68,9 @@ const ActivityType: React.FC = () => {
         onCancel={() => setVisible(false)}
         width="30vw"
       >
-        <AddDepartment setDepartments={setDepartments}></AddDepartment>
+        {permissions.addDepartment && (
+          <AddDepartment setDepartments={setDepartments}></AddDepartment>
+        )}
         <Table
           columns={columns}
           dataSource={departments}

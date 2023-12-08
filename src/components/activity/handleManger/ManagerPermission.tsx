@@ -5,6 +5,7 @@ import { getManagers } from "@/apis/event";
 import PutManager from "./PutManager";
 import DeleteManager from "./DeleteManager";
 import AddManager from "./AddManager";
+import getAdminPermission from "@/utils/getAdminPermisson";
 
 interface ManagerPermissionProps {
   title: string;
@@ -24,6 +25,8 @@ const ManagerPermission: React.FC<ManagerPermissionProps> = ({
       setManagerData(res.data.users);
     });
   }, [eventId]);
+
+  const permissions = getAdminPermission();
 
   const columns = [
     {

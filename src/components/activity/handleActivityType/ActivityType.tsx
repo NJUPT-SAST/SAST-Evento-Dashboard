@@ -5,6 +5,7 @@ import ChangeActivityType from "./ChangeActivityType";
 import DeleteActivityType from "./DeleteActivityType";
 import AddActivityType from "./AddActivityType";
 import styles from "./ActivityType.module.scss";
+import getAdminPermission from "@/utils/getAdminPermisson";
 
 const ActivityType: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -19,6 +20,8 @@ const ActivityType: React.FC = () => {
       setVisible(true);
     });
   };
+
+  const permissions = getAdminPermission();
 
   const columns: any = [
     {
@@ -47,17 +50,21 @@ const ActivityType: React.FC = () => {
         record: { id: number; typeName: string; allowConflict: boolean }
       ) => (
         <Space>
-          <ChangeActivityType
-            setActivityTypes={setActivityTypes}
-            id={record.id}
-            typeName={record.typeName}
-            allowConflict={record.allowConflict}
-          ></ChangeActivityType>
-          <DeleteActivityType
-            setActivityTypes={setActivityTypes}
-            id={record.id}
-            typeName={record.typeName}
-          ></DeleteActivityType>
+          {permissions.updateType && (
+            <ChangeActivityType
+              setActivityTypes={setActivityTypes}
+              id={record.id}
+              typeName={record.typeName}
+              allowConflict={record.allowConflict}
+            ></ChangeActivityType>
+          )}
+          {permissions.deleteType && (
+            <DeleteActivityType
+              setActivityTypes={setActivityTypes}
+              id={record.id}
+              typeName={record.typeName}
+            ></DeleteActivityType>
+          )}
         </Space>
       ),
     },
@@ -71,7 +78,11 @@ const ActivityType: React.FC = () => {
         onCancel={() => setVisible(false)}
         width="30vw"
       >
-        <AddActivityType setActivityTypes={setActivityTypes}></AddActivityType>
+        {permissions.addType && (
+          <AddActivityType
+            setActivityTypes={setActivityTypes}
+          ></AddActivityType>
+        )}
         <Table
           columns={columns}
           dataSource={activityTypes}

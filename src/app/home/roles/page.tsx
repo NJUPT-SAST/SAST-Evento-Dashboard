@@ -16,6 +16,7 @@ import {
 import { getAdminsList } from "@/apis/permission";
 import { ShowPermission } from "@/components/roles/ShowPermission";
 import { ChangePermission } from "@/components/roles/ChangePermission";
+import getAdminPermission from "@/utils/getAdminPermisson";
 
 export default function Roles() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -51,6 +52,7 @@ export default function Roles() {
     getNewAdminList(page, 10);
   }, [page]);
 
+  const permissions = getAdminPermission();
   return (
     <>
       <div className={styles.main}>
@@ -96,7 +98,9 @@ export default function Roles() {
                 extra={
                   <ButtonGroup theme="borderless">
                     <ShowPermission studentId={item.studentId}></ShowPermission>
-                    <ChangePermission userId={item.id}></ChangePermission>
+                    {permissions.putAdmin && (
+                      <ChangePermission userId={item.id}></ChangePermission>
+                    )}
                   </ButtonGroup>
                 }
               />

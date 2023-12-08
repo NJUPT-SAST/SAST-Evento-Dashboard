@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { getPictureDir, getPictureList } from "@/apis/picture";
 import Numeral from "@douyinfe/semi-ui/lib/es/typography/numeral";
 import DeleteImagesButton from "@/components/image/DeleteImageButton";
+import getAdminPermission from "@/utils/getAdminPermisson";
 
 export default function Image() {
   const [pictureDir, setPictureDir] = useState<Array<string>>([]);
@@ -39,6 +40,7 @@ export default function Image() {
       setPictureDir(res.data);
     });
   }, []);
+  const permissions = getAdminPermission();
 
   useEffect(() => {
     // setPage(1);
@@ -54,12 +56,14 @@ export default function Image() {
       <div className={styles.main}>
         <div className={styles.container}>
           <div className={styles.addButtonContainer}>
-            <AddImageButton
-              page={page}
-              chosenDir={chosenTab}
-              setImageDate={setImageData}
-              setTotal={setTotal}
-            ></AddImageButton>
+            {permissions.addPicture && (
+              <AddImageButton
+                page={page}
+                chosenDir={chosenTab}
+                setImageDate={setImageData}
+                setTotal={setTotal}
+              ></AddImageButton>
+            )}
           </div>
           <Tabs
             tabPosition="left"
@@ -84,12 +88,14 @@ export default function Image() {
                             src={obj.uri}
                             alt={`Image ${index + 1}`}
                           />
-                          <DeleteImagesButton
-                            id={obj.id}
-                            dir={chosenTab}
-                            setImageData={setImageData}
-                            setTotal={setTotal}
-                          ></DeleteImagesButton>
+                          {permissions.deletePicture && (
+                            <DeleteImagesButton
+                              id={obj.id}
+                              dir={chosenTab}
+                              setImageData={setImageData}
+                              setTotal={setTotal}
+                            ></DeleteImagesButton>
+                          )}
                         </div>
                       ))}
                     </div>

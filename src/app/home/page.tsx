@@ -9,7 +9,7 @@ export default function Home() {
   useEffect(() => {
     getMyAdminPermission().then((res) => {
       console.log(res);
-      localStorage.setItem("adminPermission", res.data);
+      localStorage.setItem("adminPermission", JSON.stringify(res.data));
     });
   }, []);
 

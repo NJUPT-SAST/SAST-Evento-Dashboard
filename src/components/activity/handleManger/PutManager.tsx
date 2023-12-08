@@ -6,9 +6,6 @@ import {
   managerUserList,
   putManagers,
 } from "@/apis/permission";
-import { Value } from "sass";
-import { time } from "console";
-import { title } from "process";
 
 interface PutManagerProps {
   eventId: number;

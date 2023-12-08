@@ -21,6 +21,7 @@ import ChangeUrl from "@/components/picture/ChangeUrl";
 import SavePicture from "@/components/picture/SavePicture";
 import DeletePicture from "@/components/picture/DeletePicture";
 import AddPicture from "@/components/picture/AddPicture";
+import getAdminPermission from "@/utils/getAdminPermisson";
 
 export default function Picture() {
   const [data, setData] = useState<Array<slideDate>>([]);
@@ -35,6 +36,8 @@ export default function Picture() {
   const [link, setLink] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [total, setTotal] = useState<number>(0);
+
+  const permissions = getAdminPermission();
 
   useEffect(() => {
     getSlide(currentPage).then((res: any) => {
@@ -104,20 +107,24 @@ export default function Picture() {
                         onChange={setLink}
                       ></Input>
                       <ChangeUrl setUrl={setUrl}></ChangeUrl>
-                      <SavePicture
-                        url={url}
-                        title={title}
-                        link={link}
-                        slideId={item.id}
-                        setData={setData}
-                        currentPage={currentPage}
-                      ></SavePicture>
-                      <DeletePicture
-                        eventId={item.id}
-                        currentPage={currentPage}
-                        setData={setData}
-                        setTotal={setTotal}
-                      ></DeletePicture>
+                      {permissions.patchHomeSlide && (
+                        <SavePicture
+                          url={url}
+                          title={title}
+                          link={link}
+                          slideId={item.id}
+                          setData={setData}
+                          currentPage={currentPage}
+                        ></SavePicture>
+                      )}
+                      {permissions.deleteHomeSlide && (
+                        <DeletePicture
+                          eventId={item.id}
+                          currentPage={currentPage}
+                          setData={setData}
+                          setTotal={setTotal}
+                        ></DeletePicture>
+                      )}
                     </div>
                   </div>
                   <div className={styles.previewImageContainer}>
@@ -134,10 +141,13 @@ export default function Picture() {
             ))}
         </Tabs>
         <div className={styles.PaginationContainer}>
-          <AddPicture
-            setParentData={setData}
-            setParentTotal={setTotal}
-          ></AddPicture>
+          {permissions.addHomeSlide && (
+            <AddPicture
+              setParentData={setData}
+              setParentTotal={setTotal}
+            ></AddPicture>
+          )}
+
           <Pagination
             total={total}
             onChange={handlePageChange}

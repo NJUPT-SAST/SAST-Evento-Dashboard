@@ -5,18 +5,25 @@ import styles from "./HandleLocation.module.scss";
 import AddLocation from "./AddLocation";
 import ChangeLocation from "./ChangeLocation";
 import DeleteLocation from "./DeleteLocation";
+import getAdminPermission from "@/utils/getAdminPermisson";
 
 const HandleLocation: React.FC = () => {
   const [treeData, setTreeData] = useState<Array<object>>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [id, setId] = useState<number>(0);
   const [location, setLocation] = useState<string>("");
+  const [isAddLocation, setIsAddLocation] = useState<boolean>(false);
+  const [isUpdateLocationName, setIsUpdateLocationName] =
+    useState<boolean>(false);
+  const [isDeleteLocation, setIsDeleteLocation] = useState<boolean>(false);
 
   useEffect(() => {
     getLocations().then((res) => {
       setTreeData(res.data);
     });
   }, []);
+
+  const permissions = getAdminPermission();
 
   //TODO: 这里的value是一个any，需要修改
   const getLabel = (value: any) => {
@@ -41,9 +48,15 @@ const HandleLocation: React.FC = () => {
           placeholder="地点(可搜索)"
         />
         <div className={styles.buttonContainer}>
-          <AddLocation parentId={id} setTreeDate={setTreeData}></AddLocation>
-          <ChangeLocation id={id} setTreeDate={setTreeData}></ChangeLocation>
-          <DeleteLocation id={id} setTreeDate={setTreeData}></DeleteLocation>
+          {permissions.addLocation && (
+            <AddLocation parentId={id} setTreeDate={setTreeData}></AddLocation>
+          )}
+          {permissions.updateLocationName && (
+            <ChangeLocation id={id} setTreeDate={setTreeData}></ChangeLocation>
+          )}
+          {permissions.deleteLocation && (
+            <DeleteLocation id={id} setTreeDate={setTreeData}></DeleteLocation>
+          )}
         </div>
       </SideSheet>
     </>
