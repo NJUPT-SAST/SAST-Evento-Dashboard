@@ -168,7 +168,7 @@ const PutActivity: React.FC<PutActivityProps> = ({
     values: Array<{ id: number; departmentName: string }>
   ) => {
     const departments = [];
-    for (var i = 0; i < values.length; i++) {
+    for (var i = 0; i < values?.length; i++) {
       departments.push(values[i].id);
     }
     console.log(departments);
@@ -193,7 +193,7 @@ const PutActivity: React.FC<PutActivityProps> = ({
 
   const stateList = [
     { value: "1", label: "未开始" },
-    { value: "2", label: "签到中" },
+    { value: "2", label: "报名中" },
     { value: "3", label: "进行中" },
     { value: "4", label: "已取消" },
     { value: "5", label: "已结束" },

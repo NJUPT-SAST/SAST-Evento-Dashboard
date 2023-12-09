@@ -5,7 +5,7 @@ import styles from "./HandleLocation.module.scss";
 import AddLocation from "./AddLocation";
 import ChangeLocation from "./ChangeLocation";
 import DeleteLocation from "./DeleteLocation";
-import getAdminPermission from "@/utils/getAdminPermisson";
+import getAdminPermission from "@/utils/getAdminPermission";
 
 const HandleLocation: React.FC = () => {
   const [treeData, setTreeData] = useState<Array<object>>([]);

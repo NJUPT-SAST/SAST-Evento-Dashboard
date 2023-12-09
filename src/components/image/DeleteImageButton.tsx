@@ -8,14 +8,16 @@ import { useState } from "react";
 import styles from "./DeleteImageButton.module.scss";
 
 interface DeleteImagesButtonProps {
-  id: number;
+  cosKey: string;
   dir: string;
   setTotal: (total: number) => void;
-  setImageData: (imageData: Array<{ uri: string; id: number }>) => void;
+  setImageData: (
+    imageData: Array<{ uri: string; id: number; cosKey: string }>
+  ) => void;
 }
 
 const DeleteImagesButton: React.FC<DeleteImagesButtonProps> = ({
-  id,
+  cosKey,
   dir,
   setTotal,
   setImageData,
@@ -23,9 +25,8 @@ const DeleteImagesButton: React.FC<DeleteImagesButtonProps> = ({
   const [visible, setVisible] = useState<boolean>(false);
   //TODO:后端接口出现问题
   const deleteImg = () => {
-    console.log(id);
     console.log(dir);
-    deletePictureList(String(id), dir).then((res) => {
+    deletePictureList(cosKey, dir).then((res) => {
       if (res.success === true) {
         getPictureList(dir, 1, 6).then((res: any) => {
           setImageData(res.data.images);

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ChangeDepartment from "./ChangeDepartment";
 import DeleteDepartments from "./DeleteDepartment";
 import AddDepartment from "./AddDepartment";
-import getAdminPermission from "@/utils/getAdminPermisson";
+import getAdminPermission from "@/utils/getAdminPermission";
 
 const ActivityType: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);

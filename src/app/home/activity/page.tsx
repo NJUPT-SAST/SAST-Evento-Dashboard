@@ -9,8 +9,8 @@ import ActivityType from "@/components/activity/handleActivityType/ActivityType"
 import Department from "@/components/activity/handleDepartment/Department";
 import HandleLocation from "@/components/activity/handleLocation/HandleLocation";
 import AddActivity from "@/components/activity/handleActivity/AddActivity";
-import permissions from "@/utils/getAdminPermisson";
-import getAdminPermission from "@/utils/getAdminPermisson";
+import permissions from "@/utils/getAdminPermission";
+import getAdminPermission from "@/utils/getAdminPermission";
 
 export default function Activity() {
   const [data, setData] = useState<Array<object>>([{}]);
@@ -55,7 +55,7 @@ export default function Activity() {
           if (state === 1) {
             return <Tag color="green">未开始</Tag>;
           } else if (state === 2) {
-            return <Tag color="blue">签到中</Tag>;
+            return <Tag color="blue">报名中</Tag>;
           } else if (state === 3) {
             return <Tag color="grey">进行中</Tag>;
           } else if (state === 4) {

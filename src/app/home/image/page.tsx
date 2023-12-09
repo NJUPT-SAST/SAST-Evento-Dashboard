@@ -8,12 +8,12 @@ import { useEffect, useState } from "react";
 import { getPictureDir, getPictureList } from "@/apis/picture";
 import Numeral from "@douyinfe/semi-ui/lib/es/typography/numeral";
 import DeleteImagesButton from "@/components/image/DeleteImageButton";
-import getAdminPermission from "@/utils/getAdminPermisson";
+import getAdminPermission from "@/utils/getAdminPermission";
 
 export default function Image() {
   const [pictureDir, setPictureDir] = useState<Array<string>>([]);
   const [imageData, setImageData] = useState<
-    Array<{ uri: string; id: number }>
+    Array<{ uri: string; id: number; cosKey: string }>
   >([]);
   const [total, setTotal] = useState<number>(0);
   const [chosenTab, setChosenTab] = useState<string>("developer");
@@ -90,7 +90,7 @@ export default function Image() {
                           />
                           {permissions.deletePicture && (
                             <DeleteImagesButton
-                              id={obj.id}
+                              cosKey={obj.cosKey}
                               dir={chosenTab}
                               setImageData={setImageData}
                               setTotal={setTotal}

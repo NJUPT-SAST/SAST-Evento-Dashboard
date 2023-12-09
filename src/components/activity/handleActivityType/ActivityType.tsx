@@ -5,7 +5,7 @@ import ChangeActivityType from "./ChangeActivityType";
 import DeleteActivityType from "./DeleteActivityType";
 import AddActivityType from "./AddActivityType";
 import styles from "./ActivityType.module.scss";
-import getAdminPermission from "@/utils/getAdminPermisson";
+import getAdminPermission from "@/utils/getAdminPermission";
 
 const ActivityType: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);

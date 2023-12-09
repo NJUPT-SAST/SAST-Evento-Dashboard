@@ -5,7 +5,7 @@ import { getManagers } from "@/apis/event";
 import PutManager from "./PutManager";
 import DeleteManager from "./DeleteManager";
 import AddManager from "./AddManager";
-import getAdminPermission from "@/utils/getAdminPermisson";
+import getAdminPermission from "@/utils/getAdminPermission";
 
 interface ManagerPermissionProps {
   title: string;

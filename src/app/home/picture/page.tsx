@@ -21,7 +21,7 @@ import ChangeUrl from "@/components/picture/ChangeUrl";
 import SavePicture from "@/components/picture/SavePicture";
 import DeletePicture from "@/components/picture/DeletePicture";
 import AddPicture from "@/components/picture/AddPicture";
-import getAdminPermission from "@/utils/getAdminPermisson";
+import getAdminPermission from "@/utils/getAdminPermission";
 
 export default function Picture() {
   const [data, setData] = useState<Array<slideDate>>([]);

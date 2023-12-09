@@ -16,7 +16,7 @@ import {
 import { getAdminsList } from "@/apis/permission";
 import { ShowPermission } from "@/components/roles/ShowPermission";
 import { ChangePermission } from "@/components/roles/ChangePermission";
-import getAdminPermission from "@/utils/getAdminPermisson";
+import getAdminPermission from "@/utils/getAdminPermission";
 
 export default function Roles() {
   const [loading, setLoading] = useState<boolean>(false);
