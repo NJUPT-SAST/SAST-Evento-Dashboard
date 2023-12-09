@@ -27,11 +27,10 @@ export default function Login() {
           <Image className={styles.logo} alt="loginLogo" src={logo} />
         </div>
         <div className={styles.loginContainer}>
-          <Card style={{ width: "20vw" }}>
+          <Card style={{ width: "500px" }}>
             <div className={styles.titleContainer}>
-              <Image src={icon} alt="icon" width={50}></Image>
               <strong>
-                <h1>请登录您的账号</h1>
+                <h1>SAST EVENTO</h1>
               </strong>
             </div>
             <br></br>

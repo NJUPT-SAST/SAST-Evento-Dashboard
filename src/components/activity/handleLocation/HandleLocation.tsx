@@ -41,6 +41,8 @@ const HandleLocation: React.FC = () => {
         width="30vw"
       >
         <TreeSelect
+          autoExpandParent={true}
+          expandAll={true}
           filterTreeNode
           onChange={getLabel}
           style={{ width: "70%" }}

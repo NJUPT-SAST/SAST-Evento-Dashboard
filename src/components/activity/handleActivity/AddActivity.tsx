@@ -213,6 +213,8 @@ const AddActivity: React.FC<AddActivityProps> = ({
                 style={{ width: "90%" }}
               />
             </Col>
+          </Row>
+          <Row>
             <Col span={12}>
               <Form.DatePicker
                 type="dateTimeRange"
@@ -251,6 +253,7 @@ const AddActivity: React.FC<AddActivityProps> = ({
           <Row>
             <Col span={12}>
               <Form.TreeSelect
+                expandAll={true}
                 filterTreeNode
                 field="locationId"
                 label="活动地点"
@@ -260,15 +263,6 @@ const AddActivity: React.FC<AddActivityProps> = ({
                 treeData={locations}
               />
             </Col>
-            {/* <Col span={12}>
-              <Form.Select
-                field="state"
-                label="活动状态"
-                trigger="blur"
-                style={{ width: "90%" }}
-                optionList={stateList}
-              />
-            </Col> */}
           </Row>
           <Row>
             <Form.TextArea

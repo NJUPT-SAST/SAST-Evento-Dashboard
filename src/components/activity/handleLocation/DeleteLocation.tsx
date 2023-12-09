@@ -32,7 +32,9 @@ const DeleteLocation: React.FC<DeleteLocationProps> = ({ id, setTreeDate }) => {
         }
         position="topRight"
       >
-        <Button onClick={() => setVisible(true)}>删除</Button>
+        <Button onClick={() => setVisible(true)} type="danger">
+          删除
+        </Button>
       </Popover>
       <Modal
         title={"确定要删除此地点吗？"}

@@ -9,7 +9,6 @@ import ActivityType from "@/components/activity/handleActivityType/ActivityType"
 import Department from "@/components/activity/handleDepartment/Department";
 import HandleLocation from "@/components/activity/handleLocation/HandleLocation";
 import AddActivity from "@/components/activity/handleActivity/AddActivity";
-import permissions from "@/utils/getAdminPermission";
 import getAdminPermission from "@/utils/getAdminPermission";
 
 export default function Activity() {
@@ -53,15 +52,15 @@ export default function Activity() {
         align: "center",
         render: (state: number, record: object, index: number) => {
           if (state === 1) {
-            return <Tag color="green">未开始</Tag>;
+            return <Tag color="yellow">未开始</Tag>;
           } else if (state === 2) {
-            return <Tag color="blue">报名中</Tag>;
+            return <Tag color="green">报名中</Tag>;
           } else if (state === 3) {
-            return <Tag color="grey">进行中</Tag>;
+            return <Tag color="blue">进行中</Tag>;
           } else if (state === 4) {
-            return <Tag color="yellow">已取消</Tag>;
+            return <Tag color="red">已取消</Tag>;
           } else {
-            return <Tag color="red">已结束</Tag>;
+            return <Tag color="grey">已结束</Tag>;
           }
         },
       },
@@ -86,13 +85,15 @@ export default function Activity() {
           }
         ) => {
           return (
-            <MoreOperate
-              setLoading={setLoading}
-              setData={setData}
-              setTotal={setTotal}
-              currentPage={currentPage}
-              record={record}
-            />
+            <div className={styles.moreOperate}>
+              <MoreOperate
+                setLoading={setLoading}
+                setData={setData}
+                setTotal={setTotal}
+                currentPage={currentPage}
+                record={record}
+              />
+            </div>
           );
         },
       },
@@ -109,11 +110,13 @@ export default function Activity() {
   };
 
   const expandData = data?.map((msg: any, _index: number) => {
+    console.log(msg.gmtEventStart);
+
     return [
-      { key: "活动开始时间", value: msg.gmtEventStart },
-      { key: "活动结束时间", value: msg.gmtEventEnd },
-      { key: "报名开始时间", value: msg.gmtRegistrationStart },
-      { key: "报名结束时间", value: msg.gmtRegistrationEnd },
+      { key: "活动开始时间", value: msg.gmtEventStart?.slice(0, -3) },
+      { key: "活动结束时间", value: msg.gmtEventEnd?.slice(0, -3) },
+      { key: "报名开始时间", value: msg.gmtRegistrationStart?.slice(0, -3) },
+      { key: "报名结束时间", value: msg.gmtRegistrationEnd?.slice(0, -3) },
       { key: "活动标签", value: msg.tag },
       { key: "活动地点", value: msg.location },
       { key: "活动小组", value: getDepartment(msg.departments) },

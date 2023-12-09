@@ -1,11 +1,6 @@
 import { getMyAdminPermission } from "@/apis/permission";
 
 const getAdminPermission = () => {
-  getMyAdminPermission().then((res) => {
-    console.log(res);
-    localStorage.setItem("adminPermission", JSON.stringify(res.data));
-  });
-  
   const adminPermissionStr = localStorage.getItem("adminPermission");
   const adminPermission = adminPermissionStr
     ? JSON.parse(adminPermissionStr)

@@ -1,9 +1,9 @@
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -104,5 +104,25 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+/* 设置滚动条的轨道颜色为白色 */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* 设置滚动条轨道的背景颜色为白色 */
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+
+/* 设置滚动条滑块的颜色为白色 */
+::-webkit-scrollbar-thumb {
+  background-color: #ffffff;
+}
+
+/* 设置滚动条滑块悬停时的颜色为浅灰色 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #f2f2f2;
 }
 

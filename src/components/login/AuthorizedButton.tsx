@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styles from "./AuthorizedButton.module.scss";
 
 export default function AuthorizedButton() {
@@ -10,12 +11,32 @@ export default function AuthorizedButton() {
     const linkUrl = `https://link.sast.fun/auth?client_id=${client_id}&code_challenge=YillThSRrGTj6mXqFfDPinX7G35qEQ1QEyWV6PDSEuc%3D&code_challenge_method=S256&redirect_uri=${redirect_uri}&response_type=code&scope=all&state=xyz`;
     //授权link逻辑
     window.location.href = linkUrl;
-    
   };
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    // 创建一个函数来更新窗口宽度的状态
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // 添加事件监听器，当窗口大小改变时调用 handleResize 函数
+    window.addEventListener("resize", handleResize);
+
+    // 组件卸载时，移除事件监听器
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log(windowWidth);
+  }, [windowWidth]);
+  
   const AuthorizedWeChat = () => {
     console.log("授权WeChat登录");
-    //授权wechat逻辑
+    //授权weChat逻辑
   };
 
   const AuthorizedTicket = () => {
