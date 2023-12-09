@@ -1,0 +1,47 @@
+.main {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  .container {
+    width: 100% !important;
+    padding: 20px;
+    width: fit-content;
+    height: fit-content;
+    .addButtonContainer {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .tab {
+      margin-top: 20px;
+      .imageGallery {
+        height: calc((80vh - 60px - 32px));
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        width: 100%;
+        .imageContainer {
+          width: 32.5%;
+          height: calc((80vh - 60px - 32px) / 2);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          .image {
+            width: 100%;
+            img {
+              width: 100%;
+              height: calc((80vh - 60px - 32px) / 2);
+              object-fit: cover;
+            }
+          }
+        }
+      }
+    }
+    .bottomPagination {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+  }
+}

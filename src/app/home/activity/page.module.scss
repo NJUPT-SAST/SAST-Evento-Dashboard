@@ -1,0 +1,10 @@
+.main {
+  height: 100%;
+  padding: 20px;
+  background-color: white;
+  .activityHeader {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+}

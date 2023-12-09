@@ -5,12 +5,15 @@ import { Card, Form, Button, Input } from "@douyinfe/semi-ui";
 import { IconUser, IconLock } from "@douyinfe/semi-icons";
 import AuthorizedButton from "@/components/login/AuthorizedButton";
 import logo from "../../../public/Logo.png";
+import icon from "../../../public/eventoicon.ico";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getMyAdminPermission } from "@/apis/permission";
 
 export default function Login() {
   const [userAccount, setUserAccount] = useState<string>();
   const [password, setPassword] = useState<string>();
+
 
   const login = () => {
     console.log(userAccount);
@@ -20,10 +23,16 @@ export default function Login() {
   return (
     <>
       <div className={styles.main}>
+        <div className={styles.logoContainer}>
+          <Image className={styles.logo} alt="loginLogo" src={logo} />
+        </div>
         <div className={styles.loginContainer}>
-          <Card>
-            <div className={styles.logoContainer}>
-              <Image className={styles.logo} alt="loginLogo" src={logo} />
+          <Card style={{ width: "20vw" }}>
+            <div className={styles.titleContainer}>
+              <Image src={icon} alt="icon" width={50}></Image>
+              <strong>
+                <h1>请登录您的账号</h1>
+              </strong>
             </div>
             <br></br>
             <div className={styles.inputItem}>

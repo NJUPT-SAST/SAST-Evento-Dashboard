@@ -1,0 +1,50 @@
+.main {
+  height: 100%;
+  padding: 20px;
+  background-color: white;
+  box-sizing: border-box;
+  .TabNavContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    .tabImage {
+      width: 100px;
+      height: 65px;
+      object-fit: cover;
+    }
+  }
+  .rightContainer {
+    margin-left: 20px;
+    .previewImageContainer {
+      margin: 100px;
+      .previewImage {
+        height: calc(100vh - 60px - 32px - 42px - 200px - 20px - 70px - 40px);
+        width: calc(100vw - 200px - 20px - 81px - 5vw - 200px - 70px - 40px);
+        overflow: hidden;
+        object-fit: contain;
+      }
+    }
+    .upContainer {
+      margin-left: 100px;
+      margin-top: 50px;
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      .inputContainer {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        .input {
+          width: 10vw;
+        }
+      }
+    }
+  }
+  .PaginationContainer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+}
