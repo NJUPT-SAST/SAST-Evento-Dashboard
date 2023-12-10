@@ -115,23 +115,23 @@ const AddPicture: React.FC<AddPictureProps> = ({
         onCancel={() => setVisible(false)}
         closeOnEsc={true}
       >
-        <div className={styles.selectContainer}>
-          <div>
-            <h4>请输入title</h4>
+        <div className={styles.inputFatherContainer}>
+          <div className={styles.inputContainer}>
             <Input
+              prefix="Title"
               className={styles.input}
               value={title}
               onChange={setTitle}
             ></Input>
-          </div>
-          <div>
-            <h4>请输入link</h4>
             <Input
+              prefix="Link"
               className={styles.input}
               value={link}
               onChange={setLink}
             ></Input>
           </div>
+        </div>
+        <div className={styles.imageSelect}>
           <div>
             <h4>请从图库中选择图片</h4>
             <Select
@@ -147,41 +147,43 @@ const AddPicture: React.FC<AddPictureProps> = ({
                 ))}
             </Select>
           </div>
-        </div>
-        <div className={styles.changeUrlTabsContainer}>
-          <Tabs tabPosition="left" type="button" onChange={changeTab}>
-            {imagesData &&
-              imagesData.map((item, index) => (
-                <TabPane tab={item.name} itemKey={`${item.id}`} key={index}>
-                  <div className={styles.tabPaneContainer}>
-                    {!isSelect && (
-                      <Button onClick={() => selectPicture(true)}>选定</Button>
-                    )}
-                    {isSelect && (
-                      <Button
-                        icon={<IconTick />}
-                        onClick={() => selectPicture(false)}
-                      >
-                        选定
-                      </Button>
-                    )}
-                    <Image
-                      src={item.uri}
-                      alt={item.name}
-                      width={700}
-                      height={500}
-                    ></Image>
-                  </div>
-                </TabPane>
-              ))}
-          </Tabs>
-          <div className={styles.PaginationContainer}>
-            <Pagination
-              total={total}
-              pageSize={4}
-              onChange={setCurrentPage}
-              currentPage={currentPage}
-            ></Pagination>
+          <div className={styles.changeUrlTabsContainer}>
+            <Tabs tabPosition="left" type="button" onChange={changeTab}>
+              {imagesData &&
+                imagesData.map((item, index) => (
+                  <TabPane tab={item.name} itemKey={`${item.id}`} key={index}>
+                    <div className={styles.tabPaneContainer}>
+                      {!isSelect && (
+                        <Button onClick={() => selectPicture(true)}>
+                          选定
+                        </Button>
+                      )}
+                      {isSelect && (
+                        <Button
+                          icon={<IconTick />}
+                          onClick={() => selectPicture(false)}
+                        >
+                          选定
+                        </Button>
+                      )}
+                      <Image
+                        src={item.uri}
+                        alt={item.name}
+                        width={700}
+                        height={500}
+                      ></Image>
+                    </div>
+                  </TabPane>
+                ))}
+            </Tabs>
+            <div className={styles.PaginationContainer}>
+              <Pagination
+                total={total}
+                pageSize={4}
+                onChange={setCurrentPage}
+                currentPage={currentPage}
+              ></Pagination>
+            </div>
           </div>
         </div>
       </Modal>

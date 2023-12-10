@@ -1,11 +1,15 @@
-.selectContainer {
+.inputFatherContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   gap: 20px;
+  .inputContainer {
+    display: flex;
+    gap: 30px;
+  }
   .input {
-    width: 300px;
+    width: 400px;
   }
 }
 .changeUrlTabsContainer {
@@ -28,4 +32,12 @@
   display: flex;
   align-items: flex-end;
   margin: 10px 0;
+}
+
+.imageSelect {
+  border: 1px solid rgb(232, 232, 232);
+  margin: 8px 0;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 10px;
 }

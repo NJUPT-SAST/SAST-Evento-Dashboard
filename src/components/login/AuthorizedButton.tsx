@@ -13,26 +13,7 @@ export default function AuthorizedButton() {
     window.location.href = linkUrl;
   };
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    // 创建一个函数来更新窗口宽度的状态
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    // 添加事件监听器，当窗口大小改变时调用 handleResize 函数
-    window.addEventListener("resize", handleResize);
-
-    // 组件卸载时，移除事件监听器
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log(windowWidth);
-  }, [windowWidth]);
   
   const AuthorizedWeChat = () => {
     console.log("授权WeChat登录");

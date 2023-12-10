@@ -41,6 +41,9 @@ export default function AddImageButton({
     const imageFile = value?.currentFile.fileInstance;
     setImageFile(imageFile);
   };
+
+  let fileLimit = ".svg,.png,.jpeg,.jpg";
+
   return (
     <>
       <Button
@@ -60,6 +63,7 @@ export default function AddImageButton({
         请从本地选择需要添加的图片到 <strong>{chosenDir}</strong> 文件夹中
         <div className={styles.uploadContainer}>
           <Upload
+            accept={fileLimit}
             className={styles.upload}
             limit={1}
             onChange={getFile}

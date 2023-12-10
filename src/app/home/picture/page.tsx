@@ -51,6 +51,13 @@ export default function Picture() {
     });
   }, [currentPage]);
 
+  useEffect(() => {
+    console.log(data);
+    setTitle(data[0].title);
+    setLink(data[0].link);
+    setUrl(data[0].url);
+  }, [data]);
+
   const changeTab = (value: string) => {
     const indexId = Number(value);
     const newData: slideDate | undefined = data?.find(
@@ -90,7 +97,7 @@ export default function Picture() {
               >
                 <div className={styles.rightContainer}>
                   <div className={styles.upContainer}>
-                    <span>
+                    <span style={{ whiteSpace: "nowrap" }}>
                       <strong>编辑幻灯片</strong>
                     </span>
                     <div className={styles.inputContainer}>

@@ -78,17 +78,22 @@ const ActivityType: React.FC = () => {
         onCancel={() => setVisible(false)}
         width="30vw"
       >
-        {permissions.addType && (
-          <AddActivityType
-            setActivityTypes={setActivityTypes}
-          ></AddActivityType>
-        )}
         <Table
           columns={columns}
           dataSource={activityTypes}
           pagination={false}
           className={styles.table}
         ></Table>
+        {permissions.addType && (
+          <div className={styles.mainContainer}>
+            <div className={styles.divider}></div>
+            <div className={styles.addActivityContainer}>
+              <AddActivityType
+                setActivityTypes={setActivityTypes}
+              ></AddActivityType>
+            </div>
+          </div>
+        )}
       </SideSheet>
     </>
   );

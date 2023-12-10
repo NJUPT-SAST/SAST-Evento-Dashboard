@@ -214,6 +214,7 @@ const PutActivity: React.FC<PutActivityProps> = ({
         编辑活动
       </span>
       <SideSheet
+        zIndex={200}
         title="编辑活动信息"
         visible={visible}
         onCancel={() => setVisible(false)}

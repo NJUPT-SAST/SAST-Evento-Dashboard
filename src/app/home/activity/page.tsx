@@ -119,7 +119,7 @@ export default function Activity() {
       { key: "报名结束时间", value: msg.gmtRegistrationEnd?.slice(0, -3) },
       { key: "活动标签", value: msg.tag },
       { key: "活动地点", value: msg.location },
-      { key: "活动小组", value: getDepartment(msg.departments) },
+      { key: "活动组别", value: getDepartment(msg.departments) },
       { key: "活动描述", value: msg.description },
     ];
   });
@@ -208,6 +208,7 @@ export default function Activity() {
 
           {/* TODO :app-index.js:32  Warning: CustomExpandIcon: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.目前不影响使用 */}
           <Table
+            expandRowByClick={true}
             scroll={scroll}
             rowKey="id"
             columns={columns}

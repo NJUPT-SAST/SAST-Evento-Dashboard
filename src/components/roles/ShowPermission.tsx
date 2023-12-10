@@ -25,7 +25,9 @@ export const ShowPermission = ({ studentId }: ShowPermissionProps) => {
 
   return (
     <>
-      <Button onClick={showMore}>权限详情</Button>
+      <Button onClick={showMore}>
+        <span style={{ color: "rgb(0,100,250)" }}>权限详情</span>
+      </Button>
       <Modal
         title="权限详情"
         maskClosable={false}

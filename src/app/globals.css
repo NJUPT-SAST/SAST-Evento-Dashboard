@@ -126,3 +126,11 @@ a {
   background-color: #f2f2f2;
 }
 
+.semi-modal-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  .semi-modal-large {
+    margin: auto !important;
+  }
+}

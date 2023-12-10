@@ -6,6 +6,7 @@ import ChangeDepartment from "./ChangeDepartment";
 import DeleteDepartments from "./DeleteDepartment";
 import AddDepartment from "./AddDepartment";
 import getAdminPermission from "@/utils/getAdminPermission";
+import styles from "./Department.module.scss";
 
 const ActivityType: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -25,11 +26,6 @@ const ActivityType: React.FC = () => {
   const permissions = getAdminPermission();
 
   const columns: any = [
-    {
-      title: "序号",
-      dataIndex: "id",
-      align: "center",
-    },
     {
       title: "组别",
       dataIndex: "departmentName",
@@ -68,14 +64,19 @@ const ActivityType: React.FC = () => {
         onCancel={() => setVisible(false)}
         width="30vw"
       >
-        {permissions.addDepartment && (
-          <AddDepartment setDepartments={setDepartments}></AddDepartment>
-        )}
         <Table
           columns={columns}
           dataSource={departments}
           pagination={false}
         ></Table>
+        {permissions.addDepartment && (
+          <div className={styles.mainContainer}>
+            <div className={styles.divider}></div>
+            <div className={styles.addDepartmentContainer}>
+              <AddDepartment setDepartments={setDepartments}></AddDepartment>
+            </div>
+          </div>
+        )}
       </SideSheet>
     </>
   );

@@ -80,7 +80,9 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
 
   return (
     <>
-      <Button onClick={showChangeModal}>修改url</Button>
+      <Button onClick={showChangeModal} type="warning">
+        修改图片
+      </Button>
       <Modal
         title="是否要更换图片"
         visible={visible}

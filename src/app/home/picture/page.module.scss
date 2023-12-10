@@ -16,6 +16,7 @@
     }
   }
   .rightContainer {
+    width: 100%;
     margin-left: 20px;
     .previewImageContainer {
       margin: 100px;
@@ -30,14 +31,14 @@
       margin-left: 100px;
       margin-top: 50px;
       display: flex;
-      gap: 40px;
+      gap: 30px;
       align-items: center;
       .inputContainer {
         display: flex;
         align-items: center;
         gap: 30px;
         .input {
-          width: 10vw;
+          width: 14vw;
         }
       }
     }
