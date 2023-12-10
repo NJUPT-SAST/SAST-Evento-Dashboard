@@ -74,7 +74,7 @@ const downLoadTimetable = async () => {
           800 + 200 + 400 + heightNumber * 1000
         );
       }
-      ctx.font = "110px 华文中宋";
+      ctx.font = "1000 110px 华文中宋";
       ctx.fillStyle = "#544140";
       const initHeight = 220;
       ctx.fillText(
