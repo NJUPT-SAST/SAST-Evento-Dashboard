@@ -53,9 +53,9 @@ export default function Picture() {
 
   useEffect(() => {
     console.log(data);
-    setTitle(data[0].title);
-    setLink(data[0].link);
-    setUrl(data[0].url);
+    setTitle(data[0]?.title);
+    setLink(data[0]?.link);
+    setUrl(data[0]?.url);
   }, [data]);
 
   const changeTab = (value: string) => {
