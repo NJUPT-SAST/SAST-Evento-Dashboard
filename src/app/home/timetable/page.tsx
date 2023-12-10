@@ -64,7 +64,8 @@ export default function Timetable() {
   };
 
   useEffect(() => {
-    getNewEventsList("", chosenDepartment, "2000-1-1");
+    getNewEventsList("", String(chosenDepartment), "2000-1-1");
+    console.log(String(chosenDepartment));
   }, [chosenDepartment]);
 
   const downloadCalendar = () => {
@@ -92,7 +93,6 @@ export default function Timetable() {
         <br></br>
         <br></br>
         <DatePicker
-          // TODO: any to date
           onChange={(value: any) => setDate(value)}
           value={date}
         ></DatePicker>

@@ -26,7 +26,9 @@ export const DepartmentSelection = ({
       <Select
         defaultValue="全部"
         className={styles.select}
-        onChange={(value:any) => setChosenDepartment(value)}
+        onChange={(value: any) => setChosenDepartment(value)}
+        multiple={true}
+        
       >
         {departments.map((obj, index) => {
           return (
