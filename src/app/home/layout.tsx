@@ -12,6 +12,8 @@ import {
 } from "@douyinfe/semi-icons";
 import Link from "next/link";
 import { ButtonHTMLAttributes, useEffect, useRef, useState } from "react";
+import getAdminPermission from "@/utils/getAdminPermission";
+import { getMyAdminPermission } from "@/apis/permission";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -69,7 +71,17 @@ export default function DashboardLayout({
 
   let PathName = window.location.href;
   PathName = PathName.split("/")[PathName.split("/").length - 1];
-  //TODO: 刷新时，无法正常显示活动的sidebar标签
+
+  const updatePermission = () => {
+    getMyAdminPermission().then((res) => {
+      console.log(res);
+      if (res.success) {
+        localStorage.setItem("adminPermission", JSON.stringify(res.data));
+        location.reload();
+      }
+    });
+  };
+
   return (
     <section>
       <Layout
@@ -91,10 +103,13 @@ export default function DashboardLayout({
               <Nav.Footer>
                 <Dropdown
                   trigger={"click"}
-                  position="bottom"
+                  position="bottomRight"
                   render={
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={() => {}}>退出登录</Dropdown.Item>
+                      <Dropdown.Item onClick={updatePermission}>
+                        权限刷新
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   }
                 >

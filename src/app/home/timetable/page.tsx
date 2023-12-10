@@ -92,7 +92,7 @@ export default function Timetable() {
           setChosenDepartment={setChosenDepartment}
         ></DepartmentSelection>
         <Button className={styles.button} onClick={downLoadTimetable}>
-          一键下载本周活动总览图
+          一键生成本周授课表
         </Button>
         <br></br>
         <br></br>
