@@ -41,12 +41,15 @@ const HandleLocation: React.FC = () => {
         width="30vw"
       >
         <TreeSelect
+          autoExpandParent={true}
+          expandAll={true}
           filterTreeNode
           onChange={getLabel}
           style={{ width: "70%" }}
           treeData={treeData}
           placeholder="地点(可搜索)"
         />
+        <div className={styles.divider}></div>
         <div className={styles.buttonContainer}>
           {permissions.addLocation && (
             <AddLocation parentId={id} setTreeDate={setTreeData}></AddLocation>

@@ -41,7 +41,9 @@ const MoreOperate: React.FC<MoreOperateProps> = ({
   return (
     <>
       <Dropdown
-        trigger="click"
+        zIndex={100}
+        mouseLeaveDelay={100}
+        stopPropagation={true}
         clickToHide
         keepDOM={true}
         render={

@@ -37,7 +37,9 @@ const SavePicture: React.FC<SavePictureProps> = ({
   };
   return (
     <>
-      <Button onClick={() => setVisible(true)}>保存修改</Button>
+      <Button onClick={() => setVisible(true)} type="warning">
+        保存修改
+      </Button>
       <Modal
         visible={visible}
         onCancel={() => setVisible(false)}

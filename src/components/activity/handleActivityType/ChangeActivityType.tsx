@@ -55,7 +55,9 @@ const ChangeActivityType: React.FC<ChangeActivityTypeProps> = ({
 
   return (
     <>
-      <Button onClick={showChangeModal}>编辑</Button>
+      <Button onClick={showChangeModal} type="warning">
+        编辑
+      </Button>
       <Modal
         visible={visible}
         title={"修改活动类型"}

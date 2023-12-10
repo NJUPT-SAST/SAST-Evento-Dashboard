@@ -33,7 +33,9 @@ const ChangeLocation: React.FC<ChangeLocationProps> = ({ id, setTreeDate }) => {
         }
         position="top"
       >
-        <Button onClick={() => setVisible(true)}>修改</Button>
+        <Button onClick={() => setVisible(true)} type="warning">
+          修改
+        </Button>
       </Popover>
       <Modal
         title={"更改地点"}

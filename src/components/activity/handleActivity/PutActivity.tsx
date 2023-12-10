@@ -214,6 +214,7 @@ const PutActivity: React.FC<PutActivityProps> = ({
         编辑活动
       </span>
       <SideSheet
+        zIndex={200}
         title="编辑活动信息"
         visible={visible}
         onCancel={() => setVisible(false)}
@@ -257,6 +258,9 @@ const PutActivity: React.FC<PutActivityProps> = ({
                 style={{ width: "90%" }}
               />
             </Col>
+          </Row>
+
+          <Row>
             <Col span={12}>
               <Form.DatePicker
                 initValue={[registrationStart, registrationEnd]}
@@ -300,6 +304,7 @@ const PutActivity: React.FC<PutActivityProps> = ({
           <Row>
             <Col span={12}>
               <Form.TreeSelect
+                expandAll={true}
                 filterTreeNode
                 field="locationId"
                 label="活动地点"

@@ -12,7 +12,8 @@ import {
 import { getEventsList } from "@/apis/event";
 import { CalenderItem } from "@/components/timetable/CalenderItem";
 import { DepartmentSelection } from "@/components/timetable/DepartmentSelect";
-import html2canvas from "html2canvas";
+import downLoadTimetable from "@/utils/downLoadTimetable";
+import Head from "next/head";
 
 export default function Timetable() {
   const [mode, setMode] = useState<"day" | "week" | "month">("day");
@@ -21,7 +22,6 @@ export default function Timetable() {
   const [chosenDepartment, setChosenDepartment] = useState<string>("");
   // TODO: any=>array
   const [events, setEvents] = useState<any>([]);
-  const calendarRef = useRef(null);
 
   const getNewEventsList = (
     typeId: string,
@@ -64,25 +64,18 @@ export default function Timetable() {
   };
 
   useEffect(() => {
-    getNewEventsList("", chosenDepartment, "2000-1-1");
+    getNewEventsList("", String(chosenDepartment), "2000-1-1");
+    console.log(String(chosenDepartment));
   }, [chosenDepartment]);
-
-  const downloadCalendar = () => {
-    const calendarElement: HTMLElement | null = calendarRef.current;
-    console.log(calendarElement);
-    if (calendarElement) {
-      html2canvas(calendarElement).then((canvas) => {
-        const dataURL = canvas.toDataURL();
-        const link = document.createElement("a");
-        link.href = dataURL;
-        link.download = "calendar.png";
-        link.click();
-      });
-    }
-  };
 
   return (
     <>
+      <Head>
+        <link
+          href="https://fonts.font.im/css?family=Righteous"
+          rel="stylesheet"
+        ></link>
+      </Head>
       <div className={styles.main}>
         <RadioGroup type="button" onChange={changeMode} value={mode}>
           <Radio value={"day"}>日视图</Radio>
@@ -92,19 +85,18 @@ export default function Timetable() {
         <br></br>
         <br></br>
         <DatePicker
-          // TODO: any to date
           onChange={(value: any) => setDate(value)}
           value={date}
         ></DatePicker>
         <DepartmentSelection
           setChosenDepartment={setChosenDepartment}
         ></DepartmentSelection>
-        <Button className={styles.button} onClick={downloadCalendar}>
-          下载日历图片
+        <Button className={styles.button} onClick={downLoadTimetable}>
+          一键生成本周授课表
         </Button>
         <br></br>
         <br></br>
-        <div ref={calendarRef} id="calendar">
+        <div id="calendar">
           <Calendar
             className={styles.calendar}
             mode={mode}

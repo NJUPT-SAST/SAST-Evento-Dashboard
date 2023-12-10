@@ -31,7 +31,9 @@ const DeleteDepartments: React.FC<DeleteDepartmentProps> = ({
 
   return (
     <>
-      <Button onClick={() => setVisible(true)}>删除</Button>
+      <Button onClick={() => setVisible(true)} type="danger">
+        删除
+      </Button>
       <Modal
         visible={visible}
         title={`确定要删除 ${departmentName} 吗？`}

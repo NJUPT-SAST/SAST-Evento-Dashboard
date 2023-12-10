@@ -21,6 +21,7 @@ const AddDepartment: React.FC<AddDepartmentProps> = ({ setDepartments }) => {
           console.log(res);
           setDepartments(res.data);
           setVisible(false);
+          setDepartmentName("");
         });
       }
     });

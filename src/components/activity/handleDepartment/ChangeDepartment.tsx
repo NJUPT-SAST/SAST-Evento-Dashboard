@@ -36,7 +36,9 @@ const ChangeDepartment: React.FC<ChangeDepartmentProps> = ({
 
   return (
     <>
-      <Button onClick={() => setVisible(true)}>修改</Button>
+      <Button onClick={() => setVisible(true)} type="warning">
+        修改
+      </Button>
       <Modal
         title={`修改部门名称`}
         visible={visible}

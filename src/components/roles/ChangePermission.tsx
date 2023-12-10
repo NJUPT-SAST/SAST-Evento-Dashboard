@@ -94,7 +94,9 @@ export const ChangePermission = ({ userId }: ShowPermissionProps) => {
 
   return (
     <>
-      <Button onClick={showChange}>权限修改</Button>
+      <Button onClick={showChange}>
+        <span style={{ color: "rgb(252,136,63)" }}>权限修改</span>
+      </Button>
       <Modal
         title="权限修改"
         maskClosable={false}

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styles from "./AuthorizedButton.module.scss";
 
 export default function AuthorizedButton() {
@@ -10,12 +11,13 @@ export default function AuthorizedButton() {
     const linkUrl = `https://link.sast.fun/auth?client_id=${client_id}&code_challenge=YillThSRrGTj6mXqFfDPinX7G35qEQ1QEyWV6PDSEuc%3D&code_challenge_method=S256&redirect_uri=${redirect_uri}&response_type=code&scope=all&state=xyz`;
     //授权link逻辑
     window.location.href = linkUrl;
-    
   };
 
+
+  
   const AuthorizedWeChat = () => {
     console.log("授权WeChat登录");
-    //授权wechat逻辑
+    //授权weChat逻辑
   };
 
   const AuthorizedTicket = () => {

@@ -11,6 +11,9 @@ import {
   IconUserCardVideo,
 } from "@douyinfe/semi-icons";
 import Link from "next/link";
+import { ButtonHTMLAttributes, useEffect, useRef, useState } from "react";
+import getAdminPermission from "@/utils/getAdminPermission";
+import { getMyAdminPermission } from "@/apis/permission";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -19,9 +22,66 @@ export default function DashboardLayout({
 }) {
   const { Header, Sider } = Layout;
 
+  const navRef = useRef(null);
+  //这里通过随着宽度的变化点击收起按钮来实现sider的自适应
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [eventTriggered, setEventTriggered] = useState(false);
+
+  useEffect(() => {
+    const CollapsedButton: any = document.getElementsByClassName(
+      "semi-navigation-collapse-btn"
+    )[0].childNodes[0];
+
+    // 监听窗口大小改变事件
+    window.addEventListener("resize", handleResize);
+
+    // 处理窗口大小改变事件
+    function handleResize() {
+      const newWindowWidth = window.innerWidth;
+
+      // 检查窗口宽度是否经过 1200
+      if (newWindowWidth < 1200 && windowWidth >= 1200 && !eventTriggered) {
+        // 在窗口宽度从大于等于 1200 变为小于 1200 时触发事件
+        // 执行你想要的操作
+        console.log("窗口宽度小于 1200");
+        CollapsedButton.click();
+        setEventTriggered(true);
+      }
+
+      if (newWindowWidth >= 1200 && windowWidth < 1200 && eventTriggered) {
+        // 在窗口宽度从小于 1200 变为大于等于 1200 时触发事件
+        // 执行你想要的操作
+        console.log("窗口宽度大于等于 1200");
+        CollapsedButton.click();
+        setEventTriggered(false);
+      }
+
+      console.log("old", windowWidth);
+      console.log("new", newWindowWidth);
+
+      // 更新 windowWidth 的值
+      setWindowWidth(newWindowWidth);
+    }
+
+    // 在组件卸载时清除事件监听器
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [eventTriggered, windowWidth]);
+
   let PathName = window.location.href;
   PathName = PathName.split("/")[PathName.split("/").length - 1];
-  //TODO: 刷新时，无法正常显示活动的sidebar标签
+
+  const updatePermission = () => {
+    getMyAdminPermission().then((res) => {
+      console.log(res);
+      if (res.success) {
+        localStorage.setItem("adminPermission", JSON.stringify(res.data));
+        location.reload();
+      }
+    });
+  };
+
   return (
     <section>
       <Layout
@@ -43,10 +103,13 @@ export default function DashboardLayout({
               <Nav.Footer>
                 <Dropdown
                   trigger={"click"}
-                  position="bottom"
+                  position="bottomRight"
                   render={
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={() => {}}>退出登录</Dropdown.Item>
+                      <Dropdown.Item onClick={updatePermission}>
+                        权限刷新
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   }
                 >
@@ -61,6 +124,8 @@ export default function DashboardLayout({
         <Layout>
           <Sider style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
             <Nav
+              ref={navRef}
+              defaultIsCollapsed={false}
               renderWrapper={({ itemElement, isSubNav, isInSubNav, props }) => {
                 const routerMap = {
                   Timetable: "home/timetable",

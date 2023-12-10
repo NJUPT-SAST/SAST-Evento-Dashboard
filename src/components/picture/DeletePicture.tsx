@@ -31,7 +31,7 @@ const DeletePicture: React.FC<DeletePictureProps> = ({
   };
   return (
     <>
-      <Button onClick={() => setVisible(true)}>删除幻灯片</Button>
+      <Button onClick={() => setVisible(true)} type="danger">删除幻灯片</Button>
       <Modal
         visible={visible}
         onCancel={() => setVisible(false)}
