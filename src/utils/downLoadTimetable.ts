@@ -28,14 +28,13 @@ const downLoadTimetable = async () => {
   // 创建画布
   const canvas = document.createElement("canvas");
   canvas.width = 3000; // 设置画布宽度
-  canvas.height = eventData.length * 2000; // 设置画布高度
+  canvas.height = eventData.length * 2000 + 1000; // 设置画布高度
 
   // 获取 2D 上下文
   const ctx = canvas.getContext("2d");
   if (ctx) {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // ctx.strokeRect(200, 200, 2600, 800);
     ctx.font = "400px 华文琥珀";
     ctx.fillStyle = "#7899ba";
     ctx.textBaseline = "top";

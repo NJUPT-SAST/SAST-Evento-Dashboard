@@ -14,6 +14,8 @@ import Link from "next/link";
 import { ButtonHTMLAttributes, useEffect, useRef, useState } from "react";
 import getAdminPermission from "@/utils/getAdminPermission";
 import { getMyAdminPermission } from "@/apis/permission";
+import { useRouter } from "next/navigation";
+import { UserInfo } from "@/utils/commonInterface";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -82,6 +84,19 @@ export default function DashboardLayout({
     });
   };
 
+  const router = useRouter();
+
+  const goLogin = () => {
+    router.push("/login");
+    localStorage.clear();
+  };
+
+  const userinfo: UserInfo = JSON.parse(localStorage.getItem("userinfo") as string);
+
+  const avatarUri = userinfo.avatar;
+
+  const userNickName = userinfo.nickname;
+
   return (
     <section>
       <Layout
@@ -106,15 +121,19 @@ export default function DashboardLayout({
                   position="bottomRight"
                   render={
                     <Dropdown.Menu>
-                      <Dropdown.Item onClick={() => {}}>退出登录</Dropdown.Item>
                       <Dropdown.Item onClick={updatePermission}>
                         权限刷新
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={goLogin}>
+                        <span style={{ color: "rgb(249, 113, 90)" }}>
+                          退出登录
+                        </span>
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   }
                 >
-                  <Avatar color="orange" size="small">
-                    User
+                  <Avatar color="orange" size="small" src={avatarUri}>
+                    {userNickName}
                   </Avatar>
                 </Dropdown>
               </Nav.Footer>

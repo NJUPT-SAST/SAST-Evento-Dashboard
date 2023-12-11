@@ -25,7 +25,6 @@ const HandleLocation: React.FC = () => {
 
   const permissions = getAdminPermission();
 
-  //TODO: 这里的value是一个any，需要修改
   const getLabel = (value: any) => {
     const numberValue = JSON.parse(value);
     setId(numberValue);

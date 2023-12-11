@@ -1,7 +1,9 @@
-import { Button, Modal } from "@douyinfe/semi-ui";
+import { Button, Modal, Toast } from "@douyinfe/semi-ui";
 import { useState } from "react";
 import { IconDelete } from "@douyinfe/semi-icons";
 import styles from "./DeleteManager.module.scss";
+import { deleteEventManager } from "@/apis/permission";
+import { getManagers } from "@/apis/event";
 
 interface DeleteManagerProps {
   userName: string;
@@ -17,6 +19,19 @@ const DeleteManager: React.FC<DeleteManagerProps> = ({
   setManagerData,
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
+
+  const deleteManager = () => {
+    deleteEventManager(String(eventId), String(userId)).then((res) => {
+      console.log(res);
+      if (res.success) {
+        getManagers(eventId).then((res) => {
+          console.log(res.data.users);
+          setManagerData(res.data.users);
+          setVisible(false);
+        });
+      }
+    });
+  };
   return (
     <>
       {/* TODO:这里的删除未调接口，等待增加管理员做好后，再调删除管理员接口*/}
@@ -34,6 +49,7 @@ const DeleteManager: React.FC<DeleteManagerProps> = ({
         closable={false}
         visible={visible}
         onCancel={() => setVisible(false)}
+        onOk={deleteManager}
         // footer={footer}
         closeOnEsc={true}
       ></Modal>

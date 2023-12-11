@@ -37,7 +37,7 @@ export default function Roles() {
   //将请求和设置数据封装
 
   function getNewAdminList(current: number, size: number) {
-    getAdminsList(current, size).then((res) => {
+    getAdminsList(String(current), String(size)).then((res) => {
       console.log(res);
       setAdminList(res.data.users);
       setTotal(res.data.total);
@@ -96,7 +96,10 @@ export default function Roles() {
                   </div>
                 }
                 extra={
-                  <ButtonGroup theme="borderless">
+                  <ButtonGroup
+                    theme="borderless"
+                    className={styles.buttonGroup}
+                  >
                     <ShowPermission studentId={item.studentId}></ShowPermission>
                     {permissions.putAdmin && (
                       <ChangePermission userId={item.id}></ChangePermission>

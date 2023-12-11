@@ -41,3 +41,16 @@ export interface pictureDate {
   uri: string;
   userId: string;
 }
+
+export interface UserInfo {
+  avatar: string;
+  biography: string;
+  email: string;
+  id: string;
+  link: string[];
+  linkId: string;
+  nickname: string;
+  organization: string;
+  studentId: string;
+  [property: string]: any;
+}
