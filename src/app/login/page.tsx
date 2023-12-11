@@ -19,7 +19,7 @@ export default function Login() {
     console.log(password);
   };
 
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState<number>(2000);
   const [isLogoShow, setIsLogoShow] = useState<boolean>(true);
 
   useEffect(() => {

@@ -1,5 +1,3 @@
-import { getMyAdminPermission } from "@/apis/permission";
-
 const getAdminPermission = () => {
   const adminPermissionStr = localStorage.getItem("adminPermission");
   const adminPermission = adminPermissionStr
@@ -27,5 +25,27 @@ const getAdminPermission = () => {
     updateType: adminPermission.includes("updateType"),
   };
 };
+
+export interface Permissions {
+  addAdmin: any;
+  deletePicture: any;
+  deleteAdmin: boolean;
+  addEvent: boolean;
+  addDepartment: boolean;
+  deleteHomeSlide: boolean;
+  deleteType: boolean;
+  addHomeSlide: boolean;
+  getFeedbackEvents: boolean;
+  deleteDepartment: boolean;
+  putDepartment: boolean;
+  addLocation: boolean;
+  addPicture: boolean;
+  patchHomeSlide: boolean;
+  updateLocationName: boolean;
+  putAdmin: boolean;
+  addType: boolean;
+  deleteLocation: boolean;
+  updateType: boolean;
+}
 
 export default getAdminPermission;

@@ -21,7 +21,7 @@ import ChangeUrl from "@/components/picture/ChangeUrl";
 import SavePicture from "@/components/picture/SavePicture";
 import DeletePicture from "@/components/picture/DeletePicture";
 import AddPicture from "@/components/picture/AddPicture";
-import getAdminPermission from "@/utils/getAdminPermission";
+import getAdminPermission, { Permissions } from "@/utils/getAdminPermission";
 
 export default function Picture() {
   const [data, setData] = useState<Array<slideDate>>([]);
@@ -36,8 +36,16 @@ export default function Picture() {
   const [link, setLink] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [total, setTotal] = useState<number>(0);
+  const [permissions, setPermissions] = useState<Permissions>();
 
-  const permissions = getAdminPermission();
+  useEffect(() => {
+    // const permissions = getAdminPermission();
+    setPermissions(getAdminPermission());
+  }, []);
+
+  useEffect(() => {
+    console.log(permissions);
+  }, [permissions]);
 
   useEffect(() => {
     getSlide(currentPage).then((res: any) => {
@@ -69,6 +77,7 @@ export default function Picture() {
       setUrl(newData.url);
     }
   };
+
   const handlePageChange = (value: number) => {
     setCurrentPage(value);
   };
@@ -114,7 +123,7 @@ export default function Picture() {
                         onChange={setLink}
                       ></Input>
                       <ChangeUrl setUrl={setUrl}></ChangeUrl>
-                      {permissions.patchHomeSlide && (
+                      {permissions?.patchHomeSlide && (
                         <SavePicture
                           url={url}
                           title={title}
@@ -124,7 +133,7 @@ export default function Picture() {
                           currentPage={currentPage}
                         ></SavePicture>
                       )}
-                      {permissions.deleteHomeSlide && (
+                      {permissions?.deleteHomeSlide && (
                         <DeletePicture
                           eventId={item.id}
                           currentPage={currentPage}
@@ -148,7 +157,7 @@ export default function Picture() {
             ))}
         </Tabs>
         <div className={styles.PaginationContainer}>
-          {permissions.addHomeSlide && (
+          {permissions?.addHomeSlide && (
             <AddPicture
               setParentData={setData}
               setParentTotal={setTotal}

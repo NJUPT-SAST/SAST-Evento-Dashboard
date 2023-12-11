@@ -5,13 +5,14 @@ import ChangeActivityType from "./ChangeActivityType";
 import DeleteActivityType from "./DeleteActivityType";
 import AddActivityType from "./AddActivityType";
 import styles from "./ActivityType.module.scss";
-import getAdminPermission from "@/utils/getAdminPermission";
+import getAdminPermission, { Permissions } from "@/utils/getAdminPermission";
 
 const ActivityType: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [activityTypes, setActivityTypes] = useState<
     Array<{ id: number; typeName: string; allowConflict: boolean }>
   >([]);
+  const [permissions, setPermissions] = useState<Permissions>();
 
   const showActivitySheet = () => {
     getTypes().then((res) => {
@@ -21,7 +22,10 @@ const ActivityType: React.FC = () => {
     });
   };
 
-  const permissions = getAdminPermission();
+  useEffect(() => {
+    const permissions = getAdminPermission();
+    setPermissions(permissions);
+  }, []);
 
   const columns: any = [
     {
@@ -50,7 +54,7 @@ const ActivityType: React.FC = () => {
         record: { id: number; typeName: string; allowConflict: boolean }
       ) => (
         <Space>
-          {permissions.updateType && (
+          {permissions?.updateType && (
             <ChangeActivityType
               setActivityTypes={setActivityTypes}
               id={record.id}
@@ -58,7 +62,7 @@ const ActivityType: React.FC = () => {
               allowConflict={record.allowConflict}
             ></ChangeActivityType>
           )}
-          {permissions.deleteType && (
+          {permissions?.deleteType && (
             <DeleteActivityType
               setActivityTypes={setActivityTypes}
               id={record.id}
@@ -84,7 +88,7 @@ const ActivityType: React.FC = () => {
           pagination={false}
           className={styles.table}
         ></Table>
-        {permissions.addType && (
+        {permissions?.addType && (
           <div className={styles.mainContainer}>
             <div className={styles.divider}></div>
             <div className={styles.addActivityContainer}>

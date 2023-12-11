@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import ChangeDepartment from "./ChangeDepartment";
 import DeleteDepartments from "./DeleteDepartment";
 import AddDepartment from "./AddDepartment";
-import getAdminPermission from "@/utils/getAdminPermission";
+import getAdminPermission, { Permissions } from "@/utils/getAdminPermission";
 import styles from "./Department.module.scss";
 
 const ActivityType: React.FC = () => {
@@ -13,6 +13,7 @@ const ActivityType: React.FC = () => {
   const [departments, setDepartments] = useState<
     Array<{ id: number; departmentName: string }>
   >([]);
+  const [permissions, setPermissions] = useState<Permissions>();
 
   useEffect(() => {}, []);
   const showActivitySheet = () => {
@@ -23,7 +24,10 @@ const ActivityType: React.FC = () => {
     });
   };
 
-  const permissions = getAdminPermission();
+  useEffect(() => {
+    const permissions = getAdminPermission();
+    setPermissions(permissions);
+  }, []);
 
   const columns: any = [
     {
@@ -37,14 +41,14 @@ const ActivityType: React.FC = () => {
       align: "center",
       render: (_: any, record: { id: number; departmentName: string }) => (
         <Space>
-          {permissions.putDepartment && (
+          {permissions?.putDepartment && (
             <ChangeDepartment
               id={record.id}
               departmentName={record.departmentName}
               setDepartments={setDepartments}
             ></ChangeDepartment>
           )}
-          {permissions.deleteDepartment && (
+          {permissions?.deleteDepartment && (
             <DeleteDepartments
               id={record.id}
               departmentName={record.departmentName}
@@ -69,7 +73,7 @@ const ActivityType: React.FC = () => {
           dataSource={departments}
           pagination={false}
         ></Table>
-        {permissions.addDepartment && (
+        {permissions?.addDepartment && (
           <div className={styles.mainContainer}>
             <div className={styles.divider}></div>
             <div className={styles.addDepartmentContainer}>

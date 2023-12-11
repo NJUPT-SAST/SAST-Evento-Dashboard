@@ -5,7 +5,7 @@ import styles from "./HandleLocation.module.scss";
 import AddLocation from "./AddLocation";
 import ChangeLocation from "./ChangeLocation";
 import DeleteLocation from "./DeleteLocation";
-import getAdminPermission from "@/utils/getAdminPermission";
+import getAdminPermission, { Permissions } from "@/utils/getAdminPermission";
 
 const HandleLocation: React.FC = () => {
   const [treeData, setTreeData] = useState<Array<object>>([]);
@@ -16,14 +16,15 @@ const HandleLocation: React.FC = () => {
   const [isUpdateLocationName, setIsUpdateLocationName] =
     useState<boolean>(false);
   const [isDeleteLocation, setIsDeleteLocation] = useState<boolean>(false);
+  const [permissions, setPermissions] = useState<Permissions>();
 
   useEffect(() => {
     getLocations().then((res) => {
       setTreeData(res.data);
     });
+    const permissions = getAdminPermission();
+    setPermissions(permissions);
   }, []);
-
-  const permissions = getAdminPermission();
 
   const getLabel = (value: any) => {
     const numberValue = JSON.parse(value);
@@ -50,13 +51,13 @@ const HandleLocation: React.FC = () => {
         />
         <div className={styles.divider}></div>
         <div className={styles.buttonContainer}>
-          {permissions.addLocation && (
+          {permissions?.addLocation && (
             <AddLocation parentId={id} setTreeDate={setTreeData}></AddLocation>
           )}
-          {permissions.updateLocationName && (
+          {permissions?.updateLocationName && (
             <ChangeLocation id={id} setTreeDate={setTreeData}></ChangeLocation>
           )}
-          {permissions.deleteLocation && (
+          {permissions?.deleteLocation && (
             <DeleteLocation id={id} setTreeDate={setTreeData}></DeleteLocation>
           )}
         </div>

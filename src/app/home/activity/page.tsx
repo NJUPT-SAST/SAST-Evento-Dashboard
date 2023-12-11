@@ -9,20 +9,27 @@ import ActivityType from "@/components/activity/handleActivityType/ActivityType"
 import Department from "@/components/activity/handleDepartment/Department";
 import HandleLocation from "@/components/activity/handleLocation/HandleLocation";
 import AddActivity from "@/components/activity/handleActivity/AddActivity";
-import getAdminPermission from "@/utils/getAdminPermission";
+import getAdminPermission, { Permissions } from "@/utils/getAdminPermission";
 
 export default function Activity() {
   const [data, setData] = useState<Array<object>>([{}]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [total, setTotal] = useState<number>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [tableHeight, setTableHeight] = useState<number>(0);
+  const [permissions, setPermissions] = useState<Permissions>();
 
-  const windowHeight = window.innerHeight;
-  console.log(windowHeight);
-  const tableHeight = windowHeight - 60 - 40 - 32 - 0.12 * windowHeight;
+  useEffect(() => {
+    const windowHeight = window.innerHeight;
+    console.log(windowHeight);
+    const tableHeight = windowHeight - 60 - 40 - 32 - 0.12 * windowHeight;
+    setTableHeight(tableHeight);
+  }, []);
 
-  const permissions = getAdminPermission();
-  console.log(permissions.addEvent);
+  useEffect(() => {
+    const permissions = getAdminPermission();
+    setPermissions(permissions);
+  }, []);
 
   const columns: any = useMemo(
     () => [
@@ -193,7 +200,7 @@ export default function Activity() {
       <div className={styles.main}>
         <div className="activityContainer">
           <div className={styles.activityHeader}>
-            {permissions.addEvent && (
+            {permissions?.addEvent && (
               <AddActivity
                 setData={setData}
                 currentPage={currentPage}
