@@ -26,8 +26,15 @@ export default function DashboardLayout({
 
   const navRef = useRef(null);
   //这里通过随着宽度的变化点击收起按钮来实现sider的自适应
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(0);
   const [eventTriggered, setEventTriggered] = useState(false);
+  const [pathName, setPathName] = useState<string>("");
+  const [userinfo, setUserinfo] = useState<UserInfo>();
+
+  useEffect(() => {
+    const windowWidth = window.innerWidth;
+    setWindowWidth(windowWidth);
+  }, []);
 
   useEffect(() => {
     const CollapsedButton: any = document.getElementsByClassName(
@@ -71,8 +78,11 @@ export default function DashboardLayout({
     };
   }, [eventTriggered, windowWidth]);
 
-  let PathName = window.location.href;
-  PathName = PathName.split("/")[PathName.split("/").length - 1];
+  useEffect(() => {
+    let PathName = window.location.href;
+    PathName = PathName.split("/")[PathName.split("/").length - 1];
+    setPathName(PathName);
+  }, []);
 
   const updatePermission = () => {
     getMyAdminPermission().then((res) => {
@@ -91,11 +101,13 @@ export default function DashboardLayout({
     localStorage.clear();
   };
 
-  const userinfo: UserInfo = JSON.parse(localStorage.getItem("userinfo") as string);
+  useEffect(() => {
+    setUserinfo(JSON.parse(localStorage.getItem("userinfo") ?? ""));
+  }, []);
 
-  const avatarUri = userinfo.avatar;
+  const avatarUri = userinfo?.avatar;
 
-  const userNickName = userinfo.nickname;
+  const userNickName = userinfo?.nickname;
 
   return (
     <section>
@@ -163,7 +175,7 @@ export default function DashboardLayout({
                 );
               }}
               style={{ maxWidth: 220, height: "100%" }}
-              defaultSelectedKeys={[PathName]}
+              defaultSelectedKeys={[pathName]}
               items={[
                 {
                   itemKey: "activity",

@@ -9,8 +9,8 @@ const request = axios.create({
   baseURL: "https://evento.sast.fun/api",
 
   headers: {
-    token: localStorage.getItem("token"),
-    // token: token,
+    // token: localStorage.getItem("token"),
+    token: token,
   },
   timeout: 30000,
 });

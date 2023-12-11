@@ -16,7 +16,7 @@ import {
 import { getAdminsList } from "@/apis/permission";
 import { ShowPermission } from "@/components/roles/ShowPermission";
 import { ChangePermission } from "@/components/roles/ChangePermission";
-import getAdminPermission from "@/utils/getAdminPermission";
+import getAdminPermission, { Permissions } from "@/utils/getAdminPermission";
 
 export default function Roles() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -33,6 +33,7 @@ export default function Roles() {
       id: string;
     }>
   >([]);
+  const [permissions, setPermissions] = useState<Permissions>();
 
   //将请求和设置数据封装
 
@@ -52,7 +53,11 @@ export default function Roles() {
     getNewAdminList(page, 10);
   }, [page]);
 
-  const permissions = getAdminPermission();
+  useEffect(() => {
+    const permissions = getAdminPermission();
+    setPermissions(permissions);
+  }, []);
+
   return (
     <>
       <div className={styles.main}>
@@ -101,7 +106,7 @@ export default function Roles() {
                     className={styles.buttonGroup}
                   >
                     <ShowPermission studentId={item.studentId}></ShowPermission>
-                    {permissions.putAdmin && (
+                    {permissions?.putAdmin && (
                       <ChangePermission userId={item.id}></ChangePermission>
                     )}
                   </ButtonGroup>

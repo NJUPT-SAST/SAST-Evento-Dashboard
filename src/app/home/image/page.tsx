@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { getPictureDir, getPictureList } from "@/apis/picture";
 import Numeral from "@douyinfe/semi-ui/lib/es/typography/numeral";
 import DeleteImagesButton from "@/components/image/DeleteImageButton";
-import getAdminPermission from "@/utils/getAdminPermission";
+import getAdminPermission, { Permissions } from "@/utils/getAdminPermission";
 
 export default function Image() {
   const [pictureDir, setPictureDir] = useState<Array<string>>([]);
@@ -18,17 +18,16 @@ export default function Image() {
   const [total, setTotal] = useState<number>(0);
   const [chosenTab, setChosenTab] = useState<string>("developer");
   const [page, setPage] = useState<number>(1);
+  const [permissions, setPermissions] = useState<Permissions>();
 
   //封装api和set
   function getNewPictureList(dir: string, num: number, size: number) {
     setImageData([]);
     getPictureList(dir, num, size).then((res) => {
       console.log(res.data);
-
       const data = res.data;
       setTotal(data.total);
       setImageData(data.images);
-
       if (num === 1) {
         setPage(1);
       }
@@ -39,8 +38,9 @@ export default function Image() {
     getPictureDir().then((res) => {
       setPictureDir(res.data);
     });
+    const permissions = getAdminPermission();
+    setPermissions(permissions);
   }, []);
-  const permissions = getAdminPermission();
 
   useEffect(() => {
     // setPage(1);
@@ -56,7 +56,7 @@ export default function Image() {
       <div className={styles.main}>
         <div className={styles.container}>
           <div className={styles.addButtonContainer}>
-            {permissions.addPicture && (
+            {permissions?.addPicture && (
               <AddImageButton
                 page={page}
                 chosenDir={chosenTab}
@@ -88,7 +88,7 @@ export default function Image() {
                             src={obj.uri}
                             alt={`Image ${index + 1}`}
                           />
-                          {permissions.deletePicture && (
+                          {permissions?.deletePicture && (
                             <DeleteImagesButton
                               cosKey={obj.cosKey}
                               dir={chosenTab}
