@@ -1,6 +1,6 @@
 import request from "../utils/request";
 
-export const getAdminsList = async (current: number, size: number) => {
+export const getAdminsList = async (current: string, size: string) => {
   const response = await request({
     method: "get",
     url: "/permission/admins",
@@ -122,6 +122,22 @@ export const getMyAdminPermission = async () => {
   const response = await request({
     method: "get",
     url: "/permission/admin/self",
+  });
+
+  return response.data;
+};
+
+export const deleteEventManager = async (eventId: string, userId: string) => {
+  const response = await request({
+    method: "delete",
+    url: "/permission/event/manager",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    params: {
+      eventId: eventId,
+    },
+    data: { userId },
   });
 
   return response.data;

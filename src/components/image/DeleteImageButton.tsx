@@ -23,7 +23,6 @@ const DeleteImagesButton: React.FC<DeleteImagesButtonProps> = ({
   setImageData,
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
-  //TODO:后端接口出现问题
   const deleteImg = () => {
     console.log(dir);
     deletePictureList(cosKey, dir).then((res) => {

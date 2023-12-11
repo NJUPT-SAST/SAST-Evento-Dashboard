@@ -28,9 +28,8 @@ export const DepartmentSelection = ({
         className={styles.select}
         onChange={(value: any) => setChosenDepartment(value)}
         multiple={true}
-        
       >
-        {departments.map((obj, index) => {
+        {departments?.map((obj, index) => {
           return (
             <Select.Option value={obj.id} key={index}>
               {obj.departmentName}

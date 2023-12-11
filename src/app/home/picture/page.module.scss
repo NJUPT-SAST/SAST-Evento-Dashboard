@@ -20,6 +20,9 @@
     margin-left: 20px;
     .previewImageContainer {
       margin: 100px;
+      display: flex;
+      align-items: center;
+      justify-self: center;
       .previewImage {
         height: calc(100vh - 60px - 32px - 42px - 200px - 20px - 70px - 40px);
         width: calc(100vw - 200px - 20px - 81px - 5vw - 200px - 70px - 40px);

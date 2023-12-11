@@ -20,7 +20,6 @@ export default function Timetable() {
   const [date, setDate] = useState<Date>(new Date());
   const [eventsData, setEventsData] = useState<Array<any> | undefined>();
   const [chosenDepartment, setChosenDepartment] = useState<string>("");
-  // TODO: any=>array
   const [events, setEvents] = useState<any>([]);
 
   const getNewEventsList = (
