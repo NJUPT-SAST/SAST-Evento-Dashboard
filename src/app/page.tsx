@@ -2,12 +2,21 @@
 
 import "./welcomeAnimate.scss";
 import styles from "./page.module.scss";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 function TypingComponent() {
   const [animate, setAnimate] = useState(true);
   const [showButton, setShowButton] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    localStorage.getItem("token");
+    console.log(localStorage.getItem("token"));
+    if (localStorage.getItem("token")) {
+      router.push("/home");
+    }
+  }, [router]);
 
   const handleClick = () => {
     setAnimate(false);
@@ -17,8 +26,6 @@ function TypingComponent() {
   setTimeout(() => {
     setShowButton(true);
   }, 0);
-
-  const router = useRouter();
 
   const toLogin = () => {
     router.push("/login", { scroll: false });

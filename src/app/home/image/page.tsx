@@ -2,13 +2,29 @@
 
 import AddImageButton from "@/components/image/AddImageButton";
 import styles from "./page.module.scss";
-import { Pagination, Tabs, TabPane, Button } from "@douyinfe/semi-ui";
+import {
+  Pagination,
+  Tabs,
+  TabPane,
+  ImagePreview,
+  Button,
+} from "@douyinfe/semi-ui";
 import { Image as SemiImage } from "@douyinfe/semi-ui";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getPictureDir, getPictureList } from "@/apis/picture";
-import Numeral from "@douyinfe/semi-ui/lib/es/typography/numeral";
-import DeleteImagesButton from "@/components/image/DeleteImageButton";
 import getAdminPermission, { Permissions } from "@/utils/getAdminPermission";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconMinus,
+  IconPlus,
+  IconRotate,
+  IconDownload,
+  IconRealSizeStroked,
+  IconWindowAdaptionStroked,
+  IconDelete,
+} from "@douyinfe/semi-icons";
+import DeleteImagesButton from "@/components/image/DeleteImageButton";
 
 export default function Image() {
   const [pictureDir, setPictureDir] = useState<Array<string>>([]);
@@ -19,6 +35,8 @@ export default function Image() {
   const [chosenTab, setChosenTab] = useState<string>("developer");
   const [page, setPage] = useState<number>(1);
   const [permissions, setPermissions] = useState<Permissions>();
+  const [downloadName, setDownloadName] = useState<string>("picture");
+  const [chosenImageData, setChosenImageData] = useState<any>();
 
   //封装api和set
   function getNewPictureList(dir: string, num: number, size: number) {
@@ -51,6 +69,91 @@ export default function Image() {
     getNewPictureList(chosenTab, page, 6);
   }, [page, chosenTab]);
 
+  const renderPreviewMenu = (props: any) => {
+    const {
+      ratio,
+      disabledPrev,
+      disabledNext,
+      disableZoomIn,
+      disableZoomOut,
+      onNext,
+      onPrev,
+      onRotateLeft,
+      onRatioClick,
+      onZoomIn,
+      onZoomOut,
+    } = props;
+    return (
+      <div
+        style={{
+          background: "grey",
+          height: 40,
+          width: 280,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-around",
+          borderRadius: 3,
+        }}
+      >
+        <Button
+          icon={<IconChevronLeft size="large" />}
+          type="tertiary"
+          onClick={!disabledPrev ? onPrev : undefined}
+          disabled={disabledPrev}
+        />
+        <Button
+          icon={<IconChevronRight size="large" />}
+          type="tertiary"
+          onClick={!disabledNext ? onNext : undefined}
+          disabled={disabledNext}
+        />
+        <Button
+          icon={<IconMinus size="large" />}
+          type="tertiary"
+          onClick={!disableZoomOut ? onZoomOut : undefined}
+          disabled={disableZoomOut}
+        />
+        <Button
+          icon={<IconPlus size="large" />}
+          type="tertiary"
+          onClick={!disableZoomIn ? onZoomIn : undefined}
+          disabled={disableZoomIn}
+        />
+        <Button
+          icon={
+            ratio === "adaptation" ? (
+              <IconRealSizeStroked size="large" />
+            ) : (
+              <IconWindowAdaptionStroked size="large" />
+            )
+          }
+          type="tertiary"
+          onClick={onRatioClick}
+        />
+        <Button
+          icon={<IconRotate size="large" />}
+          type="tertiary"
+          onClick={onRotateLeft}
+        />
+        <DeleteImagesButton
+          cosKey={String(chosenImageData?.cosKey)}
+          dir={chosenTab}
+          setImageData={setImageData}
+          setTotal={setTotal}
+        ></DeleteImagesButton>
+      </div>
+    );
+  };
+
+  const test = (value: number) => {
+    console.log(value);
+    console.log(imageData[value]);
+    setChosenImageData(imageData[value]);
+  };
+
+  useEffect(() => {
+    console.log(chosenImageData);
+  }, [chosenImageData]);
   return (
     <>
       <div className={styles.main}>
@@ -81,23 +184,25 @@ export default function Image() {
                 >
                   <div style={{ padding: "0 24px" }}>
                     <div className={styles.imageGallery}>
-                      {imageData.map((obj, index) => (
-                        <div className={styles.imageContainer} key={index}>
-                          <SemiImage
-                            className={styles.image}
-                            src={obj.uri}
-                            alt={`Image ${index + 1}`}
-                          />
-                          {permissions?.deletePicture && (
-                            <DeleteImagesButton
-                              cosKey={obj.cosKey}
-                              dir={chosenTab}
-                              setImageData={setImageData}
-                              setTotal={setTotal}
-                            ></DeleteImagesButton>
-                          )}
-                        </div>
-                      ))}
+                      <ImagePreview
+                        onChange={test}
+                        style={{
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: "15px",
+                        }}
+                        renderPreviewMenu={renderPreviewMenu}
+                      >
+                        {imageData.map((obj, index) => (
+                          <div className={styles.imageContainer} key={index}>
+                            <SemiImage
+                              className={styles.image}
+                              src={obj.uri}
+                              alt={`Image ${index + 1}`}
+                            />
+                          </div>
+                        ))}
+                      </ImagePreview>
                     </div>
                   </div>
                 </TabPane>

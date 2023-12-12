@@ -11,11 +11,10 @@ import {
   IconUserCardVideo,
 } from "@douyinfe/semi-icons";
 import Link from "next/link";
-import { ButtonHTMLAttributes, useEffect, useRef, useState } from "react";
-import getAdminPermission from "@/utils/getAdminPermission";
+import { useEffect, useRef, useState } from "react";
 import { getMyAdminPermission } from "@/apis/permission";
-import { useRouter } from "next/navigation";
 import { UserInfo } from "@/utils/commonInterface";
+import { useRouter } from "next/navigation";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -30,6 +29,28 @@ export default function DashboardLayout({
   const [eventTriggered, setEventTriggered] = useState(false);
   const [pathName, setPathName] = useState<string>("");
   const [userinfo, setUserinfo] = useState<UserInfo>();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      router.push("/login");
+      localStorage.clear();
+    }
+    if (localStorage.getItem("token")) {
+      getMyAdminPermission().then((res) => {
+        console.log(res);
+        if (
+          (res.errCode === 1000 &&
+            String(res.errMsg).includes("login has expired")) ||
+          res.errCode === 1003
+        ) {
+          router.push("/login");
+          localStorage.clear();
+        }
+      });
+    }
+  }, [router]);
 
   useEffect(() => {
     const windowWidth = window.innerWidth;
@@ -88,21 +109,20 @@ export default function DashboardLayout({
     getMyAdminPermission().then((res) => {
       console.log(res);
       if (res.success) {
+        // location.reload();
         localStorage.setItem("adminPermission", JSON.stringify(res.data));
-        location.reload();
       }
     });
   };
 
-  const router = useRouter();
-
-  const goLogin = () => {
+  const goLogOut = () => {
     router.push("/login");
     localStorage.clear();
   };
 
   useEffect(() => {
-    setUserinfo(JSON.parse(localStorage.getItem("userinfo") ?? ""));
+    if (localStorage.getItem("userinfo"))
+      setUserinfo(JSON?.parse(localStorage.getItem("userinfo") ?? ""));
   }, []);
 
   const avatarUri = userinfo?.avatar;
@@ -136,7 +156,7 @@ export default function DashboardLayout({
                       <Dropdown.Item onClick={updatePermission}>
                         权限刷新
                       </Dropdown.Item>
-                      <Dropdown.Item onClick={goLogin}>
+                      <Dropdown.Item onClick={goLogOut}>
                         <span style={{ color: "rgb(249, 113, 90)" }}>
                           退出登录
                         </span>

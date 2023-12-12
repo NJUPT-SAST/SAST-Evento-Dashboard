@@ -5,19 +5,44 @@ import { Card, Form, Button, Input } from "@douyinfe/semi-ui";
 import { IconUser, IconLock } from "@douyinfe/semi-icons";
 import AuthorizedButton from "@/components/login/AuthorizedButton";
 import logo from "../../../public/Logo.png";
-import icon from "../../../public/eventoicon.ico";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { passwordLogin } from "@/apis/login";
+import { useRouter } from "next/navigation";
 import { getMyAdminPermission } from "@/apis/permission";
 
 export default function Login() {
-  const [userAccount, setUserAccount] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [userAccount, setUserAccount] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const router = useRouter();
 
   const login = () => {
     console.log(userAccount);
     console.log(password);
+    passwordLogin(userAccount, password).then((res) => {
+      console.log(res);
+      if (res.success) {
+        router.push("/home");
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("userinfo", JSON.stringify(res.data.userInfo));
+        getMyAdminPermission().then((res) => {
+          console.log(res);
+          if (res.success) {
+            localStorage.setItem("adminPermission", JSON.stringify(res.data));
+          }
+        });
+      }
+    });
   };
+
+  useEffect(() => {
+    localStorage.getItem("token");
+    console.log(localStorage.getItem("token"));
+    if (localStorage.getItem("token")) {
+      router.push("/home");
+    }
+  }, [router]);
 
   const [windowWidth, setWindowWidth] = useState<number>(2000);
   const [isLogoShow, setIsLogoShow] = useState<boolean>(true);
@@ -65,7 +90,7 @@ export default function Login() {
             </div>
             <br></br>
             <div className={styles.inputItem}>
-              <span>账号</span>
+              <span>学号</span>
               <Input
                 prefix={<IconUser />}
                 showClear

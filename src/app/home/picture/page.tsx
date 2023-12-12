@@ -1,17 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Input,
   Tabs,
   TabPane,
-  Button,
   Pagination,
-  Modal,
-  Card,
-  Notification,
-  Select,
-  Space,
+  ImagePreview,
+  Button,
 } from "@douyinfe/semi-ui";
 import styles from "./page.module.scss";
 import { getSlide } from "@/apis/slide";
@@ -22,6 +18,16 @@ import SavePicture from "@/components/picture/SavePicture";
 import DeletePicture from "@/components/picture/DeletePicture";
 import AddPicture from "@/components/picture/AddPicture";
 import getAdminPermission, { Permissions } from "@/utils/getAdminPermission";
+import { Image as SemiImage } from "@douyinfe/semi-ui";
+import {
+  IconMinus,
+  IconPlus,
+  IconRotate,
+  IconDownload,
+  IconRealSizeStroked,
+  IconWindowAdaptionStroked,
+} from "@douyinfe/semi-icons";
+import axios from "axios";
 
 export default function Picture() {
   const [data, setData] = useState<Array<slideDate>>([]);
@@ -43,9 +49,60 @@ export default function Picture() {
     setPermissions(getAdminPermission());
   }, []);
 
-  useEffect(() => {
-    console.log(permissions);
-  }, [permissions]);
+  const renderPreviewMenu = (props: any) => {
+    const {
+      ratio,
+      disableZoomIn,
+      disableZoomOut,
+      disableDownload,
+      onRotateLeft,
+      onRatioClick,
+      onZoomIn,
+      onZoomOut,
+    } = props;
+    return (
+      <div
+        style={{
+          background: "grey",
+          height: 40,
+          width: 280,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-around",
+          borderRadius: 3,
+        }}
+      >
+        <Button
+          icon={<IconMinus size="large" />}
+          type="tertiary"
+          onClick={!disableZoomOut ? onZoomOut : undefined}
+          disabled={disableZoomOut}
+        />
+        <Button
+          icon={<IconPlus size="large" />}
+          type="tertiary"
+          onClick={!disableZoomIn ? onZoomIn : undefined}
+          disabled={disableZoomIn}
+        />
+        <Button
+          icon={
+            ratio === "adaptation" ? (
+              <IconRealSizeStroked size="large" />
+            ) : (
+              <IconWindowAdaptionStroked size="large" />
+            )
+          }
+          type="tertiary"
+          onClick={onRatioClick}
+        />
+        <Button
+          icon={<IconRotate size="large" />}
+          type="tertiary"
+          onClick={onRotateLeft}
+        />
+      </div>
+    );
+  };
 
   useEffect(() => {
     getSlide(currentPage).then((res: any) => {
@@ -82,6 +139,13 @@ export default function Picture() {
     setCurrentPage(value);
   };
 
+  const setDownloadName = (src: any) => {
+    // Extract the filename from the source URL
+    const filename = src.substring(src.lastIndexOf("/") + 1);
+
+    // Return the filename as the download name
+    return filename;
+  };
   return (
     <>
       <div className={styles.main}>
@@ -144,13 +208,13 @@ export default function Picture() {
                     </div>
                   </div>
                   <div className={styles.previewImageContainer}>
-                    <Image
-                      src={url}
-                      alt={item.title}
-                      width={1000}
-                      height={618}
-                      className={styles.previewImage}
-                    ></Image>
+                    <ImagePreview renderPreviewMenu={renderPreviewMenu}>
+                      <SemiImage
+                        src={url}
+                        alt={item.title}
+                        className={styles.previewImage}
+                      ></SemiImage>
+                    </ImagePreview>
                   </div>
                 </div>
               </TabPane>
