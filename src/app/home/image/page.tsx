@@ -35,7 +35,6 @@ export default function Image() {
   const [chosenTab, setChosenTab] = useState<string>("developer");
   const [page, setPage] = useState<number>(1);
   const [permissions, setPermissions] = useState<Permissions>();
-  const [downloadName, setDownloadName] = useState<string>("picture");
   const [chosenImageData, setChosenImageData] = useState<any>();
 
   //封装api和set
@@ -61,7 +60,6 @@ export default function Image() {
   }, []);
 
   useEffect(() => {
-    // setPage(1);
     getNewPictureList(chosenTab, 1, 6);
   }, [chosenTab]);
 
@@ -145,15 +143,12 @@ export default function Image() {
     );
   };
 
-  const test = (value: number) => {
+  const changeImage = (value: number) => {
     console.log(value);
     console.log(imageData[value]);
     setChosenImageData(imageData[value]);
   };
 
-  useEffect(() => {
-    console.log(chosenImageData);
-  }, [chosenImageData]);
   return (
     <>
       <div className={styles.main}>
@@ -169,6 +164,7 @@ export default function Image() {
             )}
           </div>
           <Tabs
+            lazyRender={true}
             tabPosition="left"
             type="button"
             onChange={setChosenTab}
@@ -185,7 +181,7 @@ export default function Image() {
                   <div style={{ padding: "0 24px" }}>
                     <div className={styles.imageGallery}>
                       <ImagePreview
-                        onChange={test}
+                        onChange={changeImage}
                         style={{
                           display: "flex",
                           flexWrap: "wrap",

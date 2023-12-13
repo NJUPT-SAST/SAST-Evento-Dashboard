@@ -1,11 +1,15 @@
 import { Button, Modal, Tag } from "@douyinfe/semi-ui";
 import styles from "./ShowPermission.module.scss";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getUserPermission } from "@/apis/permission";
 
-type ShowPermissionProps = { studentId: string };
+interface ShowPermissionProps {
+  studentId: string;
+}
 
-export const ShowPermission = ({ studentId }: ShowPermissionProps) => {
+export const ShowPermission: React.FC<ShowPermissionProps> = ({
+  studentId,
+}) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [havePermission, setHavePermission] = useState<Array<string>>([]);
 

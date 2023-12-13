@@ -39,7 +39,6 @@ export default function DashboardLayout({
     }
     if (localStorage.getItem("token")) {
       getMyAdminPermission().then((res) => {
-        console.log(res);
         if (
           (res.errCode === 1000 &&
             String(res.errMsg).includes("login has expired")) ||

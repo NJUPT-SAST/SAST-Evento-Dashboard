@@ -24,7 +24,6 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
   const [pictureDir, setPictureDir] = useState<Array<string>>([""]);
   const [chosenPictureDir, setChosenPictureDir] = useState<string>("");
   const [imagesData, setImagesData] = useState<Array<pictureDate>>([]);
-  const [isSelect, setIsSelect] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [chosenPicture, setChosenPicture] = useState<number>(0);
@@ -48,25 +47,17 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
 
   const changeSelect = (value: any) => {
     setChosenPictureDir(value);
-    setIsSelect(false);
     setCurrentPage(1);
   };
 
-  const selectPicture = (value: boolean) => {
-    setIsSelect(value);
-  };
-
   const handleOk = () => {
-    if (isSelect) {
-      console.log(imagesData);
-      const newPictureData = imagesData.find((obj) => obj.id === chosenPicture);
-      if (newPictureData) {
-        console.log(newPictureData.uri);
-        setUrl(newPictureData.uri);
-        setVisible(false);
-      }
-    } else {
-      Toast.info({ content: "没有选中" });
+    console.log(imagesData);
+    const newPictureData = imagesData.find((obj) => obj.id === chosenPicture);
+    console.log(newPictureData);
+    if (newPictureData) {
+      console.log(newPictureData.uri);
+      setUrl(newPictureData.uri);
+      setVisible(false);
     }
   };
 
@@ -81,7 +72,7 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
   return (
     <>
       <Button onClick={showChangeModal} type="warning">
-        修改图片
+        更换图片
       </Button>
       <Modal
         title="是否要更换图片"
@@ -112,17 +103,6 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
               imagesData.map((item, index) => (
                 <TabPane tab={item.name} itemKey={`${item.id}`} key={index}>
                   <div className={styles.tabPaneContainer}>
-                    {!isSelect && (
-                      <Button onClick={() => selectPicture(true)}>选定</Button>
-                    )}
-                    {isSelect && (
-                      <Button
-                        icon={<IconTick />}
-                        onClick={() => selectPicture(false)}
-                      >
-                        选定
-                      </Button>
-                    )}
                     <Image
                       src={item.uri}
                       alt={item.name}

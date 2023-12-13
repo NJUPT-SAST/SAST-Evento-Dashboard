@@ -4,6 +4,7 @@ import "./welcomeAnimate.scss";
 import styles from "./page.module.scss";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getMyInfo } from "@/apis/user";
 
 function TypingComponent() {
   const [animate, setAnimate] = useState(true);
@@ -11,10 +12,13 @@ function TypingComponent() {
   const router = useRouter();
 
   useEffect(() => {
-    localStorage.getItem("token");
-    console.log(localStorage.getItem("token"));
     if (localStorage.getItem("token")) {
-      router.push("/home");
+      getMyInfo().then((res) => {
+        console.log(res);
+        if (res.success) {
+          router.push("/home");
+        }
+      });
     }
   }, [router]);
 

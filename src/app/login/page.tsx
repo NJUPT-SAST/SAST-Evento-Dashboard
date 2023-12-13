@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { passwordLogin } from "@/apis/login";
 import { useRouter } from "next/navigation";
 import { getMyAdminPermission } from "@/apis/permission";
+import { getMyInfo } from "@/apis/user";
+import { md5 } from "js-md5";
 
 export default function Login() {
   const [userAccount, setUserAccount] = useState<string>("");
@@ -20,7 +22,9 @@ export default function Login() {
   const login = () => {
     console.log(userAccount);
     console.log(password);
-    passwordLogin(userAccount, password).then((res) => {
+    const md5Password = md5(password);
+    console.log(md5Password);
+    passwordLogin(userAccount, md5Password).then((res) => {
       console.log(res);
       if (res.success) {
         router.push("/home");
@@ -37,10 +41,13 @@ export default function Login() {
   };
 
   useEffect(() => {
-    localStorage.getItem("token");
-    console.log(localStorage.getItem("token"));
     if (localStorage.getItem("token")) {
-      router.push("/home");
+      getMyInfo().then((res) => {
+        console.log(res);
+        if (res.success) {
+          router.push("/home");
+        }
+      });
     }
   }, [router]);
 

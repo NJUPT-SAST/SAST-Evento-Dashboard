@@ -26,6 +26,7 @@ const PutManager: React.FC<PutManagerProps> = ({
     manageTreeData(eventId).then((res: { data: Array<any> }) => {
       console.log(res.data);
       const newTreeDate = addKeysToData(res.data);
+      
       const labelNewTreeDate = updateTitleToLabel(newTreeDate);
       console.log(labelNewTreeDate);
       setTotalPermission(labelNewTreeDate);

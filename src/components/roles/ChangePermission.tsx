@@ -5,11 +5,13 @@ import {
 } from "@/apis/permission";
 import addKeysToData from "@/utils/addKeysToData";
 import { Button, Modal, Transfer } from "@douyinfe/semi-ui";
-import { useState } from "react";
+import React, { useState } from "react";
 
-type ShowPermissionProps = { userId: string };
+interface ShowPermissionProps {
+  userId: string;
+}
 
-export const ChangePermission = ({ userId }: ShowPermissionProps) => {
+export const ChangePermission: React.FC<ShowPermissionProps> = ({ userId }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [treeData, setTreeDate] = useState<Array<object>>([]);
   const [havePermission, setHavePermission] = useState<Array<string>>([]);

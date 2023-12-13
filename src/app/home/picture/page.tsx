@@ -27,22 +27,16 @@ import {
   IconRealSizeStroked,
   IconWindowAdaptionStroked,
 } from "@douyinfe/semi-icons";
-import axios from "axios";
 
 export default function Picture() {
   const [data, setData] = useState<Array<slideDate>>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  let opts = {
-    title: "图片详情",
-    content: "请点击图片放大查看",
-    duration: 3,
-    position: "top",
-  };
   const [title, setTitle] = useState<string>("");
   const [link, setLink] = useState<string>("");
   const [url, setUrl] = useState<string>("");
   const [total, setTotal] = useState<number>(0);
   const [permissions, setPermissions] = useState<Permissions>();
+  const [chosenTabKey, setChosenTabKey] = useState<number>(0);
 
   useEffect(() => {
     // const permissions = getAdminPermission();
@@ -54,7 +48,6 @@ export default function Picture() {
       ratio,
       disableZoomIn,
       disableZoomOut,
-      disableDownload,
       onRotateLeft,
       onRatioClick,
       onZoomIn,
@@ -106,13 +99,12 @@ export default function Picture() {
 
   useEffect(() => {
     getSlide(currentPage).then((res: any) => {
-      console.log(res.data);
-      console.log(res.data.slides);
       setData(res.data.slides);
       setTotal(res.data.total);
       setTitle(res.data.slides[0].title);
       setLink(res.data.slides[0].link);
       setUrl(res.data.slides[0].url);
+      setChosenTabKey(res.data.slides[0].id);
     });
   }, [currentPage]);
 
@@ -125,6 +117,8 @@ export default function Picture() {
 
   const changeTab = (value: string) => {
     const indexId = Number(value);
+    console.log(indexId);
+    setChosenTabKey(indexId);
     const newData: slideDate | undefined = data?.find(
       (obj) => obj.id === indexId
     );
@@ -139,17 +133,15 @@ export default function Picture() {
     setCurrentPage(value);
   };
 
-  const setDownloadName = (src: any) => {
-    // Extract the filename from the source URL
-    const filename = src.substring(src.lastIndexOf("/") + 1);
-
-    // Return the filename as the download name
-    return filename;
-  };
   return (
     <>
       <div className={styles.main}>
-        <Tabs tabPosition="left" type="button" onChange={changeTab}>
+        <Tabs
+          tabPosition="left"
+          type="button"
+          onChange={changeTab}
+          activeKey={String(chosenTabKey)}
+        >
           {data &&
             data.map((item: slideDate, index) => (
               <TabPane
@@ -203,18 +195,17 @@ export default function Picture() {
                           currentPage={currentPage}
                           setData={setData}
                           setTotal={setTotal}
+                          setChosenTabKey={setChosenTabKey}
                         ></DeletePicture>
                       )}
                     </div>
                   </div>
                   <div className={styles.previewImageContainer}>
-                    <ImagePreview renderPreviewMenu={renderPreviewMenu}>
-                      <SemiImage
-                        src={url}
-                        alt={item.title}
-                        className={styles.previewImage}
-                      ></SemiImage>
-                    </ImagePreview>
+                    <SemiImage
+                      src={url}
+                      alt={item.title}
+                      className={styles.previewImage}
+                    ></SemiImage>
                   </div>
                 </div>
               </TabPane>
@@ -222,10 +213,13 @@ export default function Picture() {
         </Tabs>
         <div className={styles.PaginationContainer}>
           {permissions?.addHomeSlide && (
-            <AddPicture
-              setParentData={setData}
-              setParentTotal={setTotal}
-            ></AddPicture>
+            <>
+              <AddPicture
+                setParentData={setData}
+                setParentTotal={setTotal}
+                setChosenTabKey={setChosenTabKey}
+              ></AddPicture>
+            </>
           )}
 
           <Pagination
