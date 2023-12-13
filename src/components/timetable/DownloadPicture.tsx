@@ -50,9 +50,9 @@ const DownloadPicture: React.FC = () => {
         }
         ctx.textBaseline = "top";
         ctx.drawImage(titleImg, 0, 0, 3000, titleImg.height / scale);
-        ctx.font = "300px Source-Han-Sans-VF";
+        ctx.font = "320px Source-Han-Sans-VF";
         ctx.fillText("软研", 120, 400);
-        ctx.font = "bold 350px Source-Han-Sans-VF";
+        ctx.font = "bold 320px Source-Han-Sans-VF";
         ctx.fillText("授课课表", 120, 1200);
         for (
           let heightNumber = 0;
@@ -61,24 +61,24 @@ const DownloadPicture: React.FC = () => {
         ) {
           console.log(eventData[heightNumber]);
           if (eventData[heightNumber].departments.length) {
-            ctx.font = "180px 华文琥珀";
+            ctx.font = "1000 180px Source-Han-Sans-VF";
             ctx.fillStyle = "rgb(253,212,71)";
             const data: Department[] = eventData[heightNumber].departments;
-            const formattedString: string = formatArray(data, "&");
+            const formattedString: string = formatArray(data, "/");
             const textWidth = ctx.measureText(`>  ${formattedString}`).width;
             console.log(textWidth);
-            ctx.fillRect(180, 1900 + 1200 * heightNumber, textWidth + 160, 380);
+            ctx.fillRect(180, 1900 + 1200 * heightNumber, textWidth + 180, 360);
             ctx.fillStyle = "black";
             ctx.fillText(
               `>  ${formattedString}`,
               250,
               2000 + 1200 * heightNumber
             );
-            ctx.font = "1000 110px 华文中宋";
+            ctx.font = "600 110px Source-Han-Sans-VF";
             ctx.fillStyle = "#544140";
             const initHeight = 400;
             ctx.fillText(
-              `授课内容：${eventData[heightNumber].description}`,
+              `主题：${eventData[heightNumber].description}`,
               180,
               2000 + heightNumber * 1200 + initHeight
             );
@@ -93,7 +93,7 @@ const DownloadPicture: React.FC = () => {
             );
             if (eventData[heightNumber].location) {
               ctx.fillText(
-                `授课地点：${eventData[heightNumber].location}`,
+                `地点：${eventData[heightNumber].location}`,
                 180,
                 2000 + heightNumber * 1200 + initHeight + 170 * 2
               );
