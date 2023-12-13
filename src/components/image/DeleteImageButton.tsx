@@ -6,6 +6,7 @@ import {
 import { Button, Modal } from "@douyinfe/semi-ui";
 import { useState } from "react";
 import styles from "./DeleteImageButton.module.scss";
+import { IconDelete } from "@douyinfe/semi-icons";
 
 interface DeleteImagesButtonProps {
   cosKey: string;
@@ -37,9 +38,12 @@ const DeleteImagesButton: React.FC<DeleteImagesButtonProps> = ({
   };
   return (
     <>
-      <Button onClick={() => setVisible(true)} className={styles.button}>
-        X
-      </Button>
+      <Button
+        style={{ backgroundColor: "rgb(249,113,90)" }}
+        icon={<IconDelete size="large" />}
+        onClick={() => setVisible(true)}
+        type="tertiary"
+      />
       <Modal
         visible={visible}
         title={"确定要删除这张图片吗？"}

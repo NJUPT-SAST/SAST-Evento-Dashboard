@@ -14,6 +14,7 @@ import { CalenderItem } from "@/components/timetable/CalenderItem";
 import { DepartmentSelection } from "@/components/timetable/DepartmentSelect";
 import downLoadTimetable from "@/utils/downLoadTimetable";
 import Head from "next/head";
+import DownloadPicture from "@/components/timetable/DownloadPicture";
 
 export default function Timetable() {
   const [mode, setMode] = useState<"day" | "week" | "month">("day");
@@ -90,13 +91,12 @@ export default function Timetable() {
         <DepartmentSelection
           setChosenDepartment={setChosenDepartment}
         ></DepartmentSelection>
-        <Button className={styles.button} onClick={downLoadTimetable}>
-          一键生成本周授课表
-        </Button>
+        <DownloadPicture></DownloadPicture>
         <br></br>
         <br></br>
         <div id="calendar">
           <Calendar
+            weekStartsOn={1}
             className={styles.calendar}
             mode={mode}
             displayValue={date}

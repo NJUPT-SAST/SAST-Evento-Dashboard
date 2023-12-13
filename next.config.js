@@ -1,12 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-module.exports = nextConfig;
-
-module.exports = {
+const nextConfig = {
+  // output: "export",
   basePath: "/console",
   images: {
-    // domains: ["sast-evento-1309205610.cos.ap-shanghai.myqcloud.com"],
     remotePatterns: [
       {
         protocol: "https",
@@ -16,3 +12,5 @@ module.exports = {
     ],
   },
 };
+
+module.exports = nextConfig;

@@ -7,6 +7,7 @@ interface DeletePictureProps {
   setData: (data: any) => void;
   currentPage: number;
   setTotal: (total: number) => void;
+  setChosenTabKey: (chosenTabKey: number) => void;
 }
 
 const DeletePicture: React.FC<DeletePictureProps> = ({
@@ -14,6 +15,7 @@ const DeletePicture: React.FC<DeletePictureProps> = ({
   currentPage,
   setData,
   setTotal,
+  setChosenTabKey,
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const handleOk = () => {
@@ -25,13 +27,17 @@ const DeletePicture: React.FC<DeletePictureProps> = ({
           console.log(res.data.slides);
           setData(res.data.slides);
           setVisible(false);
+          setChosenTabKey(res.data.slides[0].id);
+          setTotal(res.data.total);
         });
       }
     });
   };
   return (
     <>
-      <Button onClick={() => setVisible(true)} type="danger">删除幻灯片</Button>
+      <Button onClick={() => setVisible(true)} type="danger">
+        删除幻灯片
+      </Button>
       <Modal
         visible={visible}
         onCancel={() => setVisible(false)}

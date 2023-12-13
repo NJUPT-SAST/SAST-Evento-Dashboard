@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@douyinfe/semi-icons": "^2.48.0",
+    "@douyinfe/semi-illustrations": "^2.48.0",
     "@douyinfe/semi-ui": "^2.48.0",
     "axios": "^1.6.2",
     "html2canvas": "^1.4.1",
+    "js-md5": "^0.8.3",
     "next": "14.0.3",
     "qrcode": "^1.5.3",
     "qrcode.react": "^3.1.0",
@@ -21,6 +24,7 @@
     "scss": "^0.2.4"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

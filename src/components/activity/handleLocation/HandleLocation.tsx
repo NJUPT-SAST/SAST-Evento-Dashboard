@@ -47,7 +47,7 @@ const HandleLocation: React.FC = () => {
           onChange={getLabel}
           style={{ width: "70%" }}
           treeData={treeData}
-          placeholder="地点(可搜索)"
+          placeholder="活动地点"
         />
         <div className={styles.divider}></div>
         <div className={styles.buttonContainer}>

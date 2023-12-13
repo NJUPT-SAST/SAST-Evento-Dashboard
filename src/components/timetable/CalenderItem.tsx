@@ -1,18 +1,15 @@
 import styles from "./CalenderItem.module.scss";
 import { Popover, Empty, Tag } from "@douyinfe/semi-ui";
 import {
-  IllustrationSuccess,
-  IllustrationSuccessDark,
-} from "@douyinfe/semi-illustrations";
-import {
   IconDescend,
   IconHistory,
   IconApartment,
   IconActivity,
   IconBell,
 } from "@douyinfe/semi-icons";
+import React from "react";
 
-type CalenderItemProps = {
+interface CalenderItemProps {
   obj: {
     departments: Array<{ departmentName: string; id: number }>;
     id: number;
@@ -25,11 +22,10 @@ type CalenderItemProps = {
     description: string;
     state: string;
   };
-};
+}
 
-export const CalenderItem = ({ obj }: CalenderItemProps) => {
+export const CalenderItem: React.FC<CalenderItemProps> = ({ obj }) => {
   console.log(obj);
-
   return (
     <>
       <Popover

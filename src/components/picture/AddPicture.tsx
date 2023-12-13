@@ -19,11 +19,13 @@ import { addSlide, getSlide } from "@/apis/slide";
 interface AddPictureProps {
   setParentTotal: (total: number) => void;
   setParentData: (data: any) => void;
+  setChosenTabKey: (chosenTabKey: number) => void;
 }
 
 const AddPicture: React.FC<AddPictureProps> = ({
   setParentTotal,
   setParentData,
+  setChosenTabKey,
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [pictureDir, setPictureDir] = useState<Array<string>>([""]);
@@ -80,6 +82,7 @@ const AddPicture: React.FC<AddPictureProps> = ({
               setParentData(res.data.slides);
               setParentTotal(res.data.total);
               setVisible(false);
+              setChosenTabKey(res.data.slides[0].id);
             });
           }
         });
@@ -148,7 +151,7 @@ const AddPicture: React.FC<AddPictureProps> = ({
             </Select>
           </div>
           <div className={styles.changeUrlTabsContainer}>
-            <Tabs tabPosition="left" type="button" onChange={changeTab}>
+            <Tabs tabPosition="left" type="button">
               {imagesData &&
                 imagesData.map((item, index) => (
                   <TabPane tab={item.name} itemKey={`${item.id}`} key={index}>

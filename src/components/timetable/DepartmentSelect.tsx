@@ -1,15 +1,15 @@
 import { Select } from "@douyinfe/semi-ui";
 import styles from "./DepartmentSelect.module.scss";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getDepartments } from "@/apis/departments";
 
-type DepartmentSelectionProps = {
+interface DepartmentSelectionProps {
   setChosenDepartment: (department: string) => void;
-};
+}
 
-export const DepartmentSelection = ({
+export const DepartmentSelection: React.FC<DepartmentSelectionProps> = ({
   setChosenDepartment,
-}: DepartmentSelectionProps) => {
+}) => {
   const [departments, setDepartments] = useState<
     Array<{ id: number; departmentName: string }>
   >([]);

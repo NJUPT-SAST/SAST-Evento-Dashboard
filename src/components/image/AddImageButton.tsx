@@ -1,24 +1,24 @@
 import { addPictureList, getPictureList } from "@/apis/picture";
 import { IconUpload } from "@douyinfe/semi-icons";
 import { Button, Modal, Upload } from "@douyinfe/semi-ui";
-import { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import styles from "./AddImageButton.module.scss";
 
-type AddImageButtonProps = {
+interface AddImageButtonProps {
   page: number;
   chosenDir: string;
   setImageDate: Dispatch<
     SetStateAction<Array<{ uri: string; id: number; cosKey: string }>>
   >;
   setTotal: Dispatch<SetStateAction<number>>;
-};
+}
 
-export default function AddImageButton({
+const AddImageButton: React.FC<AddImageButtonProps> = ({
   page,
   chosenDir,
   setImageDate,
   setTotal,
-}: AddImageButtonProps) {
+}: AddImageButtonProps) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<File>(new File([], ""));
 
@@ -51,7 +51,7 @@ export default function AddImageButton({
           setVisible(true);
         }}
       >
-        添加图片到图库
+        上传图片到图库
       </Button>
       <Modal
         title="添加图片"
@@ -77,4 +77,6 @@ export default function AddImageButton({
       </Modal>
     </>
   );
-}
+};
+
+export default AddImageButton;
