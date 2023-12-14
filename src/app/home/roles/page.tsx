@@ -90,7 +90,7 @@ export default function Roles() {
                     <br></br>
                     {/* 这里后端传入组织数据都为空，这里为了测试设置组织为前端组 */}
                     <span className={styles.organizationSpan}>
-                      组织：{item.organization}前端组
+                      组织：{item.organization}
                     </span>
                     <br></br>
                     <span className={styles.emailSpan}>邮箱：{item.email}</span>

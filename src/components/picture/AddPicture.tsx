@@ -31,7 +31,6 @@ const AddPicture: React.FC<AddPictureProps> = ({
   const [pictureDir, setPictureDir] = useState<Array<string>>([""]);
   const [chosenPictureDir, setChosenPictureDir] = useState<string>("");
   const [imagesData, setImagesData] = useState<Array<pictureDate>>([]);
-  const [isSelect, setIsSelect] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [chosenPicture, setChosenPicture] = useState<number>(0);
@@ -57,36 +56,32 @@ const AddPicture: React.FC<AddPictureProps> = ({
 
   const changeSelect = (value: any) => {
     setChosenPictureDir(value);
-    setIsSelect(false);
     setCurrentPage(1);
   };
 
-  const selectPicture = (value: boolean) => {
-    setIsSelect(value);
-  };
-
   const handleOk = () => {
-    if (isSelect && title && link) {
-      if (imagesData) {
-        console.log("hello");
-        const uri = imagesData.find((obj) => obj.id === chosenPicture)?.uri;
-        console.log(uri);
-        console.log(title);
-        console.log(link);
-        addSlide(uri, link, title).then((res) => {
-          console.log(res);
-          if (res.success === true) {
-            getSlide(currentPage).then((res: any) => {
-              console.log(res.data);
-              console.log(res.data.slides);
-              setParentData(res.data.slides);
-              setParentTotal(res.data.total);
-              setVisible(false);
-              setChosenTabKey(res.data.slides[0].id);
-            });
-          }
-        });
-      }
+    console.log(chosenPicture);
+    if (imagesData && title && link) {
+      console.log("hello");
+      const uri = imagesData.find((obj) => obj.id === chosenPicture)?.uri;
+      console.log(uri);
+      console.log(title);
+      console.log(link);
+      addSlide(uri, link, title).then((res) => {
+        console.log(res);
+        if (res.success === true) {
+          getSlide(currentPage).then((res: any) => {
+            console.log(res.data);
+            console.log(res.data.slides);
+            setParentData(res.data.slides);
+            setParentTotal(res.data.total);
+            setVisible(false);
+            setChosenTabKey(res.data.slides[0].id);
+            setLink("");
+            setTitle("");
+          });
+        }
+      });
     }
     if (!title) {
       Toast.info({ content: "没有title" });
@@ -94,18 +89,15 @@ const AddPicture: React.FC<AddPictureProps> = ({
     if (!link) {
       Toast.info({ content: "没有link" });
     }
-    if (!isSelect) {
-      Toast.info({ content: "没有选中" });
-    }
   };
 
   const changeTab = (value: string) => {
     setChosenPicture(Number(value));
   };
 
-  useEffect(() => {
-    console.log(chosenPicture);
-  }, [chosenPicture]);
+  const changeChosenPicture = (value: string) => {
+    setChosenPicture(Number(value));
+  };
 
   return (
     <>
@@ -151,24 +143,15 @@ const AddPicture: React.FC<AddPictureProps> = ({
             </Select>
           </div>
           <div className={styles.changeUrlTabsContainer}>
-            <Tabs tabPosition="left" type="button">
+            <Tabs
+              tabPosition="left"
+              type="button"
+              onChange={changeChosenPicture}
+            >
               {imagesData &&
                 imagesData.map((item, index) => (
                   <TabPane tab={item.name} itemKey={`${item.id}`} key={index}>
                     <div className={styles.tabPaneContainer}>
-                      {!isSelect && (
-                        <Button onClick={() => selectPicture(true)}>
-                          选定
-                        </Button>
-                      )}
-                      {isSelect && (
-                        <Button
-                          icon={<IconTick />}
-                          onClick={() => selectPicture(false)}
-                        >
-                          选定
-                        </Button>
-                      )}
                       <Image
                         src={item.uri}
                         alt={item.name}

@@ -11,11 +11,12 @@ import {
   IconUserCardVideo,
 } from "@douyinfe/semi-icons";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { ReactText, useEffect, useRef, useState } from "react";
 import { getMyAdminPermission } from "@/apis/permission";
 import { UserInfo } from "@/utils/commonInterface";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/apis/login";
+import { OnSelectedData } from "@douyinfe/semi-ui/lib/es/navigation";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -28,8 +29,8 @@ export default function DashboardLayout({
   //这里通过随着宽度的变化点击收起按钮来实现sider的自适应
   const [windowWidth, setWindowWidth] = useState(0);
   const [eventTriggered, setEventTriggered] = useState(false);
-  const [pathName, setPathName] = useState<string>("");
   const [userinfo, setUserinfo] = useState<UserInfo>();
+  const [chosenNav, setChosenNav] = useState<string>("");
 
   const router = useRouter();
 
@@ -99,17 +100,18 @@ export default function DashboardLayout({
     };
   }, [eventTriggered, windowWidth]);
 
-  useEffect(() => {
-    let PathName = window.location.href;
-    PathName = PathName.split("/")[PathName.split("/").length - 1];
-    setPathName(PathName);
-  }, []);
+  const changeNav = (data: OnSelectedData) => {
+    console.log(data.itemKey);
+    const reactTextValue = data.itemKey;
+    const stringValue = reactTextValue.toString();
+    setChosenNav(stringValue);
+  };
 
   const updatePermission = () => {
     getMyAdminPermission().then((res) => {
       console.log(res);
       if (res.success) {
-        // location.reload();
+        location.reload();
         localStorage.setItem("adminPermission", JSON.stringify(res.data));
       }
     });
@@ -133,6 +135,13 @@ export default function DashboardLayout({
   const avatarUri = userinfo?.avatar;
 
   const userNickName = userinfo?.nickname;
+  const pathname = usePathname();
+  // console.log(pathname.split("/")[pathname.split("/").length - 1]);
+  const newChosenNav = pathname.split("/")[pathname.split("/").length - 1];
+
+  useEffect(() => {
+    setChosenNav(newChosenNav);
+  }, [newChosenNav]);
 
   return (
     <section>
@@ -200,7 +209,8 @@ export default function DashboardLayout({
                 );
               }}
               style={{ maxWidth: 220, height: "100%" }}
-              defaultSelectedKeys={[pathName]}
+              selectedKeys={[chosenNav]}
+              onSelect={changeNav}
               items={[
                 {
                   itemKey: "activity",
