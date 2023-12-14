@@ -186,6 +186,7 @@ export default function Image() {
                           display: "flex",
                           flexWrap: "wrap",
                           gap: "15px",
+                          width: "100%",
                         }}
                         renderPreviewMenu={renderPreviewMenu}
                       >

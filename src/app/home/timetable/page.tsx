@@ -12,7 +12,6 @@ import {
 import { getEventsList } from "@/apis/event";
 import { CalenderItem } from "@/components/timetable/CalenderItem";
 import { DepartmentSelection } from "@/components/timetable/DepartmentSelect";
-import downLoadTimetable from "@/utils/downLoadTimetable";
 import Head from "next/head";
 import DownloadPicture from "@/components/timetable/DownloadPicture";
 

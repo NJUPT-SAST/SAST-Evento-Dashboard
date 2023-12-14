@@ -20,3 +20,9 @@ export const passwordLogin = async (studentId: string, password: string) => {
 
   return response.data;
 };
+
+export const logout = async () => {
+  const response = await request.get("/user/logout");
+
+  return response.data;
+};

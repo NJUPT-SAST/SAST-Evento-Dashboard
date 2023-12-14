@@ -80,6 +80,15 @@ export default function Login() {
     }
   }, [windowWidth]);
 
+  const handleEnterKeyPress = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ): void => {
+    if (event.key === "Enter") {
+      // Trigger a click event on the button
+      login();
+    }
+  };
+
   return (
     <>
       <div className={styles.main}>
@@ -103,6 +112,7 @@ export default function Login() {
                 showClear
                 value={userAccount}
                 onChange={setUserAccount}
+                onKeyPress={handleEnterKeyPress}
               ></Input>
             </div>
             <div className={styles.inputItem}>
@@ -113,6 +123,7 @@ export default function Login() {
                 mode="password"
                 value={password}
                 onChange={setPassword}
+                onKeyPress={handleEnterKeyPress}
               ></Input>
             </div>
             <div className={styles.loginButtonContainer}>

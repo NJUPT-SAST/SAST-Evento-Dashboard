@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import { getMyAdminPermission } from "@/apis/permission";
 import { UserInfo } from "@/utils/commonInterface";
 import { useRouter } from "next/navigation";
+import { logout } from "@/apis/login";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -115,8 +116,13 @@ export default function DashboardLayout({
   };
 
   const goLogOut = () => {
-    router.push("/login");
-    localStorage.clear();
+    logout().then((res) => {
+      console.log(res);
+      if (res.success) {
+        router.push("/login");
+        localStorage.clear();
+      }
+    });
   };
 
   useEffect(() => {
