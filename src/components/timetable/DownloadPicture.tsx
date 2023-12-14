@@ -29,6 +29,7 @@ const DownloadPicture: React.FC = () => {
         eventData = res.data;
       }
     });
+    let counter = 0;
     const backgroundImg = new Image();
     backgroundImg.width = 500;
     backgroundImg.height = 500;
@@ -110,9 +111,16 @@ const DownloadPicture: React.FC = () => {
     // const myFont = new FontFace("myFont", `url(${SansVF.src})`);
     // myFont.load().then(function (font) {
     // document.fonts.add(font);
-    titleImg.onload = function () {
-      backgroundImg.onload = drawImageWhenLoad;
-    };
+    function drawImageCounter() {
+      counter++;
+      if (counter === 2) {
+        // 两张图片都加载完成，执行函数
+        drawImageWhenLoad();
+      }
+    }
+
+    titleImg.onload = drawImageCounter;
+    backgroundImg.onload = drawImageCounter;
     // });
   };
   interface Department {
