@@ -42,7 +42,6 @@ const ChangeActivityType: React.FC<ChangeActivityTypeProps> = ({
   const handleOk = () => {
     changeType(id, changeTypeName, JSON.parse(changeAllowConflict)).then(
       (res) => {
-        console.log(res);
         if (res.success === true) {
           getTypes().then((res) => {
             setActivityTypes(res.data);

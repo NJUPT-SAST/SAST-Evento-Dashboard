@@ -21,7 +21,6 @@ const OAuth2 = () => {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userinfo", JSON.stringify(res.data.userInfo));
         getMyAdminPermission().then((res) => {
-          console.log(res);
           if (res.success) {
             localStorage.setItem("adminPermission", JSON.stringify(res.data));
           }

@@ -109,7 +109,6 @@ export default function Picture() {
   }, [currentPage]);
 
   useEffect(() => {
-    console.log(data);
     setTitle(data[0]?.title);
     setLink(data[0]?.link);
     setUrl(data[0]?.url);
@@ -117,7 +116,6 @@ export default function Picture() {
 
   const changeTab = (value: string) => {
     const indexId = Number(value);
-    console.log(indexId);
     setChosenTabKey(indexId);
     const newData: slideDate | undefined = data?.find(
       (obj) => obj.id === indexId

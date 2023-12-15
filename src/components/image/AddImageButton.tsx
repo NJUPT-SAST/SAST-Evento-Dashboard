@@ -24,9 +24,7 @@ const AddImageButton: React.FC<AddImageButtonProps> = ({
 
   const handleOkAddPicture = () => {
     // addPictureList
-    console.log(chosenDir);
     addPictureList(imageFile, chosenDir).then((res) => {
-      console.log(res);
       getPictureList(chosenDir, page, 6).then((res) => {
         setImageDate(res.data.images);
         setTotal(res.data.total);
@@ -37,7 +35,6 @@ const AddImageButton: React.FC<AddImageButtonProps> = ({
 
   const getFile = (value: any) => {
     //这里获得file格式的图片文件
-    console.log(value?.currentFile.fileInstance);
     const imageFile = value?.currentFile.fileInstance;
     setImageFile(imageFile);
   };

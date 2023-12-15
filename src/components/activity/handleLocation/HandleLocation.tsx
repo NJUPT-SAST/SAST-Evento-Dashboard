@@ -11,11 +11,6 @@ const HandleLocation: React.FC = () => {
   const [treeData, setTreeData] = useState<Array<object>>([]);
   const [visible, setVisible] = useState<boolean>(false);
   const [id, setId] = useState<number>(0);
-  const [location, setLocation] = useState<string>("");
-  const [isAddLocation, setIsAddLocation] = useState<boolean>(false);
-  const [isUpdateLocationName, setIsUpdateLocationName] =
-    useState<boolean>(false);
-  const [isDeleteLocation, setIsDeleteLocation] = useState<boolean>(false);
   const [permissions, setPermissions] = useState<Permissions>();
 
   useEffect(() => {

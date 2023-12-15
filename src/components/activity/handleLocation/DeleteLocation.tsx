@@ -12,12 +12,9 @@ const DeleteLocation: React.FC<DeleteLocationProps> = ({ id, setTreeDate }) => {
   const [visible, setVisible] = useState<boolean>(false);
 
   const handleOk = () => {
-    console.log(id);
     deleteLocation(id).then((res) => {
-      console.log(res);
       if (res.success === true) {
         getLocations().then((res) => {
-          console.log(res);
           setTreeDate(res.data);
           setVisible(false);
         });

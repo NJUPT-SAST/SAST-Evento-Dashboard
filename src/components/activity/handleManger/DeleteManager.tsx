@@ -22,10 +22,8 @@ const DeleteManager: React.FC<DeleteManagerProps> = ({
 
   const deleteManager = () => {
     deleteEventManager(String(eventId), String(userId)).then((res) => {
-      console.log(res);
       if (res.success) {
         getManagers(eventId).then((res) => {
-          console.log(res.data.users);
           setManagerData(res.data.users);
           setVisible(false);
         });

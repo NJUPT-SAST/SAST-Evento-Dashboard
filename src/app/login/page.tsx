@@ -20,18 +20,13 @@ export default function Login() {
   const router = useRouter();
 
   const login = () => {
-    console.log(userAccount);
-    console.log(password);
     const md5Password = md5(password);
-    console.log(md5Password);
     passwordLogin(userAccount, md5Password).then((res) => {
-      console.log(res);
       if (res.success) {
         router.push("/home");
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userinfo", JSON.stringify(res.data.userInfo));
         getMyAdminPermission().then((res) => {
-          console.log(res);
           if (res.success) {
             localStorage.setItem("adminPermission", JSON.stringify(res.data));
           }
@@ -43,7 +38,6 @@ export default function Login() {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       getMyInfo().then((res) => {
-        console.log(res);
         if (res.success) {
           router.push("/home");
         }
@@ -70,9 +64,7 @@ export default function Login() {
   }, []);
 
   useEffect(() => {
-    console.log(windowWidth);
     if (windowWidth < 1100) {
-      console.log("hello");
       setIsLogoShow(false);
     }
     if (windowWidth > 1100) {

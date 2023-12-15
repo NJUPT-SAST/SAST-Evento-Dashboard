@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from "./AuthorizedButton.module.scss";
+import { Toast } from "@douyinfe/semi-ui";
 
 export default function AuthorizedButton() {
   const AuthorizedLink = () => {
-    console.log("授权link登录");
 
     const redirect_uri = "https://evento.sast.fun/console/oauth2";
     const client_id = "123f24cf-2aca-44dc-93a0-c54214be2861";
@@ -13,15 +13,14 @@ export default function AuthorizedButton() {
     window.location.href = linkUrl;
   };
 
-
-  
   const AuthorizedWeChat = () => {
-    console.log("授权WeChat登录");
+    Toast.info("暂未开放");
     //授权weChat逻辑
   };
 
   const AuthorizedTicket = () => {
     console.log("授权二维码登录");
+    Toast.info("暂未开放");
     //授权ticket逻辑
   };
   return (

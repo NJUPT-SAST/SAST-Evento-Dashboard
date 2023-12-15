@@ -39,7 +39,6 @@ export default function Roles() {
 
   function getNewAdminList(current: number, size: number) {
     getAdminsList(String(current), String(size)).then((res) => {
-      console.log(res);
       setAdminList(res.data.users);
       setTotal(res.data.total);
     });

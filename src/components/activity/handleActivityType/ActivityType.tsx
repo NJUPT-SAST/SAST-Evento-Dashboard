@@ -16,7 +16,6 @@ const ActivityType: React.FC = () => {
 
   const showActivitySheet = () => {
     getTypes().then((res) => {
-      console.log(res);
       setActivityTypes(res.data);
       setVisible(true);
     });

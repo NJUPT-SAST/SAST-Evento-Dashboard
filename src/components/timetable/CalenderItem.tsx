@@ -25,7 +25,6 @@ interface CalenderItemProps {
 }
 
 export const CalenderItem: React.FC<CalenderItemProps> = ({ obj }) => {
-  console.log(obj);
   return (
     <>
       <Popover

@@ -14,7 +14,6 @@ function TypingComponent() {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       getMyInfo().then((res) => {
-        console.log(res);
         if (res.success) {
           router.push("/home");
         }

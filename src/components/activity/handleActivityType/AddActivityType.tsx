@@ -32,9 +32,7 @@ const AddActivityType: React.FC<AddActivityTypeProps> = ({
   };
 
   const handleOk = () => {
-    console.log(changeTypeName, changeAllowConflict);
     addType(changeTypeName, JSON.parse(changeAllowConflict)).then((res) => {
-      console.log(res);
       if (res.success === true) {
         getTypes().then((res) => {
           setActivityTypes(res.data);

@@ -13,12 +13,9 @@ const AddDepartment: React.FC<AddDepartmentProps> = ({ setDepartments }) => {
   const [departmentName, setDepartmentName] = useState<string>("");
 
   const handleOk = () => {
-    // console.log(departmentName);
     addDepartment(departmentName).then((res) => {
-      console.log(res);
       if (res.success === true) {
         getDepartments().then((res) => {
-          console.log(res);
           setDepartments(res.data);
           setVisible(false);
           setDepartmentName("");

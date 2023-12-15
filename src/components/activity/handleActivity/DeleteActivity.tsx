@@ -22,10 +22,8 @@ const DeleteActivity: React.FC<DeleteActivityProps> = ({
 
   const handleOk = () => {
     deleteEvent(eventId).then((res) => {
-      console.log(res);
       if (res.success === true) {
         getEvent(currentPage, 20).then((res) => {
-          console.log(res.data);
           setTotal(res.data.total);
           setData(res.data.result);
           setVisible(false);

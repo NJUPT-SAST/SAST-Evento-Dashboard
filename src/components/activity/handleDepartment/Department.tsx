@@ -18,7 +18,6 @@ const ActivityType: React.FC = () => {
   useEffect(() => {}, []);
   const showActivitySheet = () => {
     getDepartments().then((res) => {
-      console.log(res);
       setDepartments(res.data);
       setVisible(true);
     });

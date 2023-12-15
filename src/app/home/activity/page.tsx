@@ -21,7 +21,6 @@ export default function Activity() {
 
   useEffect(() => {
     const windowHeight = window.innerHeight;
-    console.log(windowHeight);
     const tableHeight = windowHeight - 60 - 40 - 32 - 0.12 * windowHeight;
     setTableHeight(tableHeight);
   }, []);
@@ -117,7 +116,6 @@ export default function Activity() {
   };
 
   const expandData = data?.map((msg: any, _index: number) => {
-    console.log(msg.gmtEventStart);
 
     return [
       { key: "活动开始时间", value: msg.gmtEventStart?.slice(0, -3) },
@@ -134,15 +132,12 @@ export default function Activity() {
   const gewNewEvent = () => {
     getEvent(currentPage, 20)
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
         const newDate = res.data.result.map((obj: { id: number }) => {
           return {
             ...obj,
             key: `${obj.id}`,
           };
         });
-        console.log(newDate);
         setData(newDate);
         setTotal(res.data.total);
       })
@@ -153,15 +148,12 @@ export default function Activity() {
     setLoading(true);
     getEvent(currentPage, 20)
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
         const newDate = res.data.result.map((obj: { id: number }) => {
           return {
             ...obj,
             key: `${obj.id}`,
           };
         });
-        console.log(newDate);
         setData(newDate);
         setTotal(res.data.total);
       })
@@ -182,14 +174,6 @@ export default function Activity() {
   const expandRowRender: any = (record: object, index: number) => {
     return <Descriptions align="center" data={expandData[index]} />;
   };
-
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
-
-  useEffect(() => {
-    console.log("columns", columns);
-  }, [columns]);
 
   const y = 300;
 

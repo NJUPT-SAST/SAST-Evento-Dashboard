@@ -24,18 +24,15 @@ const PutManager: React.FC<PutManagerProps> = ({
 
   const getNewTotalManageTreeDate = (eventId: number) => {
     manageTreeData(eventId).then((res: { data: Array<any> }) => {
-      console.log(res.data);
       const newTreeDate = addKeysToData(res.data);
       
       const labelNewTreeDate = updateTitleToLabel(newTreeDate);
-      console.log(labelNewTreeDate);
       setTotalPermission(labelNewTreeDate);
     });
   };
 
   const getNewMangerPermission = (eventId: number, userId: string) => {
     managerUserList(eventId, userId).then((res) => {
-      console.log(res);
       setHavePermission(res.data);
     });
   };
@@ -51,9 +48,7 @@ const PutManager: React.FC<PutManagerProps> = ({
   };
 
   const handleOk = () => {
-    console.log("hello");
     putManagers(eventId, havePermission, userId).then((res) => {
-      console.log(res);
     });
     setVisible(false);
   };

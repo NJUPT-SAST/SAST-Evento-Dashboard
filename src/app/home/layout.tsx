@@ -28,9 +28,9 @@ export default function DashboardLayout({
   const navRef = useRef(null);
   //这里通过随着宽度的变化点击收起按钮来实现sider的自适应
   const [windowWidth, setWindowWidth] = useState(0);
-  const [eventTriggered, setEventTriggered] = useState(false);
   const [userinfo, setUserinfo] = useState<UserInfo>();
   const [chosenNav, setChosenNav] = useState<string>("");
+  const [isCollapsed, setIsCollapsed] = useState<boolean>();
 
   const router = useRouter();
 
@@ -56,13 +56,14 @@ export default function DashboardLayout({
   useEffect(() => {
     const windowWidth = window.innerWidth;
     setWindowWidth(windowWidth);
+    if (windowWidth < 1200) {
+      setIsCollapsed(true);
+    } else {
+      setIsCollapsed(false);
+    }
   }, []);
 
   useEffect(() => {
-    const CollapsedButton: any = document.getElementsByClassName(
-      "semi-navigation-collapse-btn"
-    )[0].childNodes[0];
-
     // 监听窗口大小改变事件
     window.addEventListener("resize", handleResize);
 
@@ -71,26 +72,14 @@ export default function DashboardLayout({
       const newWindowWidth = window.innerWidth;
 
       // 检查窗口宽度是否经过 1200
-      if (newWindowWidth < 1200 && windowWidth >= 1200 && !eventTriggered) {
-        // 在窗口宽度从大于等于 1200 变为小于 1200 时触发事件
-        // 执行你想要的操作
-        console.log("窗口宽度小于 1200");
-        CollapsedButton.click();
-        setEventTriggered(true);
+      if (newWindowWidth < 1200 && windowWidth >= 1200) {
+        setIsCollapsed(true);
       }
 
-      if (newWindowWidth >= 1200 && windowWidth < 1200 && eventTriggered) {
-        // 在窗口宽度从小于 1200 变为大于等于 1200 时触发事件
-        // 执行你想要的操作
-        console.log("窗口宽度大于等于 1200");
-        CollapsedButton.click();
-        setEventTriggered(false);
+      if (newWindowWidth >= 1200 && windowWidth < 1200) {
+        setIsCollapsed(false);
       }
 
-      console.log("old", windowWidth);
-      console.log("new", newWindowWidth);
-
-      // 更新 windowWidth 的值
       setWindowWidth(newWindowWidth);
     }
 
@@ -98,10 +87,9 @@ export default function DashboardLayout({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [eventTriggered, windowWidth]);
+  }, [windowWidth, isCollapsed]);
 
   const changeNav = (data: OnSelectedData) => {
-    console.log(data.itemKey);
     const reactTextValue = data.itemKey;
     const stringValue = reactTextValue.toString();
     setChosenNav(stringValue);
@@ -109,7 +97,6 @@ export default function DashboardLayout({
 
   const updatePermission = () => {
     getMyAdminPermission().then((res) => {
-      console.log(res);
       if (res.success) {
         location.reload();
         localStorage.setItem("adminPermission", JSON.stringify(res.data));
@@ -119,7 +106,6 @@ export default function DashboardLayout({
 
   const goLogOut = () => {
     logout().then((res) => {
-      console.log(res);
       if (res.success) {
         router.push("/login");
         localStorage.clear();
@@ -136,7 +122,6 @@ export default function DashboardLayout({
 
   const userNickName = userinfo?.nickname;
   const pathname = usePathname();
-  // console.log(pathname.split("/")[pathname.split("/").length - 1]);
   const newChosenNav = pathname.split("/")[pathname.split("/").length - 1];
 
   useEffect(() => {
@@ -190,7 +175,7 @@ export default function DashboardLayout({
           <Sider style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
             <Nav
               ref={navRef}
-              defaultIsCollapsed={false}
+              isCollapsed={isCollapsed}
               renderWrapper={({ itemElement, isSubNav, isInSubNav, props }) => {
                 const routerMap = {
                   Timetable: "home/timetable",

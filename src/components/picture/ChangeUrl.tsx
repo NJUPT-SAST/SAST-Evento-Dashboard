@@ -38,7 +38,6 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
 
   useEffect(() => {
     getPictureList(chosenPictureDir, currentPage, 4).then((res: any) => {
-      console.log(res.data);
       setImagesData(res.data.images);
       setTotal(res.data.total);
       setChosenPicture(res.data.images[0]?.id);
@@ -51,11 +50,8 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
   };
 
   const handleOk = () => {
-    console.log(imagesData);
     const newPictureData = imagesData.find((obj) => obj.id === chosenPicture);
-    console.log(newPictureData);
     if (newPictureData) {
-      console.log(newPictureData.uri);
       setUrl(newPictureData.uri);
       setVisible(false);
     }
@@ -65,9 +61,6 @@ const ChangeUrl: React.FC<ChangeUrlProps> = ({ setUrl }) => {
     setChosenPicture(Number(value));
   };
 
-  useEffect(() => {
-    console.log(chosenPicture);
-  }, [chosenPicture]);
 
   return (
     <>
