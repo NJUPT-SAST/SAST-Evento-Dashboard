@@ -21,6 +21,8 @@ export default function Login() {
 
   const login = () => {
     const md5Password = md5(password);
+    console.log(md5Password);
+
     passwordLogin(userAccount, md5Password).then((res) => {
       if (res.success) {
         router.push("/home");

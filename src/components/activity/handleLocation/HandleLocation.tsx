@@ -33,7 +33,7 @@ const HandleLocation: React.FC = () => {
         title="活动地点管理"
         visible={visible}
         onCancel={() => setVisible(false)}
-        width="30vw"
+        width="40vw"
       >
         <TreeSelect
           autoExpandParent={true}

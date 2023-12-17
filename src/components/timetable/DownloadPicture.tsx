@@ -4,8 +4,7 @@ import background from "../../../public/background .png";
 import pictureTitle from "../../../public/title1.png";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getEventsList } from "@/apis/event";
-import { image } from "html2canvas/dist/types/css/types/image";
-import { backgroundImage } from "html2canvas/dist/types/css/property-descriptors/background-image";
+import dayjs from "dayjs";
 // import SansVF from "../../../public/";
 
 // const greatVibesFont = localFont({
@@ -34,6 +33,15 @@ const DownloadPicture: React.FC = () => {
       }
     });
 
+    //get the week
+    const today: Date = new Date();
+    console.log(today);
+    const end = new Date(2023, 8, 4);
+    console.log(end);
+    const endDate = dayjs(end);
+    const todayDate = dayjs(today);
+    const diffInDays = todayDate.diff(endDate, "day");
+    const diffInWeeks = Math.ceil(diffInDays / 7);
     const backgroundImg = new Image();
     const titleImg = new Image();
     let counter = 0;
@@ -73,6 +81,8 @@ const DownloadPicture: React.FC = () => {
         ctx.drawImage(titleImg, 0, 0, 3000, titleImg.height / scale);
         ctx.font = "320px Source-Han-Sans-VF";
         ctx.fillText("软研", 120, 400);
+        ctx.font = "bold 320px Source-Han-Sans-VF";
+        ctx.fillText(`第${diffInWeeks}周`, 120, 800);
         ctx.font = "bold 320px Source-Han-Sans-VF";
         ctx.fillText("授课课表", 120, 1200);
         for (
@@ -188,7 +198,11 @@ const DownloadPicture: React.FC = () => {
         visible={visible}
         maskClosable={false}
         onOk={downloadPicture}
-      ></Modal>
+      >
+        <a href="https://github.com/adobe-fonts/source-han-sans/tree/release?tab=readme-ov-file">
+          字体请点击这里下载
+        </a>
+      </Modal>
     </>
   );
 };

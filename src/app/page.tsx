@@ -46,7 +46,16 @@ function TypingComponent() {
         <div className={styles.buttonContainer}>
           {showButton && (
             <button className={styles.button} onClick={toLogin}>
-              toLogin
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                toLogin
+              </div>
             </button>
           )}
         </div>

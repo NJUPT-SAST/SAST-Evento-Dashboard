@@ -134,7 +134,7 @@ const AddActivity: React.FC<AddActivityProps> = ({
         visible={visible}
         onCancel={() => setVisible(false)}
         footer={footer}
-        width="40vw"
+        width="60vw"
         headerStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
         bodyStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
       >

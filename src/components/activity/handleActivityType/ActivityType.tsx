@@ -79,14 +79,16 @@ const ActivityType: React.FC = () => {
         title="活动类型管理"
         visible={visible}
         onCancel={() => setVisible(false)}
-        width="30vw"
+        width="40vw"
       >
-        <Table
-          columns={columns}
-          dataSource={activityTypes}
-          pagination={false}
-          className={styles.table}
-        ></Table>
+        <div className={styles.tableContainer}>
+          <Table
+            columns={columns}
+            dataSource={activityTypes}
+            pagination={false}
+            className={styles.table}
+          ></Table>
+        </div>
         {permissions?.addType && (
           <div className={styles.mainContainer}>
             <div className={styles.divider}></div>

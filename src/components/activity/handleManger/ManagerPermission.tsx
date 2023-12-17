@@ -78,7 +78,7 @@ const ManagerPermission: React.FC<ManagerPermissionProps> = ({
       </span>
       <SideSheet
         title={title}
-        width="40vw"
+        width="60vw"
         visible={visible}
         onCancel={() => setVisible(false)}
       >
