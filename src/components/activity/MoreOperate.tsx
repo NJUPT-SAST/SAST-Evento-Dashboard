@@ -36,7 +36,6 @@ const MoreOperate: React.FC<MoreOperateProps> = ({
   currentPage,
   record,
 }) => {
-  console.log(record.location);
 
   return (
     <>

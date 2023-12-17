@@ -9,6 +9,7 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 1vh;
+  margin-right: 2vw;
 }
 
 .mainContainer {
@@ -16,4 +17,9 @@
   bottom: 2vh;
   width: 95%;
   box-sizing: border-box;
+}
+
+.tableContainer {
+  height: calc(100vh - 32px - 5vh - 18vh);
+  overflow-y: scroll;
 }

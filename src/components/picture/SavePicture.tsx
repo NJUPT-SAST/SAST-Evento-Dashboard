@@ -21,14 +21,10 @@ const SavePicture: React.FC<SavePictureProps> = ({
   currentPage,
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
-  console.log(url, title, link, slideId);
   const handleOk = () => {
     patchSlide(url, link, title, String(slideId)).then((res) => {
-      console.log(res);
       if (res.success === true) {
         getSlide(currentPage).then((res: any) => {
-          console.log(res.data);
-          console.log(res.data.slides);
           setData(res.data.slides);
           setVisible(false);
         });

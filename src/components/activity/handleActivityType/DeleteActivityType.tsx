@@ -23,7 +23,6 @@ const DeleteActivityType: React.FC<DeleteActivityTypeProps> = ({
 
   const handleOk = () => {
     deleteType(id).then((res) => {
-      console.log(res);
       if (res.success === true) {
         getTypes().then((res) => {
           setActivityTypes(res.data);

@@ -86,7 +86,6 @@ export const cancelEvent = async (eventId: number) => {
 };
 
 export const postEvent = async (eventDate: eventData) => {
-  console.log(eventDate);
   const departments = eventDate.departments.map((item) => {
     return { id: item };
   });
@@ -111,7 +110,6 @@ export const postEvent = async (eventDate: eventData) => {
 };
 
 export const putEvent = async (eventId: number, eventDate: eventData) => {
-  console.log(eventDate);
   const departments = eventDate.departments.map((item) => {
     return { id: item };
   });

@@ -16,12 +16,10 @@ const DeleteDepartments: React.FC<DeleteDepartmentProps> = ({
   setDepartments,
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
-  console.log(id);
   const handleOk = () => {
     deleteDepartment(id).then((res) => {
       if (res.success === true) {
         getDepartments().then((res) => {
-          console.log(res);
           setDepartments(res.data);
           setVisible(false);
         });

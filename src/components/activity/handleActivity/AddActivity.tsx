@@ -37,7 +37,6 @@ const AddActivity: React.FC<AddActivityProps> = ({
     setVisible(true);
     getDepartments().then(
       (res: { data: [{ id: number; departmentName: string }] }) => {
-        console.log(res);
         const transformedData = res.data.map(({ id, departmentName }) => ({
           value: id,
           label: departmentName,
@@ -46,7 +45,6 @@ const AddActivity: React.FC<AddActivityProps> = ({
       }
     );
     getTypes().then((res: { data: [{ id: number; typeName: string }] }) => {
-      console.log(res);
       const transformedType = res.data.map(({ id, typeName }) => ({
         value: id,
         label: typeName,
@@ -54,9 +52,7 @@ const AddActivity: React.FC<AddActivityProps> = ({
       setTypes(transformedType);
     });
     getLocations().then((res) => {
-      console.log(res.data);
       const addKeyLocations = addKeysToData(res.data);
-      console.log(addKeyLocations);
       setLocations(addKeyLocations);
     });
   };
@@ -65,19 +61,15 @@ const AddActivity: React.FC<AddActivityProps> = ({
     const newValues = fixEventDate(eventData);
     if (newValues) {
       postEvent(newValues).then((res) => {
-        console.log(res);
         if (res.success) {
           getEvent(currentPage, 20)
             .then((res) => {
-              console.log(res);
-              console.log(res.data);
               const newDate = res.data.result.map((obj: { id: number }) => {
                 return {
                   ...obj,
                   key: `${obj.id}`,
                 };
               });
-              console.log(newDate);
               setData(newDate);
               setTotal(res.data.total);
               setVisible(false);
@@ -103,7 +95,6 @@ const AddActivity: React.FC<AddActivityProps> = ({
     for (var i = 0; i < values.length; i++) {
       departments.push(values[i].id);
     }
-    console.log(departments);
 
     return departments;
   };
@@ -132,7 +123,6 @@ const AddActivity: React.FC<AddActivityProps> = ({
   ];
 
   const changeEventData = (value: any) => {
-    console.log(value);
     setEventData(value.values);
   };
 
@@ -144,7 +134,7 @@ const AddActivity: React.FC<AddActivityProps> = ({
         visible={visible}
         onCancel={() => setVisible(false)}
         footer={footer}
-        width="40vw"
+        width="60vw"
         headerStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
         bodyStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
       >

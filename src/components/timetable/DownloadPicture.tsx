@@ -1,15 +1,18 @@
-import { Button } from "@douyinfe/semi-ui";
+import { Button, Modal } from "@douyinfe/semi-ui";
 import NextImage from "next/image";
 import background from "../../../public/background .png";
 import pictureTitle from "../../../public/title1.png";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getEventsList } from "@/apis/event";
-import { image } from "html2canvas/dist/types/css/types/image";
-import { backgroundImage } from "html2canvas/dist/types/css/property-descriptors/background-image";
-// import SansVF from '../../../public/SourceHanSansCN-VF.otf'
-import localFont from "next/font/local";
+import dayjs from "dayjs";
+// import SansVF from "../../../public/";
+
+// const greatVibesFont = localFont({
+//   src: "/public/SourceHanSansSC-VF.ttf",
+// });
 
 const DownloadPicture: React.FC = () => {
+  const [visible, setVisible] = useState<boolean>(false);
   const downloadPicture = async () => {
     let eventData: Array<{
       title: string;
@@ -29,17 +32,42 @@ const DownloadPicture: React.FC = () => {
         eventData = res.data;
       }
     });
-    let counter = 0;
+
+    //get the week
+    const today: Date = new Date();
+    console.log(today);
+    const end = new Date(2023, 8, 4);
+    console.log(end);
+    const endDate = dayjs(end);
+    const todayDate = dayjs(today);
+    const diffInDays = todayDate.diff(endDate, "day");
+    const diffInWeeks = Math.ceil(diffInDays / 7);
     const backgroundImg = new Image();
+    const titleImg = new Image();
+    let counter = 0;
+
+    // const sourceCodePro400 = Source_Sans_3({ weight: "400" });
+
+    // const myFont = new FontFace(
+    //   "myFont",
+    //   "/public/SourceHanSansCN-VF.otf.woff2"
+    // );
+
+    // const loadFonts = async () => {
+    //   await document.fonts.load(greatVibesFont);
+    // };
+
+    // sourceCodePro400.load().then(() => {
+    // document.fonts.add(myFont);
     backgroundImg.width = 500;
     backgroundImg.height = 500;
     backgroundImg.src = String(background.src);
-    const titleImg = new Image();
     titleImg.src = String(pictureTitle.src);
-    const scale = pictureTitle.width / 3000;
-    console.log(backgroundImg);
-    const canvas = document.createElement("canvas");
+    // });
+
     const drawImageWhenLoad = () => {
+      const scale = pictureTitle.width / 3000;
+      const canvas = document.createElement("canvas");
       canvas.width = 3000;
       canvas.height = 2000 + 1200 * eventData.length + 500;
       const ctx = canvas.getContext("2d");
@@ -54,20 +82,20 @@ const DownloadPicture: React.FC = () => {
         ctx.font = "320px Source-Han-Sans-VF";
         ctx.fillText("软研", 120, 400);
         ctx.font = "bold 320px Source-Han-Sans-VF";
+        ctx.fillText(`第${diffInWeeks}周`, 120, 800);
+        ctx.font = "bold 320px Source-Han-Sans-VF";
         ctx.fillText("授课课表", 120, 1200);
         for (
           let heightNumber = 0;
           heightNumber < eventData.length;
           heightNumber++
         ) {
-          console.log(eventData[heightNumber]);
           if (eventData[heightNumber].departments.length) {
             ctx.font = "1000 180px Source-Han-Sans-VF";
             ctx.fillStyle = "rgb(253,212,71)";
             const data: Department[] = eventData[heightNumber].departments;
             const formattedString: string = formatArray(data, "/");
             const textWidth = ctx.measureText(`>  ${formattedString}`).width;
-            console.log(textWidth);
             ctx.fillRect(180, 1900 + 1200 * heightNumber, textWidth + 180, 360);
             ctx.fillStyle = "black";
             ctx.fillText(
@@ -111,6 +139,7 @@ const DownloadPicture: React.FC = () => {
     // const myFont = new FontFace("myFont", `url(${SansVF.src})`);
     // myFont.load().then(function (font) {
     // document.fonts.add(font);
+
     function drawImageCounter() {
       counter++;
       if (counter === 2) {
@@ -160,9 +189,20 @@ const DownloadPicture: React.FC = () => {
 
   return (
     <>
-      <Button style={{ marginLeft: 20 }} onClick={downloadPicture}>
+      <Button style={{ marginLeft: 20 }} onClick={() => setVisible(true)}>
         生成本周授课表
       </Button>
+      <Modal
+        title="生成授课图片"
+        onCancel={() => setVisible(true)}
+        visible={visible}
+        maskClosable={false}
+        onOk={downloadPicture}
+      >
+        <a href="https://github.com/adobe-fonts/source-han-sans/tree/release?tab=readme-ov-file">
+          字体请点击这里下载
+        </a>
+      </Modal>
     </>
   );
 };

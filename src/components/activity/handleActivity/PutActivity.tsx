@@ -53,20 +53,16 @@ const PutActivity: React.FC<PutActivityProps> = ({
   const [types, setTypes] = useState<Array<{ value: number; label: string }>>(
     []
   );
-  console.log(location);
-  console.log("state", state);
 
   const [locations, setLocations] = useState<Array<any>>([]);
   const [eventData, setEventData] = useState<getEventData>();
 
-  console.log(state);
 
   const showSideSheet = (event: any) => {
     event.stopPropagation();
     setVisible(true);
     getDepartments().then(
       (res: { data: [{ id: number; departmentName: string }] }) => {
-        console.log(res);
         const transformedData = res.data.map(({ id, departmentName }) => ({
           value: id,
           label: departmentName,
@@ -75,7 +71,6 @@ const PutActivity: React.FC<PutActivityProps> = ({
       }
     );
     getTypes().then((res: { data: [{ id: number; typeName: string }] }) => {
-      console.log(res);
       const transformedType = res.data.map(({ id, typeName }) => ({
         value: id,
         label: typeName,
@@ -83,33 +78,24 @@ const PutActivity: React.FC<PutActivityProps> = ({
       setTypes(transformedType);
     });
     getLocations().then((res) => {
-      console.log(res.data);
       const addKeyLocations = addKeysToData(res.data);
-      console.log(addKeyLocations);
       setLocations(addKeyLocations);
     });
   };
 
   const changeOk = () => {
-    console.log(eventData);
     const newValue = formaEventData(eventData);
-    console.log(id);
     if (newValue) {
-      console.log(id);
       putEvent(id, newValue).then((res) => {
-        console.log(res);
         if (res.success) {
           getEvent(currentPage, 20)
             .then((res) => {
-              console.log(res);
-              console.log(res.data);
               const newDate = res.data.result.map((obj: { id: number }) => {
                 return {
                   ...obj,
                   key: `${obj.id}`,
                 };
               });
-              console.log(newDate);
               setData(newDate);
               setTotal(res.data.total);
               setVisible(false);
@@ -135,7 +121,6 @@ const PutActivity: React.FC<PutActivityProps> = ({
     for (var i = 0; i < values?.length; i++) {
       departments.push(values[i].id);
     }
-    console.log(departments);
 
     return departments;
   };
@@ -164,7 +149,6 @@ const PutActivity: React.FC<PutActivityProps> = ({
   ];
 
   const changeEventData = (value: any) => {
-    console.log(value);
     setEventData(value.values);
   };
 
@@ -183,7 +167,7 @@ const PutActivity: React.FC<PutActivityProps> = ({
         visible={visible}
         onCancel={() => setVisible(false)}
         footer={footer}
-        width="40vw"
+        width="60vw"
         headerStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
         bodyStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
       >

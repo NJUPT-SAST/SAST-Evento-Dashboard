@@ -28,7 +28,6 @@ export default function Timetable() {
     time: string
   ) => {
     getEventsList(typeId, departmentId, time).then((res) => {
-      console.log(res.data);
       setEventsData(res.data);
     });
   };
@@ -46,13 +45,11 @@ export default function Timetable() {
         ),
       };
     });
-    console.log(newEvents);
     setEvents(newEvents);
   }, [eventsData]);
 
   // TODO: 将时间设置为2000年1月1日，能获得自这一天之后的所有数据，可以优化只对后端进行一次请求，不需要每次日期更新都要对后端请求。
   useEffect(() => {
-    console.log("hello");
     getNewEventsList("", "", "2000-1-1");
   }, []);
 
@@ -64,7 +61,6 @@ export default function Timetable() {
 
   useEffect(() => {
     getNewEventsList("", String(chosenDepartment), "2000-1-1");
-    console.log(String(chosenDepartment));
   }, [chosenDepartment]);
 
   return (

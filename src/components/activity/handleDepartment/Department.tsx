@@ -18,7 +18,6 @@ const ActivityType: React.FC = () => {
   useEffect(() => {}, []);
   const showActivitySheet = () => {
     getDepartments().then((res) => {
-      console.log(res);
       setDepartments(res.data);
       setVisible(true);
     });
@@ -66,13 +65,15 @@ const ActivityType: React.FC = () => {
         title="活动组别管理"
         visible={visible}
         onCancel={() => setVisible(false)}
-        width="30vw"
+        width="40vw"
       >
-        <Table
-          columns={columns}
-          dataSource={departments}
-          pagination={false}
-        ></Table>
+        <div className={styles.tableContainer}>
+          <Table
+            columns={columns}
+            dataSource={departments}
+            pagination={false}
+          ></Table>
+        </div>
         {permissions?.addDepartment && (
           <div className={styles.mainContainer}>
             <div className={styles.divider}></div>

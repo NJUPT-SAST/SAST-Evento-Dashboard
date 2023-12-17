@@ -19,12 +19,9 @@ const DeletePicture: React.FC<DeletePictureProps> = ({
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const handleOk = () => {
-    console.log(eventId);
     deleteSlide(String(eventId)).then((res) => {
       if (res.success === true) {
         getSlide(currentPage).then((res: any) => {
-          console.log(res.data);
-          console.log(res.data.slides);
           setData(res.data.slides);
           setVisible(false);
           setChosenTabKey(res.data.slides[0].id);

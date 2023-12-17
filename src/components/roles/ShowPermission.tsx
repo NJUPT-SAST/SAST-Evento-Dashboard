@@ -14,8 +14,6 @@ export const ShowPermission: React.FC<ShowPermissionProps> = ({
   const [havePermission, setHavePermission] = useState<Array<string>>([]);
 
   const showMore = () => {
-    console.log("hello");
-    console.log(studentId);
 
     setVisible(true);
     getUserPermission(studentId, "").then((res) => {
@@ -24,7 +22,6 @@ export const ShowPermission: React.FC<ShowPermissionProps> = ({
   };
 
   useEffect(() => {
-    console.log(havePermission);
   }, [havePermission]);
 
   return (

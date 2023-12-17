@@ -47,7 +47,6 @@ const AddPicture: React.FC<AddPictureProps> = ({
 
   useEffect(() => {
     getPictureList(chosenPictureDir, currentPage, 4).then((res: any) => {
-      console.log(res.data);
       setImagesData(res.data.images);
       setTotal(res.data.total);
       setChosenPicture(res.data.images[0]?.id);
@@ -60,19 +59,11 @@ const AddPicture: React.FC<AddPictureProps> = ({
   };
 
   const handleOk = () => {
-    console.log(chosenPicture);
     if (imagesData && title && link) {
-      console.log("hello");
       const uri = imagesData.find((obj) => obj.id === chosenPicture)?.uri;
-      console.log(uri);
-      console.log(title);
-      console.log(link);
       addSlide(uri, link, title).then((res) => {
-        console.log(res);
         if (res.success === true) {
           getSlide(currentPage).then((res: any) => {
-            console.log(res.data);
-            console.log(res.data.slides);
             setParentData(res.data.slides);
             setParentTotal(res.data.total);
             setVisible(false);

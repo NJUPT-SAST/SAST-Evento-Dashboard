@@ -25,7 +25,6 @@ const DeleteImagesButton: React.FC<DeleteImagesButtonProps> = ({
 }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const deleteImg = () => {
-    console.log(dir);
     deletePictureList(cosKey, dir).then((res) => {
       if (res.success === true) {
         getPictureList(dir, 1, 6).then((res: any) => {

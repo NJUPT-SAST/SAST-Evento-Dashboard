@@ -18,7 +18,6 @@ export const ChangePermission: React.FC<ShowPermissionProps> = ({ userId }) => {
 
   const onChangeOk = () => {
     changeUserPermission(userId, havePermission).then((res) => {
-      console.log(res);
     });
     setVisible(false);
   };
@@ -28,10 +27,8 @@ export const ChangePermission: React.FC<ShowPermissionProps> = ({ userId }) => {
       setHavePermission(res.data);
     });
     getAdminTreeDate().then((res) => {
-      console.log(res);
       const newTreeDate = addKeysToData(res.data);
       const labelNewTreeDate = updateTitleToLabel(newTreeDate);
-      console.log(labelNewTreeDate);
       setTreeDate(labelNewTreeDate);
     });
     setVisible(true);

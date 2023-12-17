@@ -16,7 +16,6 @@ export const DepartmentSelection: React.FC<DepartmentSelectionProps> = ({
 
   useEffect(() => {
     getDepartments().then((res) => {
-      console.log(res.data);
       setDepartments(res.data);
     });
   }, []);

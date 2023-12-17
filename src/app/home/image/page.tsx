@@ -41,7 +41,6 @@ export default function Image() {
   function getNewPictureList(dir: string, num: number, size: number) {
     setImageData([]);
     getPictureList(dir, num, size).then((res) => {
-      console.log(res.data);
       const data = res.data;
       setTotal(data.total);
       setImageData(data.images);
@@ -144,8 +143,6 @@ export default function Image() {
   };
 
   const changeImage = (value: number) => {
-    console.log(value);
-    console.log(imageData[value]);
     setChosenImageData(imageData[value]);
   };
 

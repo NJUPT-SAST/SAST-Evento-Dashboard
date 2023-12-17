@@ -20,10 +20,8 @@ const AddManager: React.FC<AddManagerProps> = ({ eventId, setManagerData }) => {
 
   const getNewTotalManageTreeDate = (eventId: number) => {
     manageTreeData(eventId).then((res: { data: Array<any> }) => {
-      console.log(res.data);
       const newTreeDate = addKeysToData(res.data);
       const labelNewTreeDate = updateTitleToLabel(newTreeDate);
-      console.log(labelNewTreeDate);
       setTotalPermission(labelNewTreeDate);
     });
   };
@@ -48,7 +46,6 @@ const AddManager: React.FC<AddManagerProps> = ({ eventId, setManagerData }) => {
   }
 
   const changeHavePermission = (value: Array<any>) => {
-    console.log(value);
     setHavePermission(value);
   };
 
@@ -56,21 +53,15 @@ const AddManager: React.FC<AddManagerProps> = ({ eventId, setManagerData }) => {
     setVisible(true);
     getNewTotalManageTreeDate(eventId);
     getAdminsList("", "").then((res) => {
-      console.log(res.data);
       setAdminList(res.data.users);
     });
   };
 
   const addManager = () => {
-    console.log("hello");
-    console.log(studentNickname);
     const isActive = adminList?.find((obj) => obj.nickname === studentNickname);
-    console.log(isActive);
     if (isActive) {
       addManagers(eventId, isActive?.id, havePermission).then((res) => {
-        console.log(res);
         getManagers(eventId).then((res) => {
-          console.log(res.data.users);
           setManagerData(res.data.users);
         });
       });

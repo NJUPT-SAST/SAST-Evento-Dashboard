@@ -21,7 +21,6 @@ const ManagerPermission: React.FC<ManagerPermissionProps> = ({
 
   useEffect(() => {
     getManagers(eventId).then((res) => {
-      console.log(res.data.users);
       setManagerData(res.data.users);
     });
   }, [eventId]);
@@ -47,7 +46,6 @@ const ManagerPermission: React.FC<ManagerPermissionProps> = ({
       title: "权限操作",
       dataIndex: "linkId",
       render: (_: any, record: { id: string; nickname: string }) => {
-        console.log("44行de$", record);
         return (
           <>
             <Space>
@@ -80,7 +78,7 @@ const ManagerPermission: React.FC<ManagerPermissionProps> = ({
       </span>
       <SideSheet
         title={title}
-        width="40vw"
+        width="60vw"
         visible={visible}
         onCancel={() => setVisible(false)}
       >

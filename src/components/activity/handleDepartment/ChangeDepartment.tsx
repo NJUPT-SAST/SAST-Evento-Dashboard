@@ -23,10 +23,8 @@ const ChangeDepartment: React.FC<ChangeDepartmentProps> = ({
 
   const handleOk = () => {
     putDepartment(id, changeDepartmentName).then((res) => {
-      console.log(res);
       if (res.success === true) {
         getDepartments().then((res) => {
-          console.log(res);
           setDepartments(res.data);
           setVisible(false);
         });

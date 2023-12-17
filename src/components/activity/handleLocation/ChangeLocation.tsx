@@ -12,13 +12,9 @@ const ChangeLocation: React.FC<ChangeLocationProps> = ({ id, setTreeDate }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [location, setLocation] = useState<string>("");
   const handleOk = () => {
-    console.log(location);
-    console.log(id);
     changeLocation(id, location).then((res) => {
-      console.log(res);
       if (res.success === true) {
         getLocations().then((res) => {
-          console.log(res);
           setTreeDate(res.data);
           setVisible(false);
         });
