@@ -36,11 +36,13 @@ const DownloadPicture: React.FC = () => {
     //get the week
     const today: Date = new Date();
     console.log(today);
-    const end = new Date(2023, 8, 4);
+    const end = new Date(2023, 8, 3);
     console.log(end);
     const endDate = dayjs(end);
     const todayDate = dayjs(today);
     const diffInDays = todayDate.diff(endDate, "day");
+    console.log(diffInDays);
+    
     const diffInWeeks = Math.ceil(diffInDays / 7);
     const backgroundImg = new Image();
     const titleImg = new Image();
@@ -194,7 +196,7 @@ const DownloadPicture: React.FC = () => {
       </Button>
       <Modal
         title="生成授课图片"
-        onCancel={() => setVisible(true)}
+        onCancel={() => setVisible(false)}
         visible={visible}
         maskClosable={false}
         onOk={downloadPicture}

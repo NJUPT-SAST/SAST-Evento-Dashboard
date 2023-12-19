@@ -128,6 +128,10 @@ export default function DashboardLayout({
     setChosenNav(newChosenNav);
   }, [newChosenNav]);
 
+  const onCollapseChange = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
     <section>
       <Layout
@@ -174,6 +178,7 @@ export default function DashboardLayout({
         <Layout>
           <Sider style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
             <Nav
+              onCollapseChange={onCollapseChange}
               ref={navRef}
               isCollapsed={isCollapsed}
               renderWrapper={({ itemElement, isSubNav, isInSubNav, props }) => {
