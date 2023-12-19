@@ -5,12 +5,8 @@ import styles from "./page.module.scss";
 import {
   List,
   Skeleton,
-  Button,
   Avatar,
-  Modal,
   ButtonGroup,
-  Transfer,
-  Tag,
   Pagination,
 } from "@douyinfe/semi-ui";
 import { getAdminsList } from "@/apis/permission";
