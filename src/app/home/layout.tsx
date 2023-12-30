@@ -1,15 +1,16 @@
 "use client";
 
-import { Dropdown, Layout, Nav, Avatar } from "@douyinfe/semi-ui";
+import { Dropdown, Layout, Nav, Avatar, SideSheet } from "@douyinfe/semi-ui";
 import Image from "next/image";
 import logo from "../../../public/Logo.png";
 import {
-  IconHome,
+  IconToken,
+  IconBadgeStar,
+  IconCarousel,
+  IconCalendar,
   IconImage,
-  IconLive,
-  IconSetting,
-  IconUserCardVideo,
-} from "@douyinfe/semi-icons";
+  IconCollapse,
+} from "@douyinfe/semi-icons-lab";
 import Link from "next/link";
 import { ReactText, useEffect, useRef, useState } from "react";
 import { getMyAdminPermission } from "@/apis/permission";
@@ -17,6 +18,7 @@ import { UserInfo } from "@/utils/commonInterface";
 import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/apis/login";
 import { OnSelectedData } from "@douyinfe/semi-ui/lib/es/navigation";
+import styles from "./layout.module.scss";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -26,11 +28,11 @@ export default function DashboardLayout({
   const { Header, Sider } = Layout;
 
   const navRef = useRef(null);
-  //这里通过随着宽度的变化点击收起按钮来实现sider的自适应
   const [windowWidth, setWindowWidth] = useState(0);
   const [userinfo, setUserinfo] = useState<UserInfo>();
   const [chosenNav, setChosenNav] = useState<string>("");
   const [isCollapsed, setIsCollapsed] = useState<boolean>();
+  const [sideSheetVisible, setSideSheetVisible] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -63,27 +65,20 @@ export default function DashboardLayout({
     }
   }, []);
 
+  //Listener function, adaptive sidebar stowage based on screen width
   useEffect(() => {
-    // 监听窗口大小改变事件
     window.addEventListener("resize", handleResize);
-
-    // 处理窗口大小改变事件
     function handleResize() {
       const newWindowWidth = window.innerWidth;
-
-      // 检查窗口宽度是否经过 1200
       if (newWindowWidth < 1200 && windowWidth >= 1200) {
         setIsCollapsed(true);
       }
-
       if (newWindowWidth >= 1200 && windowWidth < 1200) {
         setIsCollapsed(false);
       }
-
       setWindowWidth(newWindowWidth);
     }
 
-    // 在组件卸载时清除事件监听器
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -132,6 +127,12 @@ export default function DashboardLayout({
     setIsCollapsed(!isCollapsed);
   };
 
+  //移动端适配导航栏跳转
+  const navToPage = (value: string) => {
+    router.push(`${value}`);
+    setSideSheetVisible(false);
+  };
+
   return (
     <section>
       <Layout
@@ -151,6 +152,10 @@ export default function DashboardLayout({
                 />
               </Nav.Header>
               <Nav.Footer>
+                <IconCollapse
+                  className={styles.moreIcon}
+                  onClick={() => setSideSheetVisible(true)}
+                />
                 <Dropdown
                   trigger={"click"}
                   position="bottomRight"
@@ -168,7 +173,7 @@ export default function DashboardLayout({
                   }
                 >
                   <Avatar color="orange" size="small" src={avatarUri}>
-                    {userNickName}
+                    {userNickName?.slice(-2)}
                   </Avatar>
                 </Dropdown>
               </Nav.Footer>
@@ -176,7 +181,10 @@ export default function DashboardLayout({
           </div>
         </Header>
         <Layout>
-          <Sider style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
+          <Sider
+            style={{ backgroundColor: "var(--semi-color-bg-1)" }}
+            className={styles.siderBar}
+          >
             <Nav
               onCollapseChange={onCollapseChange}
               ref={navRef}
@@ -205,26 +213,26 @@ export default function DashboardLayout({
                 {
                   itemKey: "activity",
                   text: "活动管理",
-                  icon: <IconHome size="large" />,
+                  icon: <IconToken size="large" />,
                 },
                 {
                   itemKey: "timetable",
-                  text: "活动时间",
-                  icon: <IconLive size="large" />,
+                  text: "时间表",
+                  icon: <IconCalendar size="large" />,
                 },
                 {
                   itemKey: "roles",
                   text: "用户管理",
-                  icon: <IconSetting size="large" />,
+                  icon: <IconBadgeStar size="large" />,
                 },
                 {
                   itemKey: "picture",
                   text: "幻灯片",
-                  icon: <IconUserCardVideo size="large" />,
+                  icon: <IconCarousel size="large" />,
                 },
                 {
                   itemKey: "image",
-                  text: "图库",
+                  text: "媒体库",
                   icon: <IconImage size="large" />,
                 },
               ]}
@@ -236,6 +244,39 @@ export default function DashboardLayout({
           <Layout>{children}</Layout>
         </Layout>
       </Layout>
+      {/* 移动端适配的侧边栏 */}
+      <SideSheet
+        title="导航栏"
+        style={{ width: "80%" }}
+        visible={sideSheetVisible}
+        onCancel={() => setSideSheetVisible(false)}
+      >
+        <div className={styles.navContainer}>
+          <div className={styles.navItem} onClick={() => navToPage("activity")}>
+            <IconToken size="large" />
+            <span className={styles.navItemSpan}>活动管理</span>
+          </div>
+          <div
+            className={styles.navItem}
+            onClick={() => navToPage("timetable")}
+          >
+            <IconCalendar size="large" />
+            <span className={styles.navItemSpan}>时间表</span>
+          </div>
+          <div className={styles.navItem} onClick={() => navToPage("roles")}>
+            <IconBadgeStar size="large" />
+            <span className={styles.navItemSpan}>用户管理</span>
+          </div>
+          <div className={styles.navItem} onClick={() => navToPage("picture")}>
+            <IconCarousel size="large" />
+            <span className={styles.navItemSpan}>幻灯片</span>
+          </div>
+          <div className={styles.navItem} onClick={() => navToPage("image")}>
+            <IconImage size="large" />
+            <span className={styles.navItemSpan}>媒体库</span>
+          </div>
+        </div>
+      </SideSheet>
     </section>
   );
 }

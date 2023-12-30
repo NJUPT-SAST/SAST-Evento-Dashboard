@@ -27,7 +27,7 @@ const DownloadPicture: React.FC = () => {
     }> = [];
 
     //获取本周的数据
-    await getEventsList("3", "", formatMondayDate()).then((res) => {
+    await getEventsList("3pnp", "", formatMondayDate()).then((res) => {
       if (res.success) {
         eventData = res.data;
       }
@@ -47,25 +47,10 @@ const DownloadPicture: React.FC = () => {
     const backgroundImg = new Image();
     const titleImg = new Image();
     let counter = 0;
-
-    // const sourceCodePro400 = Source_Sans_3({ weight: "400" });
-
-    // const myFont = new FontFace(
-    //   "myFont",
-    //   "/public/SourceHanSansCN-VF.otf.woff2"
-    // );
-
-    // const loadFonts = async () => {
-    //   await document.fonts.load(greatVibesFont);
-    // };
-
-    // sourceCodePro400.load().then(() => {
-    // document.fonts.add(myFont);
     backgroundImg.width = 500;
     backgroundImg.height = 500;
     backgroundImg.src = String(background.src);
     titleImg.src = String(pictureTitle.src);
-    // });
 
     const drawImageWhenLoad = () => {
       const scale = pictureTitle.width / 3000;

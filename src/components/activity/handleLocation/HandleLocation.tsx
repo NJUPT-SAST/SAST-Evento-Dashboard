@@ -12,6 +12,10 @@ const HandleLocation: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [id, setId] = useState<number>(0);
   const [permissions, setPermissions] = useState<Permissions>();
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
 
   useEffect(() => {
     getLocations().then((res) => {
@@ -33,7 +37,7 @@ const HandleLocation: React.FC = () => {
         title="活动地点管理"
         visible={visible}
         onCancel={() => setVisible(false)}
-        width="40vw"
+        width={`${windowWidth > 1000 ? "40vw" : "100vw"}`}
       >
         <TreeSelect
           autoExpandParent={true}

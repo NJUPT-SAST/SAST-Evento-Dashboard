@@ -14,6 +14,10 @@ const ActivityType: React.FC = () => {
     Array<{ id: number; departmentName: string }>
   >([]);
   const [permissions, setPermissions] = useState<Permissions>();
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
 
   useEffect(() => {}, []);
   const showActivitySheet = () => {
@@ -65,7 +69,7 @@ const ActivityType: React.FC = () => {
         title="活动组别管理"
         visible={visible}
         onCancel={() => setVisible(false)}
-        width="40vw"
+        width={`${windowWidth > 1000 ? "40vw" : "100vw"}`}
       >
         <div className={styles.tableContainer}>
           <Table

@@ -17,3 +17,10 @@
     }
   }
 }
+
+@media only screen and (max-width: 1000px) {
+  .container {
+    display: flex;
+    padding: 30px !important;
+  }
+}

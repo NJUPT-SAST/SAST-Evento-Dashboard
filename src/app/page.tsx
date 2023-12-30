@@ -8,7 +8,6 @@ import { getMyInfo } from "@/apis/user";
 
 function TypingComponent() {
   const [animate, setAnimate] = useState(true);
-  const [showButton, setShowButton] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -26,10 +25,6 @@ function TypingComponent() {
     setTimeout(() => setAnimate(true), 1);
   };
 
-  setTimeout(() => {
-    setShowButton(true);
-  }, 0);
-
   const toLogin = () => {
     router.push("/login", { scroll: false });
   };
@@ -44,20 +39,18 @@ function TypingComponent() {
           ></div>
         </div>
         <div className={styles.buttonContainer}>
-          {showButton && (
-            <button className={styles.button} onClick={toLogin}>
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                toLogin
-              </div>
-            </button>
-          )}
+          <button className={styles.button} onClick={toLogin}>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              toLogin
+            </div>
+          </button>
         </div>
       </div>
     </>

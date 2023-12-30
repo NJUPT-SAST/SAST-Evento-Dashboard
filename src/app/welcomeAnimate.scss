@@ -10,6 +10,7 @@ body {
   align-items: center;
   height: 100vh;
   background: #eee;
+  white-space: wrap;
 }
 
 .typing.animate {
@@ -23,10 +24,12 @@ body {
   overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
+  white-space: wrap;
 }
 
 .typing.animate::before {
   content: "Hello, here 's SAST";
+  white-space: wrap;
   animation: type2 1s steps(4) 3s forwards, type3 3s steps(22, end) 6s forwards;
 }
 

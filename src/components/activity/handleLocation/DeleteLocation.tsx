@@ -24,8 +24,11 @@ const DeleteLocation: React.FC<DeleteLocationProps> = ({ id, setTreeDate }) => {
   return (
     <>
       <Popover
+        style={{ color: "black" }}
         content={
-          <article className={commonStyles.article}>选中地点,确认删除</article>
+          <article className={commonStyles.article} style={{ color: "black" }}>
+            选中地点,确认删除
+          </article>
         }
         position="topRight"
       >

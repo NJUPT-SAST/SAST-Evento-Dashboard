@@ -32,6 +32,11 @@ const AddActivity: React.FC<AddActivityProps> = ({
 
   const [locations, setLocations] = useState<Array<any>>([]);
   const [eventData, setEventData] = useState<getEventData>();
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, []);
 
   const showSideSheet = () => {
     setVisible(true);
@@ -134,7 +139,7 @@ const AddActivity: React.FC<AddActivityProps> = ({
         visible={visible}
         onCancel={() => setVisible(false)}
         footer={footer}
-        width="60vw"
+        width={`${windowWidth > 1000 ? "60vw" : "100vw"}`}
         headerStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
         bodyStyle={{ borderBottom: "1px solid var(--semi-color-border)" }}
       >

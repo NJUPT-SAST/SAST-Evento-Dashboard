@@ -26,7 +26,7 @@ const AddLocation: React.FC<AddLocationProps> = ({ parentId, setTreeDate }) => {
     <>
       <Popover
         content={
-          <article className={commonStyles.article}>
+          <article className={commonStyles.article} style={{ color: "black" }}>
             选中添加子节点, 未选中添加根目录
           </article>
         }
