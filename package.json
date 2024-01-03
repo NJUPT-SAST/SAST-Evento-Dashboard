@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@douyinfe/semi-icons": "^2.48.0",
+    "@douyinfe/semi-icons-lab": "^2.49.2",
     "@douyinfe/semi-illustrations": "^2.48.0",
     "@douyinfe/semi-ui": "^2.48.0",
     "axios": "^1.6.2",

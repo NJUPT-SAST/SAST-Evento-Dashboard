@@ -37,7 +37,7 @@ export default function Activity() {
         dataIndex: "title",
         align: "center",
         render: (title: string, record: object, index: number) => {
-          return <span>{title}</span>;
+          return <span className={styles.titleSpan}>{title}</span>;
         },
       },
       {
@@ -49,7 +49,9 @@ export default function Activity() {
           record: object,
           index: number
         ) => {
-          return <div>{eventType?.typeName}</div>;
+          return (
+            <div className={styles.eventTypeSpan}>{eventType?.typeName}</div>
+          );
         },
       },
       {
@@ -116,7 +118,6 @@ export default function Activity() {
   };
 
   const expandData = data?.map((msg: any, _index: number) => {
-
     return [
       { key: "活动开始时间", value: msg.gmtEventStart?.slice(0, -3) },
       { key: "活动结束时间", value: msg.gmtEventEnd?.slice(0, -3) },
@@ -196,8 +197,6 @@ export default function Activity() {
             <Department></Department>
             <ActivityType></ActivityType>
           </div>
-
-          {/* TODO :app-index.js:32  Warning: CustomExpandIcon: Support for defaultProps will be removed from function components in a future major release. Use JavaScript default parameters instead.目前不影响使用 */}
           <Table
             expandRowByClick={true}
             scroll={scroll}

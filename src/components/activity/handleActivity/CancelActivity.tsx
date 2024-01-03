@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import commonStyles from "../common.module.scss";
 import { Modal } from "@douyinfe/semi-ui";
 import { cancelEvent, getEvent } from "@/apis/event";

@@ -32,7 +32,6 @@ const DeleteManager: React.FC<DeleteManagerProps> = ({
   };
   return (
     <>
-      {/* TODO:这里的删除未调接口，等待增加管理员做好后，再调删除管理员接口*/}
       <Button onClick={() => setVisible(true)} className={styles.danger}>
         删除
       </Button>
@@ -48,7 +47,6 @@ const DeleteManager: React.FC<DeleteManagerProps> = ({
         visible={visible}
         onCancel={() => setVisible(false)}
         onOk={deleteManager}
-        // footer={footer}
         closeOnEsc={true}
       ></Modal>
     </>

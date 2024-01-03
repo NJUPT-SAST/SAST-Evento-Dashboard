@@ -25,7 +25,9 @@ const ChangeLocation: React.FC<ChangeLocationProps> = ({ id, setTreeDate }) => {
     <>
       <Popover
         content={
-          <article className={commonStyles.article}>选中地点,确认修改</article>
+          <article className={commonStyles.article} style={{ color: "black" }}>
+            选中地点,确认修改
+          </article>
         }
         position="top"
       >

@@ -1,0 +1,33 @@
+@media screen and (max-width: 1000px) {
+  .siderBar {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .moreIcon {
+    display: none !important;
+  }
+}
+
+.moreIcon > svg {
+  width: 32px;
+  height: 32px;
+  margin-right: 20px;
+}
+
+.navContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  .navItem {
+    display: flex;
+    padding-top: 20px;
+    gap: 10px;
+    .navItemSpan {
+      color: black;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+}

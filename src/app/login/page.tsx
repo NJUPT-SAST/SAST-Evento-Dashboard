@@ -47,32 +47,7 @@ export default function Login() {
     }
   }, [router]);
 
-  const [windowWidth, setWindowWidth] = useState<number>(2000);
   const [isLogoShow, setIsLogoShow] = useState<boolean>(true);
-
-  useEffect(() => {
-    // 创建一个函数来更新窗口宽度的状态
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    // 添加事件监听器，当窗口大小改变时调用 handleResize 函数
-    window.addEventListener("resize", handleResize);
-
-    // 组件卸载时，移除事件监听器
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (windowWidth < 1100) {
-      setIsLogoShow(false);
-    }
-    if (windowWidth > 1100) {
-      setIsLogoShow(true);
-    }
-  }, [windowWidth]);
 
   const handleEnterKeyPress = (
     event: React.KeyboardEvent<HTMLInputElement>
@@ -92,7 +67,7 @@ export default function Login() {
           </div>
         )}
         <div className={styles.loginContainer}>
-          <Card style={{ width: "500px" }}>
+          <Card className={styles.cardContainer}>
             <div className={styles.titleContainer}>
               <strong>
                 <h1>SAST EVENTO</h1>
