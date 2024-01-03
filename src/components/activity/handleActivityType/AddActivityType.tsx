@@ -20,8 +20,6 @@ const AddActivityType: React.FC<AddActivityTypeProps> = ({
   const [changeTypeName, setChangeTypeName] = useState<string>("");
   const [changeAllowConflict, setChangeAllowConflict] = useState<string>("");
 
-  //   TODO:这里有一个bug，当名字和是否允许没有发生改变时，第一次点击state没有更新，无法正常请求
-
   const showChangeModal = () => {
     setVisible(true);
   };
