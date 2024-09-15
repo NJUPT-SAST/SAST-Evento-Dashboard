@@ -19,6 +19,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { logout } from "@/apis/login";
 import { OnSelectedData } from "@douyinfe/semi-ui/lib/es/navigation";
 import styles from "./layout.module.scss";
+import { IconEdit } from "@douyinfe/semi-icons";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -36,24 +37,24 @@ export default function DashboardLayout({
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      router.push("/login");
-      localStorage.clear();
-    }
-    if (localStorage.getItem("token")) {
-      getMyAdminPermission().then((res) => {
-        if (
-          (res.errCode === 1000 &&
-            String(res.errMsg).includes("login has expired")) ||
-          res.errCode === 1003
-        ) {
-          router.push("/login");
-          localStorage.clear();
-        }
-      });
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("token")) {
+  //     router.push("/login");
+  //     localStorage.clear();
+  //   }
+  //   if (localStorage.getItem("token")) {
+  //     getMyAdminPermission().then((res) => {
+  //       if (
+  //         (res.errCode === 1000 &&
+  //           String(res.errMsg).includes("login has expired")) ||
+  //         res.errCode === 1003
+  //       ) {
+  //         router.push("/login");
+  //         localStorage.clear();
+  //       }
+  //     });
+  //   }
+  // }, [router]);
 
   useEffect(() => {
     const windowWidth = window.innerWidth;
@@ -196,6 +197,7 @@ export default function DashboardLayout({
                   Roles: "home/roles",
                   Picture: "home/picture",
                   Image: "home/image",
+                  TimetableEditor: "home/timetableEditor",
                 };
                 return (
                   <Link
@@ -234,6 +236,11 @@ export default function DashboardLayout({
                   itemKey: "image",
                   text: "媒体库",
                   icon: <IconImage size="large" />,
+                },
+                {
+                  itemKey: "timetableEditor",
+                  text: "课表编辑器",
+                  icon: <IconEdit size="large" />,
                 },
               ]}
               footer={{
